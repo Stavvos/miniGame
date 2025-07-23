@@ -1,0 +1,14 @@
+#!/bin/bash
+
+rm ./roguelike
+
+if gcc -Wall -pedantic -o game main.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11; then
+  echo compiled
+else
+  exit $?
+fi
+
+if test "$1" != check ; then
+  ./game
+fi
+
