@@ -2,13 +2,19 @@
 
 int main(void)
 {
+    //window setup
     const int screenWidth = GetScreenWidth();
-    const int screenHeight = GetScreenHeight();
-
+    const int screenHeight = GetScreenHeight();	
     InitWindow(screenWidth, screenHeight, "game");
     SetTargetFPS(60);
     HideCursor();
+    
+    //this texture has to be declared after the InitWindow() call due to open gl
+    Texture2D player = LoadTexture("assets/sprite/player/player.png");
 
+    SetTargetFPS(60);
+    HideCursor();
+   
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -18,7 +24,7 @@ int main(void)
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
-
+	    DrawTexture(player, 300.f, 280.f, WHITE);
         EndDrawing();
     }
 
