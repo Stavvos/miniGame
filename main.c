@@ -2,8 +2,8 @@
 
 int main(void)
 {
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int screenWidth = GetScreenWidth();
+    const int screenHeight = GetScreenHeight();
 
     InitWindow(screenWidth, screenHeight, "game");
     SetTargetFPS(60);               
