@@ -10,16 +10,21 @@ int main(void)
     HideCursor();
     
     //this texture has to be declared after the InitWindow() call due to open gl
-    Texture2D player = LoadTexture("assets/sprite/player/player.png");
-
+    Texture2D player = LoadTexture("assets/sprite/player/ship.png");
+    Texture2D asteroid = LoadTexture("assets/sprite/player/asteroid.png");
+    Texture2D asteroidMedium = LoadTexture("assets/sprite/player/asteroidMedium.png");
+    Texture2D asteroidLarge = LoadTexture("assets/sprite/player/asteroidLarge.png");
     SetTargetFPS(60);
     HideCursor();
 
     typedef enum GameScreen {MENU, GAMEPLAY} GameScreen;
     GameScreen currentScreen = MENU;
-   
+
+    typedef enum GameState {PLAYING, EXIT} GameState;
+    GameState currentState = PLAYING; 
+    
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    while (currentState != EXIT) //(!WindowShouldClose())    // Detect window close button or ESC key
     {
         //Update your variables here
         switch(currentScreen)
@@ -30,15 +35,20 @@ int main(void)
 	    {
 	      currentScreen = GAMEPLAY;
 	    }
+
+	    if(IsKeyPressed(KEY_ESCAPE))
+	    {
+	      currentState = EXIT;
+	    }
 	  } break;
 
 	  case GAMEPLAY:
 	  {
-	    if(IsKeyPressed(KEY_ENTER))
+	    if(IsKeyPressed(KEY_ESCAPE))
 	    {
 	      currentScreen = MENU;
 	    }
-	  } break; 
+	  } break;
 	  
 	  default: break;
 	}	
@@ -58,6 +68,9 @@ int main(void)
 	    {
 	      ClearBackground(RAYWHITE);
 	      DrawTexture(player, 300.f, 280.f, WHITE);
+	      DrawTexture(asteroid, 100.f, 100.f, WHITE);
+	      DrawTexture(asteroidMedium, 200.f, 600.f, WHITE);
+	      DrawTexture(asteroidLarge, 920.f, 510.f, WHITE);
 	    }  break;
 	   
 	    default: break;
