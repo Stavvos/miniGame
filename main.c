@@ -9,11 +9,13 @@ int main(void)
     SetTargetFPS(60);
     HideCursor();
     
+    Vector2 playerPos = {300.f, 280.f}; 
+
     //this texture has to be declared after the InitWindow() call due to open gl
     Texture2D player = LoadTexture("assets/sprite/player/ship.png");
-    Texture2D asteroid = LoadTexture("assets/sprite/player/asteroid.png");
-    Texture2D asteroidMedium = LoadTexture("assets/sprite/player/asteroidMedium.png");
-    Texture2D asteroidLarge = LoadTexture("assets/sprite/player/asteroidLarge.png");
+    Texture2D asteroid = LoadTexture("assets/sprite/world/asteroid.png");
+    Texture2D asteroidMedium = LoadTexture("assets/sprite/world/asteroidMedium.png");
+    Texture2D asteroidLarge = LoadTexture("assets/sprite/world/asteroidLarge.png");
     SetTargetFPS(60);
     HideCursor();
 
@@ -52,6 +54,16 @@ int main(void)
 	  
 	  default: break;
 	}	
+        
+        //move forward 	
+	if(IsKeyDown(KEY_W)) {
+	  playerPos.y -= 0.5f; 
+	}
+        
+	//move down
+        if(IsKeyDown(KEY_S)) {
+	  playerPos.y += 0.5f; 
+	}
 
 	// Draw
         BeginDrawing();
@@ -67,7 +79,7 @@ int main(void)
 	    case GAMEPLAY:
 	    {
 	      ClearBackground(RAYWHITE);
-	      DrawTexture(player, 300.f, 280.f, WHITE);
+	      DrawTexture(player, playerPos.x, playerPos.y, WHITE);
 	      DrawTexture(asteroid, 100.f, 100.f, WHITE);
 	      DrawTexture(asteroidMedium, 200.f, 600.f, WHITE);
 	      DrawTexture(asteroidLarge, 920.f, 510.f, WHITE);
