@@ -1,4 +1,7 @@
 #include "raylib.h"
+#include "math.h"
+#include "stdio.h"
+#define M_PI 3.14159265358979323846
 
 int main(void)
 {
@@ -9,7 +12,11 @@ int main(void)
     SetTargetFPS(60);
     HideCursor();
     
-    Vector2 playerPos = {300.f, 280.f}; 
+    //player variables
+    Vector2 playerPos = {300.f, 280.f};
+    float playerRotation = M_PI / 4;
+    float playerRotationState = 0.0f;
+    float playerScale = 1.0f;
 
     //this texture has to be declared after the InitWindow() call due to open gl
     Texture2D player = LoadTexture("assets/sprite/player/ship.png");
@@ -26,9 +33,9 @@ int main(void)
     GameState currentState = PLAYING; 
     
     // Main game loop
-    while (currentState != EXIT) //(!WindowShouldClose())    // Detect window close button or ESC key
+    while (currentState != EXIT) 
     {
-        //Update your variables here
+        //Update game 
         switch(currentScreen)
 	{
           case MENU:
@@ -64,8 +71,29 @@ int main(void)
         if(IsKeyDown(KEY_S)) {
 	  playerPos.y += 0.5f; 
 	}
+        
+        //rotate the player sprite right	
+        if(IsKeyDown(KEY_D)) {	
+	    playerRotationState += playerRotation;  
+	}
+	
+	//rotate the player sprite left	
+        if(IsKeyDown(KEY_A)) {	
+	  playerRotationState -= playerRotation; 	
+	}
+	
+	//handle normalising the playerRotationState value to between 0-360 
+	if (playerRotationState >= 360){
+	  playerRotationState -= 360;
+	}
+	else if (playerRotationState < 0){
+	  playerRotationState  += 360;
+	}
+	
+	
+	printf("%f\n",  playerRotationState); 
 
-	// Draw
+	//Draw
         BeginDrawing();
 	  
 	  switch(currentScreen)
@@ -79,7 +107,8 @@ int main(void)
 	    case GAMEPLAY:
 	    {
 	      ClearBackground(RAYWHITE);
-	      DrawTexture(player, playerPos.x, playerPos.y, WHITE);
+	      DrawTextureEx(player, playerPos, playerRotationState, playerScale, WHITE); 
+	      //DrawTexture(player, playerPos.x, playerPos.y, WHITE); 
 	      DrawTexture(asteroid, 100.f, 100.f, WHITE);
 	      DrawTexture(asteroidMedium, 200.f, 600.f, WHITE);
 	      DrawTexture(asteroidLarge, 920.f, 510.f, WHITE);
