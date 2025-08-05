@@ -12,6 +12,11 @@ int main(void)
     SetTargetFPS(60);
     HideCursor();
     
+    Vector2 moveUp = {0, -1};
+    Vector2 moveDown = {0, 1};
+    Vector2 moveLeft = {-1, 0};
+    Vector2 moveRight = {1, 0};
+
     //player variables
     Vector2 playerPos = {300.f, 280.f};
     float playerRotation = M_PI / 4;
@@ -23,6 +28,7 @@ int main(void)
     Texture2D asteroid = LoadTexture("assets/sprite/world/asteroid.png");
     Texture2D asteroidMedium = LoadTexture("assets/sprite/world/asteroidMedium.png");
     Texture2D asteroidLarge = LoadTexture("assets/sprite/world/asteroidLarge.png");
+    
     SetTargetFPS(60);
     HideCursor();
 
@@ -64,22 +70,26 @@ int main(void)
         
         //move forward 	
 	if(IsKeyDown(KEY_W)) {
-	  playerPos.y -= 0.5f; 
+	  playerPos.x = playerPos.x + moveUp.x;
+	  playerPos.y = playerPos.y + moveUp.y; 
 	}
         
 	//move down
         if(IsKeyDown(KEY_S)) {
-	  playerPos.y += 0.5f; 
+	  playerPos.x = playerPos.x + moveDown.x;
+	  playerPos.y = playerPos.y + moveDown.y;
 	}
         
-        //rotate the player sprite right	
+        //move right	
         if(IsKeyDown(KEY_D)) {	
-	    playerRotationState += playerRotation;  
+          playerPos.x = playerPos.x + moveRight.x;
+  	  playerPos.y = playerPos.y + moveRight.y; 	  
 	}
 	
-	//rotate the player sprite left	
+	//move left	
         if(IsKeyDown(KEY_A)) {	
-	  playerRotationState -= playerRotation; 	
+          playerPos.x = playerPos.x + moveLeft.x; 
+  	  playerPos.y = playerPos.y + moveLeft.y; 	  
 	}
 	
 	//handle normalising the playerRotationState value to between 0-360 
