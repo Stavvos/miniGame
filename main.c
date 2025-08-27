@@ -4,7 +4,20 @@
 
 
 //placed this up here to enable printing player state 
-typedef enum PlayerMoveState {MOVEFORWARD, MOVEBACKWARD, MOVELEFT, MOVERIGHT, NOMOVE} PlayerMoveState;
+typedef enum PlayerMoveState 
+{
+  MOVEFORWARD, 
+  MOVEBACKWARD, 
+  MOVELEFT, 
+  MOVERIGHT, 
+  MOVEUPRIGHT, 
+  MOVEUPLEFT,
+  MOVEDOWNRIGHT,
+  MOVEDOWNLEFT,
+  NOMOVE 
+    
+} PlayerMoveState;
+
 PlayerMoveState playerMoveState = NOMOVE; 
 
 //used to print a meaningful player state rather than a number
@@ -16,11 +29,14 @@ const char* getPlayerMoveStateString(PlayerMoveState state){
     case MOVELEFT: return "MOVELEFT";
     case MOVERIGHT: return "MOVERIGHT";
     case NOMOVE: return "NOMOVE";
+    case MOVEUPRIGHT: return "MOVEUPRIGHT";
+    case MOVEUPLEFT: return "MOVEUPLEFT";
+    case MOVEDOWNRIGHT: return "MOVEDOWNRIGHT";
+    case MOVEDOWNLEFT: return "MOVEDOWNLEFT";
     default: return "NULLSTATE";
   }	
 }	
 	
-
 int main(void)
 {
     //window setup
@@ -34,6 +50,14 @@ int main(void)
     Vector2 moveDown = {0, 1};
     Vector2 moveLeft = {-1, 0};
     Vector2 moveRight = {1, 0};
+    
+    //these diagonal values are normalised to .707 to avoid diagonal movement being faster than cardinal movement.
+    //pythangorous theroum proves this with a^2 + b^2 = c^2, aka the hypotenuse c^2 is always bigger.
+    //.707 is just an approximate value, but it works well enough.
+    Vector2 moveUpRight = {0.707, -0.707};
+    Vector2 moveUpLeft = {-0.707, -0.707};
+    Vector2 moveDownRight = {0.707, 0.707};
+    Vector2 moveDownLeft = {-0.707, 0.707};
 
     //player variables
     Vector2 playerPos = {300.f, 280.f};
@@ -120,17 +144,18 @@ int main(void)
         
 	    //move down
             if(IsKeyDown(KEY_S)) {
-	      playerMoveState = MOVEBACKWARD;
+	      playerPos.x = playerPos.x + moveDown.x;
+	      playerPos.y = playerPos.y + moveDown.y;
 	    }
         
-           //move diag right	
-           if(IsKeyDown(KEY_D)) {
-	      playerMoveState = MOVERIGHT;
+           //move up right	
+           if(IsKeyDown(KEY_D) && IsKeyDown(KEY_W)) {
+	      playerMoveState = MOVEUPRIGHT;
 	    }
 	
-	   //move diag left	
+	   //move up left	
            if(IsKeyDown(KEY_A)) {
-	      playerMoveState = MOVELEFT;
+	      playerMoveState = MOVEUPLEFT;
 	    }
  	  
 	   //no move 	
@@ -144,7 +169,8 @@ int main(void)
           {
  	    //move forward 	
 	    if(IsKeyDown(KEY_W)) {
-	      playerMoveState = MOVEFORWARD;
+	      playerPos.x = playerPos.x + moveUp.x;
+	      playerPos.y = playerPos.y + moveUp.y;
 	    }
         
 	    //move down
@@ -152,7 +178,17 @@ int main(void)
 	      playerPos.x = playerPos.x + moveDown.x;
 	      playerPos.y = playerPos.y + moveDown.y;
 	    }
-         
+            
+	    //move left
+            if(IsKeyDown(KEY_A)) {
+	      playerMoveState = MOVEDOWNLEFT;
+	    }
+
+	    //move down
+            if(IsKeyDown(KEY_D)) {
+	      playerMoveState = MOVEDOWNRIGHT;
+	    }
+
 	   //no move 	
 	    if (IsKeyUp(KEY_S)){  
 	      playerMoveState = NOMOVE;
@@ -165,17 +201,22 @@ int main(void)
           {
  	    //move forward 	
 	    if(IsKeyDown(KEY_W)) {
-	      playerMoveState = MOVEFORWARD;
+	      //playerPos.x = playerPos.x + moveUp.x;
+	      //playerPos.y = playerPos.y + moveUp.y;
+	      playerMoveState = MOVEUPLEFT;
 	    }
         
 	    //move down
             if(IsKeyDown(KEY_S)) {
-	      playerMoveState = MOVEBACKWARD;
+	      //playerPos.x = playerPos.x + moveDown.x;
+	      //playerPos.y = playerPos.y + moveDown.y;
+	      playerMoveState = MOVEDOWNLEFT;
 	    }
         
            //move right	
            if(IsKeyDown(KEY_D)) {
-	      playerMoveState = MOVERIGHT;
+	      playerPos.x = playerPos.x + moveRight.x;
+	      playerPos.y = playerPos.y + moveRight.y;
 	    }
 	
 	   //move left	
@@ -195,12 +236,16 @@ int main(void)
           {
  	    //move forward 	
 	    if(IsKeyDown(KEY_W)) {
-	      playerMoveState = MOVEFORWARD;
+              //playerPos.x = playerPos.x + moveUp.x; 
+  	      //playerPos.y = playerPos.y + moveUp.y; 
+	      playerMoveState = MOVEUPRIGHT;
 	    }
         
 	    //move down
             if(IsKeyDown(KEY_S)) {
-	      playerMoveState = MOVEBACKWARD;
+	    //  playerPos.x = playerPos.x + moveDown.x; 
+  	    //  playerPos.y = playerPos.y + moveDown.y; 
+	      playerMoveState = MOVEDOWNRIGHT;
 	    }
         
            //move right	
@@ -211,6 +256,8 @@ int main(void)
 	
 	   //move left	
            if(IsKeyDown(KEY_A)) {
+	      playerPos.x = playerPos.x + moveLeft.x; 
+  	      playerPos.y = playerPos.y + moveLeft.y; 
 	      playerMoveState = MOVELEFT;
 	    }
  	  
@@ -220,12 +267,70 @@ int main(void)
 	    }
  
 	  } break;
+	  
+	  case MOVEUPRIGHT:
+          {
+ 	    
+           //move  up right	
+           if(IsKeyDown(KEY_D) && IsKeyDown(KEY_W)) {
+              playerPos.x = playerPos.x + moveUpRight.x;
+  	      playerPos.y = playerPos.y + moveUpRight.y; 	  
+	    }
+	    else 
+	    { 
+	      playerMoveState = NOMOVE; 
+	    } 
+	  
+	   } break;
+
+	  case MOVEUPLEFT:
+          {
+	   
+	   //move up left	
+           if(IsKeyDown(KEY_A) && IsKeyDown(KEY_W)) {
+	      playerPos.x = playerPos.x + moveUpLeft.x;
+  	      playerPos.y = playerPos.y + moveUpLeft.y; 	  
+	    }
+	    else
+	    {
+	      playerMoveState = NOMOVE;
+	    }
+ 	  
+	  } break;
+	  
+	  case MOVEDOWNLEFT:
+          {
+ 	   //move down left	
+           if(IsKeyDown(KEY_A) && IsKeyDown(KEY_S)) {
+	      playerPos.x = playerPos.x + moveDownLeft.x;
+  	      playerPos.y = playerPos.y + moveDownLeft.y; 	  
+	    }
+	    else
+	    {
+	      playerMoveState = NOMOVE;
+	    }
+ 	  
+	  } break;
+
+	  case MOVEDOWNRIGHT:
+          {
+ 	   
+           //move down right	
+           if(IsKeyDown(KEY_D) && IsKeyDown(KEY_S)) {
+	      playerPos.x = playerPos.x + moveDownRight.x;
+	      playerPos.y = playerPos.y + moveDownRight.y;
+	    }
+	    else
+	    {
+	      playerMoveState = NOMOVE;
+	    }
+	
+	   } break;
 
 	  default: break;
 	 
 	}
         
-       
 	//print the player's current move state
 	printf("%s \n", getPlayerMoveStateString(playerMoveState));
 
