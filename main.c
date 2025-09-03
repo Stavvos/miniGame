@@ -1,24 +1,9 @@
 #include "raylib.h"
 #include "math.h"
 #include "stdio.h"
-
-
-//placed this up here to enable printing player state 
-typedef enum PlayerMoveState 
-{
-  MOVEFORWARD, 
-  MOVEBACKWARD, 
-  MOVELEFT, 
-  MOVERIGHT, 
-  MOVEUPRIGHT, 
-  MOVEUPLEFT,
-  MOVEDOWNRIGHT,
-  MOVEDOWNLEFT,
-  NOMOVE 
-    
-} PlayerMoveState;
-
-PlayerMoveState playerMoveState = NOMOVE; 
+#include "types.h"
+#include "controls.c"
+#include "movement.c"
 
 //used to print a meaningful player state rather than a number
 const char* getPlayerMoveStateString(PlayerMoveState state){
@@ -46,24 +31,27 @@ int main(void)
     SetTargetFPS(60);
     HideCursor();
     
-    Vector2 moveUp = {0, -1};
-    Vector2 moveDown = {0, 1};
-    Vector2 moveLeft = {-1, 0};
-    Vector2 moveRight = {1, 0};
-    
-    //these diagonal values are normalised to .707 to avoid diagonal movement being faster than cardinal movement.
-    //pythangorous theroum proves this with a^2 + b^2 = c^2, aka the hypotenuse c^2 is always bigger.
-    //.707 is just an approximate value, but it works well enough.
-    Vector2 moveUpRight = {0.707, -0.707};
-    Vector2 moveUpLeft = {-0.707, -0.707};
-    Vector2 moveDownRight = {0.707, 0.707};
-    Vector2 moveDownLeft = {-0.707, 0.707};
+    struct Player player;
+    player.moveUp = (Vector2){0, -1};
+    player.moveDown = (Vector2){0, 1};
+    player.moveLeft = (Vector2){-1, 0};
+    player.moveRight = (Vector2){1, 0};
 
-    //player variables
-    Vector2 playerPos = {300.f, 280.f};
+    //these values are set to 0.707 as an approximate value for handling diagonal movement.
+    //the key to these values being useful lies within the pythagoras theorum a^2 + b^2 = c^2
+    //think of the hypotenuse of a right sided triangle
+    //
+    //for example: if you add the up vector (1 movement up) and the left vector(1 movement left) for 
+    //up left movement the player's speed is too fast by approximately 40%. the value 0.707 handles this well. 
+    player.moveUpRight = (Vector2){0.707, -0.707};
+    player.moveUpLeft = (Vector2){-0.707, -0.707};
+    player.moveDownRight = (Vector2){0.707, 0.707};
+    player.moveDownLeft = (Vector2){-0.707, 0.707};
+    
+    player.playerPos = (Vector2){300.f, 280.f};
 
     //texture has to be declared after the InitWindow() call due to open gl
-    Texture2D player = LoadTexture("assets/sprite/player/ship.png");
+    Texture2D playerTexture = LoadTexture("assets/sprite/player/ship.png");
     Texture2D asteroid = LoadTexture("assets/sprite/world/asteroid.png");
     Texture2D asteroidMedium = LoadTexture("assets/sprite/world/asteroidMedium.png");
     Texture2D asteroidLarge = LoadTexture("assets/sprite/world/asteroidLarge.png");
@@ -71,12 +59,12 @@ int main(void)
     SetTargetFPS(60);
     HideCursor();
 
-    typedef enum GameScreen {MENU, GAMEPLAY} GameScreen;
+    //typedef enum GameScreen {MENU, GAMEPLAY} GameScreen;
     GameScreen currentScreen = MENU;
 
-    typedef enum GameState {PLAYING, EXIT} GameState;
+    //typedef enum GameState {PLAYING, EXIT} GameState;
     GameState currentState = PLAYING; 
-    
+   
     // Main game loop
     while (currentState != EXIT) 
     {
@@ -107,232 +95,9 @@ int main(void)
 	  default: break;
         }	
        
-	//Update player move state 
-        switch(playerMoveState)
-	{
-          case NOMOVE:
-          {
- 	    //move forward 	
-	    if(IsKeyDown(KEY_W)) {
-	      playerMoveState = MOVEFORWARD;
-	    }
-        
-	    //move down
-            if(IsKeyDown(KEY_S)) {
-	      playerMoveState = MOVEBACKWARD;
-	    }
-        
-           //move right	
-           if(IsKeyDown(KEY_D)) {
-	      playerMoveState = MOVERIGHT;
-	    }
-	
-	   //move left	
-           if(IsKeyDown(KEY_A)) {
-	      playerMoveState = MOVELEFT;
-	    }
-  
-	 } break;
-	 
-	  case MOVEFORWARD:
-          {
- 	    //move forward 	
-	    if(IsKeyDown(KEY_W)) {
-	      playerPos.x = playerPos.x + moveUp.x;
-	      playerPos.y = playerPos.y + moveUp.y; 
-	    }
-        
-	    //move down
-            if(IsKeyDown(KEY_S)) {
-	      playerPos.x = playerPos.x + moveDown.x;
-	      playerPos.y = playerPos.y + moveDown.y;
-	    }
-        
-           //move up right	
-           if(IsKeyDown(KEY_D) && IsKeyDown(KEY_W)) {
-	      playerMoveState = MOVEUPRIGHT;
-	    }
-	
-	   //move up left	
-           if(IsKeyDown(KEY_A)) {
-	      playerMoveState = MOVEUPLEFT;
-	    }
- 	  
-	   //no move 	
-           if(IsKeyUp(KEY_W)) {
-	      playerMoveState = NOMOVE;
-	    }
- 
-	  } break;
-
-	  case MOVEBACKWARD:
-          {
- 	    //move forward 	
-	    if(IsKeyDown(KEY_W)) {
-	      playerPos.x = playerPos.x + moveUp.x;
-	      playerPos.y = playerPos.y + moveUp.y;
-	    }
-        
-	    //move down
-            if(IsKeyDown(KEY_S)) {
-	      playerPos.x = playerPos.x + moveDown.x;
-	      playerPos.y = playerPos.y + moveDown.y;
-	    }
-            
-	    //move left
-            if(IsKeyDown(KEY_A)) {
-	      playerMoveState = MOVEDOWNLEFT;
-	    }
-
-	    //move down
-            if(IsKeyDown(KEY_D)) {
-	      playerMoveState = MOVEDOWNRIGHT;
-	    }
-
-	   //no move 	
-	    if (IsKeyUp(KEY_S)){  
-	      playerMoveState = NOMOVE;
-	    }
- 	   
-	  } break;
-
-
-	  case MOVELEFT:
-          {
- 	    //move forward 	
-	    if(IsKeyDown(KEY_W)) {
-	      //playerPos.x = playerPos.x + moveUp.x;
-	      //playerPos.y = playerPos.y + moveUp.y;
-	      playerMoveState = MOVEUPLEFT;
-	    }
-        
-	    //move down
-            if(IsKeyDown(KEY_S)) {
-	      //playerPos.x = playerPos.x + moveDown.x;
-	      //playerPos.y = playerPos.y + moveDown.y;
-	      playerMoveState = MOVEDOWNLEFT;
-	    }
-        
-           //move right	
-           if(IsKeyDown(KEY_D)) {
-	      playerPos.x = playerPos.x + moveRight.x;
-	      playerPos.y = playerPos.y + moveRight.y;
-	    }
-	
-	   //move left	
-           if(IsKeyDown(KEY_A)) {
-              playerPos.x = playerPos.x + moveLeft.x; 
-  	      playerPos.y = playerPos.y + moveLeft.y; 	  
-	    }
- 	  
-	   //no move 	
-           if(IsKeyUp(KEY_A)) {
-	      playerMoveState = NOMOVE;
-	    }
- 
-	  } break;
-
-	  case MOVERIGHT:
-          {
- 	    //move forward 	
-	    if(IsKeyDown(KEY_W)) {
-              //playerPos.x = playerPos.x + moveUp.x; 
-  	      //playerPos.y = playerPos.y + moveUp.y; 
-	      playerMoveState = MOVEUPRIGHT;
-	    }
-        
-	    //move down
-            if(IsKeyDown(KEY_S)) {
-	    //  playerPos.x = playerPos.x + moveDown.x; 
-  	    //  playerPos.y = playerPos.y + moveDown.y; 
-	      playerMoveState = MOVEDOWNRIGHT;
-	    }
-        
-           //move right	
-           if(IsKeyDown(KEY_D)) {
-              playerPos.x = playerPos.x + moveRight.x;
-  	      playerPos.y = playerPos.y + moveRight.y; 	  
-	    }
-	
-	   //move left	
-           if(IsKeyDown(KEY_A)) {
-	      playerPos.x = playerPos.x + moveLeft.x; 
-  	      playerPos.y = playerPos.y + moveLeft.y; 
-	      playerMoveState = MOVELEFT;
-	    }
- 	  
-	   //no move 	
-           if(IsKeyUp(KEY_D)) {
-	      playerMoveState = NOMOVE;
-	    }
- 
-	  } break;
-	  
-	  case MOVEUPRIGHT:
-          {
- 	    
-           //move  up right	
-           if(IsKeyDown(KEY_D) && IsKeyDown(KEY_W)) {
-              playerPos.x = playerPos.x + moveUpRight.x;
-  	      playerPos.y = playerPos.y + moveUpRight.y; 	  
-	    }
-	    else 
-	    { 
-	      playerMoveState = NOMOVE; 
-	    } 
-	  
-	   } break;
-
-	  case MOVEUPLEFT:
-          {
-	   
-	   //move up left	
-           if(IsKeyDown(KEY_A) && IsKeyDown(KEY_W)) {
-	      playerPos.x = playerPos.x + moveUpLeft.x;
-  	      playerPos.y = playerPos.y + moveUpLeft.y; 	  
-	    }
-	    else
-	    {
-	      playerMoveState = NOMOVE;
-	    }
- 	  
-	  } break;
-	  
-	  case MOVEDOWNLEFT:
-          {
- 	   //move down left	
-           if(IsKeyDown(KEY_A) && IsKeyDown(KEY_S)) {
-	      playerPos.x = playerPos.x + moveDownLeft.x;
-  	      playerPos.y = playerPos.y + moveDownLeft.y; 	  
-	    }
-	    else
-	    {
-	      playerMoveState = NOMOVE;
-	    }
- 	  
-	  } break;
-
-	  case MOVEDOWNRIGHT:
-          {
- 	   
-           //move down right	
-           if(IsKeyDown(KEY_D) && IsKeyDown(KEY_S)) {
-	      playerPos.x = playerPos.x + moveDownRight.x;
-	      playerPos.y = playerPos.y + moveDownRight.y;
-	    }
-	    else
-	    {
-	      playerMoveState = NOMOVE;
-	    }
-	
-	   } break;
-
-	  default: break;
-	 
-	}
-        
-	//print the player's current move state
-	printf("%s \n", getPlayerMoveStateString(playerMoveState));
+        controlsHandler(&player);        
+	printf("%s \n", getPlayerMoveStateString(player.playerMoveState));
+        movementHandler(&player);
 
 	//Draw
         BeginDrawing();
@@ -348,7 +113,7 @@ int main(void)
 	    case GAMEPLAY:
 	    {
 	      ClearBackground(RAYWHITE);
-	      DrawTexture(player, playerPos.x, playerPos.y, WHITE); 
+	      DrawTexture(playerTexture, player.playerPos.x, player.playerPos.y, WHITE); 
 	      DrawTexture(asteroid, 100.f, 100.f, WHITE);
 	      DrawTexture(asteroidMedium, 200.f, 600.f, WHITE);
 	      DrawTexture(asteroidLarge, 920.f, 510.f, WHITE);
