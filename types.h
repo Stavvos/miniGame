@@ -26,6 +26,16 @@ typedef enum GameState
   EXIT
 } GameState;
 
+struct Game
+{
+  GameState gameState;
+};
+
+struct Screen 
+{
+  GameScreen gameScreen; 
+};
+
 struct Player 
 {
   PlayerMoveState playerMoveState;

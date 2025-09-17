@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "types.h"
 #include "controls.c"
+#include "screens.c"
 #include "movement.c"
 
 //used to print a meaningful player state rather than a number
@@ -58,51 +59,26 @@ int main(void)
     
     SetTargetFPS(60);
     HideCursor();
-
-    //typedef enum GameScreen {MENU, GAMEPLAY} GameScreen;
-    GameScreen currentScreen = MENU;
-
-    //typedef enum GameState {PLAYING, EXIT} GameState;
-    GameState currentState = PLAYING; 
+    
+    struct Screen screen;
+    screen.gameScreen = MENU;
+    
+    struct Game game;
+    game.gameState = PLAYING;
    
     // Main game loop
-    while (currentState != EXIT) 
+    while (game.gameState != EXIT) 
     {
-        //Update game screen state 
-        switch(currentScreen)
-	{
-          case MENU:
-          {
-	    if(IsKeyPressed(KEY_ENTER))
-	    {
-	      currentScreen = GAMEPLAY;
-	    }
-
-	    if(IsKeyPressed(KEY_ESCAPE))
-	    {
-	      currentState = EXIT;
-	    }
-	  } break;
-
-	  case GAMEPLAY:
-	  {
-	    if(IsKeyPressed(KEY_ESCAPE))
-	    {
-	      currentScreen = MENU;
-	    }
-	  } break;
-	  
-	  default: break;
-        }	
-       
+	screenHandler(&screen, &game); 
         controlsHandler(&player);        
-	printf("%s \n", getPlayerMoveStateString(player.playerMoveState));
         movementHandler(&player);
+	
+	printf("%s \n", getPlayerMoveStateString(player.playerMoveState));
 
 	//Draw
         BeginDrawing();
 	  
-	  switch(currentScreen)
+	  switch(screen.gameScreen)
 	  {
 	    case MENU:
 	    {

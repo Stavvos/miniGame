@@ -46,5 +46,7 @@ void controlsHandler(struct Player* player){
    if (IsKeyUp(KEY_S) && IsKeyUp(KEY_W) && IsKeyUp(KEY_A) && IsKeyUp(KEY_D))
    {
      player -> playerMoveState = NOMOVE;
-   }   
+   }
+   
 }
+
