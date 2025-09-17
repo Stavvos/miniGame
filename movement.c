@@ -1,10 +1,5 @@
 #include "types.h"
 
-void noMove(struct Player* player){
-
-
-}
-
 void movingForward(struct Player* player){
   player->playerPos.x = player->playerPos.x + player->moveUp.x;
   player->playerPos.y = player->playerPos.y + player->moveUp.y; 
@@ -53,7 +48,7 @@ switch(player -> playerMoveState)
  {
   case NOMOVE:
   {
-    noMove(player); 
+
   } break;
 
   case MOVEFORWARD:
