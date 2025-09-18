@@ -38,6 +38,7 @@ struct Screen
 
 struct Player 
 {
+  Texture2D playerTexture;
   PlayerMoveState playerMoveState;
   Vector2 playerPos;
   Vector2 moveUp;
@@ -48,6 +49,13 @@ struct Player
   Vector2 moveUpLeft;
   Vector2 moveDownRight;
   Vector2 moveDownLeft;
+};
+
+struct Enemy
+{
+  Texture2D asteroidSmall;
+  Texture2D asteroidMedium;
+  Texture2D asteroidLarge;
 };
 
 #endif
