@@ -87,7 +87,7 @@ int main(void)
     //state handling
     screenHandler(&screen, &game); 
     controlsHandler(&player);        
-    movementHandler(&player);
+    movementHandler(&player, &screen);
     updatePlayerHitBox( &player);
     printf("%s \n", getPlayerMoveStateString(player.playerMoveState));
     

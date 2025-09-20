@@ -1,52 +1,85 @@
 #include "types.h"
 
-void movingForward(struct Player* player){
-  player->playerPos.x = player->playerPos.x + player->moveUp.x;
-  player->playerPos.y = player->playerPos.y + player->moveUp.y; 
+void movingForward(struct Player* player, struct Screen* screen){  
+  
+  if(screen->gameScreen == GAMEPLAY)
+  {
+    player->playerPos.x = player->playerPos.x + player->moveUp.x;
+    player->playerPos.y = player->playerPos.y + player->moveUp.y; 
+  };
 }
 
-void movingBackward(struct Player* player){
-  player->playerPos.x = player->playerPos.x + player->moveDown.x;
-  player->playerPos.y = player->playerPos.y + player->moveDown.y;
+void movingBackward(struct Player* player, struct Screen* screen){
+  
+  if(screen->gameScreen == GAMEPLAY)
+  {
+    player->playerPos.x = player->playerPos.x + player->moveDown.x;
+    player->playerPos.y = player->playerPos.y + player->moveDown.y;
+  };
 }
 
-void movingLeft(struct Player* player){
-  player->playerPos.x = player->playerPos.x + player->moveLeft.x; 
-  player->playerPos.y = player->playerPos.y + player->moveLeft.y;   
+void movingLeft(struct Player* player, struct Screen* screen){
+  
+  if(screen->gameScreen == GAMEPLAY)
+  {
+    player->playerPos.x = player->playerPos.x + player->moveLeft.x; 
+    player->playerPos.y = player->playerPos.y + player->moveLeft.y;   
+  };
 }
 
-void movingRight(struct Player* player){
-  player->playerPos.x = player->playerPos.x + player->moveRight.x;
-  player->playerPos.y = player->playerPos.y + player->moveRight.y;
+void movingRight(struct Player* player, struct Screen* screen){
+  
+  if(screen->gameScreen == GAMEPLAY)
+  {
+    player->playerPos.x = player->playerPos.x + player->moveRight.x;
+    player->playerPos.y = player->playerPos.y + player->moveRight.y;
+  };
 }
 
-void movingUpRight(struct Player* player){
-  player->playerPos.x = player->playerPos.x + player->moveUpRight.x;
-  player->playerPos.y = player->playerPos.y + player->moveUpRight.y;  
+void movingUpRight(struct Player* player, struct Screen* screen){
+  
+  if(screen->gameScreen == GAMEPLAY)
+  {
+    player->playerPos.x = player->playerPos.x + player->moveUpRight.x;
+    player->playerPos.y = player->playerPos.y + player->moveUpRight.y;  
+  };
 }
 
-void movingUpLeft(struct Player* player){
-  player->playerPos.x = player->playerPos.x + player->moveUpLeft.x;
-  player->playerPos.y = player->playerPos.y + player->moveUpLeft.y;  
+void movingUpLeft(struct Player* player, struct Screen* screen){
+  
+  if(screen->gameScreen == GAMEPLAY)
+  {
+    player->playerPos.x = player->playerPos.x + player->moveUpLeft.x;
+    player->playerPos.y = player->playerPos.y + player->moveUpLeft.y;  
+  };
 }
 
-void movingDownRight(struct Player* player){
-  player->playerPos.x = player->playerPos.x + player->moveDownRight.x;
-  player->playerPos.y = player->playerPos.y + player->moveDownRight.y;
+void movingDownRight(struct Player* player, struct Screen* screen){
+
+  if(screen->gameScreen == GAMEPLAY)
+  {
+    player->playerPos.x = player->playerPos.x + player->moveDownRight.x;
+    player->playerPos.y = player->playerPos.y + player->moveDownRight.y;
+  };
 }
 
-void movingDownLeft(struct Player* player){
-  player->playerPos.x = player->playerPos.x + player->moveDownLeft.x;
-  player->playerPos.y = player->playerPos.y + player->moveDownLeft.y;
+void movingDownLeft(struct Player* player, struct Screen* screen){
+
+  if(screen->gameScreen == GAMEPLAY)
+  {
+    player->playerPos.x = player->playerPos.x + player->moveDownLeft.x;
+    player->playerPos.y = player->playerPos.y + player->moveDownLeft.y;
+  };
 }
 
 void updatePlayerHitBox(struct Player* player)
 {
+  
   player->playerHitBox.x = player->playerPos.x;
   player->playerHitBox.y = player->playerPos.y;
 }
 
-void movementHandler( struct Player* player) {
+void movementHandler(struct Player* player, struct Screen* screen) {
 
 //Update player move state
 switch(player -> playerMoveState)
@@ -58,42 +91,42 @@ switch(player -> playerMoveState)
 
   case MOVEFORWARD:
   {
-    movingForward(player);
+    movingForward(player, screen);
   } break;
 
   case MOVEBACKWARD:
   {
-    movingBackward(player);
+    movingBackward(player, screen);
   } break;
 
   case MOVELEFT:
   {
-    movingLeft(player); 
+    movingLeft(player, screen); 
   } break;
 
   case MOVERIGHT:
   {
-    movingRight(player); 
+    movingRight(player, screen); 
   } break;
 
   case MOVEUPRIGHT:
   {
-    movingUpRight(player);
+    movingUpRight(player, screen);
   } break;
 
   case MOVEUPLEFT:
   {
-    movingUpLeft(player);
+    movingUpLeft(player, screen);
   } break;
 
   case MOVEDOWNLEFT:
   {
-    movingDownLeft(player);
+    movingDownLeft(player, screen);
   } break;
   
   case MOVEDOWNRIGHT:
   {
-    movingDownRight(player);
+    movingDownRight(player, screen);
   } break;
 
   default: break;
