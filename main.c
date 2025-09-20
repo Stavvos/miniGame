@@ -82,7 +82,7 @@ int main(void)
   game.gameState = PLAYING;
 
   // Main game loop
-  while (game.gameState != EXIT) 
+  while (game.gameState == PLAYING) 
   {
     //state handling
     screenHandler(&screen, &game); 
