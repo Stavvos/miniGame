@@ -39,6 +39,7 @@ struct Screen
 struct Player 
 {
   Texture2D playerTexture;
+  Rectangle playerHitBox;
   PlayerMoveState playerMoveState;
   Vector2 playerPos;
   Vector2 moveUp;

@@ -18,6 +18,11 @@ void render(struct Screen* screen, struct Player* player, struct Enemy* enemy)
     {
       ClearBackground(RAYWHITE);
       DrawTexture(player->playerTexture, player->playerPos.x, player->playerPos.y, WHITE);
+      DrawRectangleLines(player->playerHitBox.x, 
+		         player->playerHitBox.y, 
+			 player->playerHitBox.width, 
+			 player->playerHitBox.height, 
+			 BLACK);
       DrawTexture(enemy->asteroidSmall, 100.f, 100.f, WHITE);
       DrawTexture(enemy->asteroidMedium, 200.f, 600.f, WHITE);
       DrawTexture(enemy->asteroidLarge, 920.f, 510.f, WHITE);

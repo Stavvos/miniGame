@@ -44,7 +44,12 @@ void initPlayer(struct Player* player)
   player->moveDownLeft = (Vector2){-0.707, 0.707};
     
   player->playerPos = (Vector2){300.f, 280.f};
-    
+  
+  player->playerHitBox.x = player->playerPos.x;
+  player->playerHitBox.y = player->playerPos.y;
+  player->playerHitBox.width = 8;
+  player->playerHitBox.height = 9;
+
   player->playerTexture = LoadTexture("assets/sprite/player/ship.png");
 }
 
@@ -75,7 +80,7 @@ int main(void)
     
   struct Game game;
   game.gameState = PLAYING;
- 
+
   // Main game loop
   while (game.gameState != EXIT) 
   {
@@ -83,6 +88,7 @@ int main(void)
     screenHandler(&screen, &game); 
     controlsHandler(&player);        
     movementHandler(&player);
+    updatePlayerHitBox( &player);
     printf("%s \n", getPlayerMoveStateString(player.playerMoveState));
     
     //Draw

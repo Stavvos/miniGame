@@ -8,7 +8,6 @@ void movingForward(struct Player* player){
 void movingBackward(struct Player* player){
   player->playerPos.x = player->playerPos.x + player->moveDown.x;
   player->playerPos.y = player->playerPos.y + player->moveDown.y;
-
 }
 
 void movingLeft(struct Player* player){
@@ -39,6 +38,12 @@ void movingDownRight(struct Player* player){
 void movingDownLeft(struct Player* player){
   player->playerPos.x = player->playerPos.x + player->moveDownLeft.x;
   player->playerPos.y = player->playerPos.y + player->moveDownLeft.y;
+}
+
+void updatePlayerHitBox(struct Player* player)
+{
+  player->playerHitBox.x = player->playerPos.x;
+  player->playerHitBox.y = player->playerPos.y;
 }
 
 void movementHandler( struct Player* player) {
