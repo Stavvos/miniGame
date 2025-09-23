@@ -52,11 +52,25 @@ struct Player
   Vector2 moveDownLeft;
 };
 
-struct Enemy
+struct SmallAsteroid
 {
-  Texture2D asteroidSmall;
-  Texture2D asteroidMedium;
-  Texture2D asteroidLarge;
+  Rectangle hitBox;
+  Texture2D texture;
+  Vector2 position;
+};
+
+struct MediumAsteroid
+{
+  Rectangle hitBox;
+  Texture2D texture;
+  Vector2 position;
+};
+
+struct LargeAsteroid
+{
+  Rectangle hitBox;
+  Texture2D texture;
+  Vector2 position;
 };
 
 #endif
