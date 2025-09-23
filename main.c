@@ -6,6 +6,7 @@
 #include "screens.c"
 #include "movement.c"
 #include "render.c"
+#include "collision.c"
 
 //used to print a meaningful player state rather than a number
 const char* getPlayerMoveStateString(PlayerMoveState state){
@@ -24,9 +25,18 @@ const char* getPlayerMoveStateString(PlayerMoveState state){
   }	
 }	
 
+//used to print a meaningful player collision state rather than a number
+const char* getPlayerCollisionStateString(CollisionState state){
+  switch (state) 
+  {
+    case NOTHITTING: return "NOTHITTING";
+    case HITTING: return "HITTING";
+    default: return "NULLSTATE";
+  }	
+}	
+
 void initPlayer(struct Player* player)
 {
-  //struct Player player;
   player->moveUp = (Vector2){0, -1};
   player->moveDown = (Vector2){0, 1};
   player->moveLeft = (Vector2){-1, 0};
@@ -51,9 +61,11 @@ void initPlayer(struct Player* player)
   player->playerHitBox.height = 9;
 
   player->playerTexture = LoadTexture("assets/sprite/player/ship.png");
+
+  player->collisionState = NOTHITTING;
 }
 
-void initEnemy(struct SmallAsteroid* smallAsteroid, struct MediumAsteroid* mediumAsteroid, struct LargeAsteroid* largeAsteroid)
+void initAsteroids(struct SmallAsteroid* smallAsteroid, struct MediumAsteroid* mediumAsteroid, struct LargeAsteroid* largeAsteroid)
 {
   smallAsteroid->texture = LoadTexture("assets/sprite/world/asteroid.png");
   smallAsteroid->position = (Vector2){100.f, 100.f};
@@ -69,7 +81,6 @@ void initEnemy(struct SmallAsteroid* smallAsteroid, struct MediumAsteroid* mediu
   mediumAsteroid->hitBox.x = mediumAsteroid->position.x;
   mediumAsteroid->hitBox.y = mediumAsteroid->position.y;
   
-
   largeAsteroid->texture = LoadTexture("assets/sprite/world/asteroidLarge.png");
   largeAsteroid->position = (Vector2){920.f, 510.f};
   largeAsteroid->hitBox.width = 65;
@@ -93,7 +104,7 @@ int main(void)
   struct SmallAsteroid smallAsteroid;
   struct MediumAsteroid mediumAsteroid;
   struct LargeAsteroid largeAsteroid;
-  initEnemy(&smallAsteroid, &mediumAsteroid, &largeAsteroid);
+  initAsteroids(&smallAsteroid, &mediumAsteroid, &largeAsteroid);
 
   struct Screen screen;
   screen.gameScreen = MENU;
@@ -109,23 +120,11 @@ int main(void)
     controlsHandler(&player);        
     movementHandler(&player, &screen);
     updatePlayerHitBox( &player);
-
-    if (CheckCollisionRecs(player.playerHitBox, smallAsteroid.hitBox) == true)
-    {
-      printf("HITTING SMALL ASTEROID:  ");
-    }
+    collisionHandler(&player, &smallAsteroid, &mediumAsteroid, &largeAsteroid);
     
-    if (CheckCollisionRecs(player.playerHitBox, mediumAsteroid.hitBox) == true)
-    {
-      printf("HITTING MEDIUM ASTEROID:  ");
-    }
-    
-    if (CheckCollisionRecs(player.playerHitBox, largeAsteroid.hitBox) == true)
-    {
-      printf("HITTING LARGE ASTEROID:  ");
-    }
-
-    printf("%s \n", getPlayerMoveStateString(player.playerMoveState));
+    //print states to console
+    printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
+		                                                    getPlayerCollisionStateString(player.collisionState));
     
     //Draw
     BeginDrawing();

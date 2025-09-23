@@ -26,6 +26,12 @@ typedef enum GameState
   EXIT
 } GameState;
 
+typedef enum CollisionState
+{
+  NOTHITTING,
+  HITTING
+} CollisionState;
+
 struct Game
 {
   GameState gameState;
@@ -50,6 +56,7 @@ struct Player
   Vector2 moveUpLeft;
   Vector2 moveDownRight;
   Vector2 moveDownLeft;
+  CollisionState collisionState;
 };
 
 struct SmallAsteroid
