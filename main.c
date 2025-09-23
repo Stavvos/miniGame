@@ -7,33 +7,7 @@
 #include "movement.c"
 #include "render.c"
 #include "collision.c"
-
-//used to print a meaningful player state rather than a number
-const char* getPlayerMoveStateString(PlayerMoveState state){
-  switch (state) 
-  {
-    case MOVEFORWARD: return "MOVEFORWARD";
-    case MOVEBACKWARD: return "MOVEBACKWARD";
-    case MOVELEFT: return "MOVELEFT";
-    case MOVERIGHT: return "MOVERIGHT";
-    case NOMOVE: return "NOMOVE";
-    case MOVEUPRIGHT: return "MOVEUPRIGHT";
-    case MOVEUPLEFT: return "MOVEUPLEFT";
-    case MOVEDOWNRIGHT: return "MOVEDOWNRIGHT";
-    case MOVEDOWNLEFT: return "MOVEDOWNLEFT";
-    default: return "NULLSTATE";
-  }	
-}	
-
-//used to print a meaningful player collision state rather than a number
-const char* getPlayerCollisionStateString(CollisionState state){
-  switch (state) 
-  {
-    case NOTHITTING: return "NOTHITTING";
-    case HITTING: return "HITTING";
-    default: return "NULLSTATE";
-  }	
-}	
+#include "testing.c"
 
 void initPlayer(struct Player* player)
 {
@@ -124,8 +98,7 @@ int main(void)
     
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
-		                                                    getPlayerCollisionStateString(player.collisionState));
-    
+		                                  getPlayerCollisionStateString(player.collisionState));
     //Draw
     BeginDrawing();
       render(&screen, &player, &smallAsteroid, &mediumAsteroid, &largeAsteroid);
