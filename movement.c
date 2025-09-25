@@ -2,11 +2,16 @@
 
 void movingForward(struct Player* player, struct Screen* screen){  
   
-  if(screen->gameScreen == GAMEPLAY)
+  if(screen->gameScreen == GAMEPLAY && player->collisionState == NOTHITTING)
   {
     player->playerPos.x = player->playerPos.x + player->moveUp.x;
     player->playerPos.y = player->playerPos.y + player->moveUp.y; 
   };
+  /*else if (screen->gameScreen == GAMEPLAY && player->collisionState == HITTING)
+  {
+    player->playerPos.x = player->playerPos.x + player->knockBack.x;
+    player->playerPos.y = player->playerPos.y + player->knockBack.y;
+  };*/
 }
 
 void movingBackward(struct Player* player, struct Screen* screen){

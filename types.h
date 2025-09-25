@@ -56,6 +56,14 @@ struct Player
   Vector2 moveUpLeft;
   Vector2 moveDownRight;
   Vector2 moveDownLeft;
+  Vector2 knockBack;
+  Vector2 knockUp;
+  Vector2 knockLeft;
+  Vector2 knockRight;
+  Vector2 knockDownLeft;
+  Vector2 knockDownRight;
+  Vector2 knockUpLeft;
+  Vector2 knockUpRight;
   CollisionState collisionState;
 };
 
