@@ -1,7 +1,7 @@
 #include "types.h"
 #include "math.h"
 
-void moveAsteroid(struct SmallAsteroid* smallAsteroid, struct Player* player, struct Screen* screen)
+void moveAsteroid(struct SmallAsteroid* smallAsteroid, struct SmallAsteroid smallAsteroids[], struct Player* player, struct Screen* screen)
 {
   
   if (screen->gameScreen == GAMEPLAY)
@@ -21,4 +21,26 @@ void moveAsteroid(struct SmallAsteroid* smallAsteroid, struct Player* player, st
     smallAsteroid->hitBox.x = smallAsteroid->position.x;
     smallAsteroid->hitBox.y = smallAsteroid->position.y;
   }
+  
+  for (int i = 0; i < 4; i++)
+  {
+    if (screen->gameScreen == GAMEPLAY)
+      {
+        smallAsteroids[i].direction.x = player->playerPos.x - smallAsteroids[i].position.x;
+        smallAsteroids[i].direction.y = player->playerPos.y - smallAsteroids[i].position.y;
+
+        smallAsteroids[i].hypotenuse = sqrt(smallAsteroids[i].direction.x * smallAsteroids[i].direction.x + 
+		                            smallAsteroids[i].direction.y * smallAsteroids[i].direction.y);
+    
+        smallAsteroids[i].direction.x /= smallAsteroids[i].hypotenuse;
+        smallAsteroids[i].direction.y /= smallAsteroids[i].hypotenuse;
+
+        smallAsteroids[i].position.x += smallAsteroids[i].direction.x;
+        smallAsteroids[i].position.y += smallAsteroids[i].direction.y;
+
+        smallAsteroids[i].hitBox.x = smallAsteroids[i].position.x;
+        smallAsteroids[i].hitBox.y = smallAsteroids[i].position.y;
+      }
+  }
+
 }

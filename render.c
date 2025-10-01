@@ -2,7 +2,7 @@
 #include "types.h"
 
 
-void render(struct Screen* screen, struct Player* player, struct SmallAsteroid* smallAsteroid,  struct MediumAsteroid* mediumAsteroid,  struct LargeAsteroid* largeAsteroid)
+void render(struct Screen* screen, struct Player* player, struct SmallAsteroid* smallAsteroid,  struct MediumAsteroid* mediumAsteroid,  struct LargeAsteroid* largeAsteroid, struct SmallAsteroid smallAsteroids[])
 {
 
   switch(screen->gameScreen)
@@ -23,7 +23,17 @@ void render(struct Screen* screen, struct Player* player, struct SmallAsteroid* 
 			 player->playerHitBox.width, 
 			 player->playerHitBox.height, 
 			 BLACK);
-      
+
+      for(int i = 0; i < 4; i++)
+      {
+        DrawTexture(smallAsteroids[i].texture, smallAsteroids[i].position.x, smallAsteroids[i].position.y, WHITE);
+        DrawRectangleLines(smallAsteroids[i].position.x,
+		           smallAsteroids[i].position.y, 
+			   smallAsteroids[i].hitBox.width, 
+			   smallAsteroids[i].hitBox.height, 
+			   BLACK);
+      } 
+
       DrawTexture(smallAsteroid->texture, smallAsteroid->position.x, smallAsteroid->position.y, WHITE);
       DrawRectangleLines(smallAsteroid->position.x,
 		         smallAsteroid->position.y, 
@@ -31,6 +41,7 @@ void render(struct Screen* screen, struct Player* player, struct SmallAsteroid* 
 			 smallAsteroid->hitBox.height, 
 			 BLACK);
       
+
       DrawTexture(mediumAsteroid->texture, mediumAsteroid->position.x, mediumAsteroid->position.y, WHITE);
       DrawRectangleLines(mediumAsteroid->position.x,
 		         mediumAsteroid->position.y, 

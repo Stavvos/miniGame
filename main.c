@@ -52,7 +52,7 @@ void initPlayer(struct Player* player)
   player->collisionState = NOTHITTING;
 }
 
-void initAsteroids(struct SmallAsteroid* smallAsteroid, struct MediumAsteroid* mediumAsteroid, struct LargeAsteroid* largeAsteroid)
+void initAsteroids(struct SmallAsteroid* smallAsteroid, struct MediumAsteroid* mediumAsteroid, struct LargeAsteroid* largeAsteroid, struct SmallAsteroid smallAsteroids[])
 {
   smallAsteroid->texture = LoadTexture("assets/sprite/world/asteroid.png");
   smallAsteroid->position = (Vector2){100.f, 100.f};
@@ -61,6 +61,22 @@ void initAsteroids(struct SmallAsteroid* smallAsteroid, struct MediumAsteroid* m
   smallAsteroid->hitBox.x = smallAsteroid->position.x;
   smallAsteroid->hitBox.y = smallAsteroid->position.y;
   
+  int offsetX = 20;
+  int offsetY = 50;
+
+  for(int i = 0; i < 4; i++)
+  {
+    smallAsteroids[i].texture = LoadTexture("assets/sprite/world/asteroid.png");
+    smallAsteroids[i].position = (Vector2){100.f + offsetX, 100.f + offsetY};
+    smallAsteroids[i].hitBox.width = 16;
+    smallAsteroids[i].hitBox.height = 16;
+    smallAsteroids[i].hitBox.x = smallAsteroid->position.x;
+    smallAsteroids[i].hitBox.y = smallAsteroid->position.y;
+
+    offsetX += 20;
+    offsetY += 50;
+  } 
+
   mediumAsteroid->texture = LoadTexture("assets/sprite/world/asteroidMedium.png");
   mediumAsteroid->position = (Vector2){200.f, 600.f};
   mediumAsteroid->hitBox.width = 32;
@@ -91,7 +107,8 @@ int main(void)
   struct SmallAsteroid smallAsteroid;
   struct MediumAsteroid mediumAsteroid;
   struct LargeAsteroid largeAsteroid;
-  initAsteroids(&smallAsteroid, &mediumAsteroid, &largeAsteroid);
+  struct SmallAsteroid smallAsteroids[4];
+  initAsteroids(&smallAsteroid, &mediumAsteroid, &largeAsteroid, smallAsteroids);
 
   struct Screen screen;
   screen.gameScreen = MENU;
@@ -110,7 +127,7 @@ int main(void)
     movementHandler(&player, &screen);
     updatePlayerHitBox( &player);
     
-    moveAsteroid(&smallAsteroid, &player, &screen);
+    moveAsteroid(&smallAsteroid, smallAsteroids, &player, &screen);
     
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
@@ -120,7 +137,7 @@ int main(void)
 
     //Draw
     BeginDrawing();
-      render(&screen, &player, &smallAsteroid, &mediumAsteroid, &largeAsteroid);
+      render(&screen, &player, &smallAsteroid, &mediumAsteroid, &largeAsteroid, smallAsteroids);
     EndDrawing();
   }
 
