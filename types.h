@@ -72,6 +72,8 @@ struct SmallAsteroid
   Rectangle hitBox;
   Texture2D texture;
   Vector2 position;
+  Vector2 direction;
+  float hypotenuse;
 };
 
 struct MediumAsteroid
@@ -79,6 +81,8 @@ struct MediumAsteroid
   Rectangle hitBox;
   Texture2D texture;
   Vector2 position;
+  Vector2 direction;
+  float hypotenuse;
 };
 
 struct LargeAsteroid
@@ -86,6 +90,8 @@ struct LargeAsteroid
   Rectangle hitBox;
   Texture2D texture;
   Vector2 position;
+  Vector2 direction;
+  float hypotenuse;
 };
 
 #endif

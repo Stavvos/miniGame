@@ -8,6 +8,7 @@
 #include "render.c"
 #include "collision.c"
 #include "testing.c"
+#include "asteroidMovement.c"
 
 void initPlayer(struct Player* player)
 {
@@ -108,10 +109,15 @@ int main(void)
     knockBack(&player, &screen);
     movementHandler(&player, &screen);
     updatePlayerHitBox( &player);
-
+    
+    moveAsteroid(&smallAsteroid, &player, &screen);
+    
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
 		                                  getPlayerCollisionStateString(player.collisionState));
+    
+    DrawFPS(0,0);
+
     //Draw
     BeginDrawing();
       render(&screen, &player, &smallAsteroid, &mediumAsteroid, &largeAsteroid);
