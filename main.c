@@ -110,7 +110,7 @@ void initAsteroids(struct SmallAsteroid smallAsteroids[], struct MediumAsteroid 
 
 void initGame(struct Game* game)
 {
-  game->SMALLASTEROIDCOUNT = 60;
+  game->SMALLASTEROIDCOUNT = 600;
   game->MEDIUMASTEROIDCOUNT = 4;
   game->LARGEASTEROIDCOUNT = 2;
   game->gameState = PLAYING;
@@ -118,7 +118,6 @@ void initGame(struct Game* game)
 
 int main(void)
 {
-  //window setup
   const int screenWidth = GetScreenWidth();
   const int screenHeight = GetScreenHeight();	
   InitWindow(screenWidth, screenHeight, "game");
@@ -148,20 +147,22 @@ int main(void)
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
     moveAsteroids(smallAsteroids, mediumAsteroids, largeAsteroids, &player, &screen, &game);
-    collisionHandler(&player, &game, smallAsteroids);
+    collisionHandler(&player, &game, smallAsteroids, mediumAsteroids, largeAsteroids);
     
     //knockBack(&player, &screen);
-    //collisionCleanup(&player); 
     
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
-		                                  getPlayerCollisionStateString(player.collisionState));
-
+ 		                                  getPlayerCollisionStateString(player.collisionState));
+    
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
       render(&screen, &player, &game, smallAsteroids, mediumAsteroids, largeAsteroids);
     EndDrawing();
+
+    //reset states
+    collisionCleanup(&player);
   }
 
   // De-Initialization

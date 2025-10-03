@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "types.h"
 
-void collisionHandler(struct Player* player, struct Game* game, struct SmallAsteroid smallAsteroids[])
+void collisionHandler(struct Player* player, struct Game* game, struct SmallAsteroid smallAsteroids[], struct MediumAsteroid mediumAsteroids[], struct LargeAsteroid largeAsteroids[])
 {
   
   for (int i = 0; i < game->SMALLASTEROIDCOUNT; i++)
@@ -12,10 +12,22 @@ void collisionHandler(struct Player* player, struct Game* game, struct SmallAste
     }
   }
   
- /*else
-  {
-    player->collisionState = NOTHITTING;
-  }*/
+  for (int i = 0; i < game->MEDIUMASTEROIDCOUNT; i++)
+  {	  
+    if (CheckCollisionRecs(player->playerHitBox, mediumAsteroids[i].hitBox))
+    {
+      player->collisionState = HITTING;
+    }
+  }
+
+  for (int i = 0; i < game->LARGEASTEROIDCOUNT; i++)
+  {	  
+    if (CheckCollisionRecs(player->playerHitBox, largeAsteroids[i].hitBox))
+    {
+      player->collisionState = HITTING;
+    }
+  }
+
 }
 
 
