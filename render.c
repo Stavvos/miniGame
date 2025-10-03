@@ -2,7 +2,7 @@
 #include "types.h"
 
 
-void render(struct Screen* screen, struct Player* player, struct SmallAsteroid* smallAsteroid,  struct MediumAsteroid* mediumAsteroid,  struct LargeAsteroid* largeAsteroid, struct SmallAsteroid smallAsteroids[])
+void render(struct Screen* screen, struct Player* player, struct Game* game, struct SmallAsteroid smallAsteroids[], struct MediumAsteroid mediumAsteroids[], struct LargeAsteroid largeAsteroids[])
 {
 
   switch(screen->gameScreen)
@@ -24,7 +24,7 @@ void render(struct Screen* screen, struct Player* player, struct SmallAsteroid* 
 			 player->playerHitBox.height, 
 			 BLACK);
 
-      for(int i = 0; i < 4; i++)
+      for(int i = 0; i < game->SMALLASTEROIDCOUNT; i++)
       {
         DrawTexture(smallAsteroids[i].texture, smallAsteroids[i].position.x, smallAsteroids[i].position.y, WHITE);
         DrawRectangleLines(smallAsteroids[i].position.x,
@@ -33,31 +33,27 @@ void render(struct Screen* screen, struct Player* player, struct SmallAsteroid* 
 			   smallAsteroids[i].hitBox.height, 
 			   BLACK);
       } 
-
-      DrawTexture(smallAsteroid->texture, smallAsteroid->position.x, smallAsteroid->position.y, WHITE);
-      DrawRectangleLines(smallAsteroid->position.x,
-		         smallAsteroid->position.y, 
-			 smallAsteroid->hitBox.width, 
-			 smallAsteroid->hitBox.height, 
-			 BLACK);
       
-
-      DrawTexture(mediumAsteroid->texture, mediumAsteroid->position.x, mediumAsteroid->position.y, WHITE);
-      DrawRectangleLines(mediumAsteroid->position.x,
-		         mediumAsteroid->position.y, 
-			 mediumAsteroid->hitBox.width, 
-			 mediumAsteroid->hitBox.height, 
-			 BLACK);
+      for (int i = 0; i < game->MEDIUMASTEROIDCOUNT; i++)
+      {
+        DrawTexture(mediumAsteroids[i].texture, mediumAsteroids[i].position.x, mediumAsteroids[i].position.y, WHITE);
+        DrawRectangleLines(mediumAsteroids[i].position.x,
+		           mediumAsteroids[i].position.y, 
+			   mediumAsteroids[i].hitBox.width, 
+			   mediumAsteroids[i].hitBox.height, 
+			   BLACK);
+      }
       
-      DrawTexture(largeAsteroid->texture, largeAsteroid->position.x, largeAsteroid->position.y, WHITE);
-      DrawRectangleLines(largeAsteroid->position.x,
-		         largeAsteroid->position.y, 
-			 largeAsteroid->hitBox.width, 
-			 largeAsteroid->hitBox.height, 
-			 BLACK);
-
-     // DrawTexture(enemy->asteroidMedium, 200.f, 600.f, WHITE);
-     // DrawTexture(enemy->asteroidLarge, 920.f, 510.f, WHITE);
+      for (int i = 0; i < game->LARGEASTEROIDCOUNT; i++)
+      {
+        DrawTexture(largeAsteroids[i].texture, largeAsteroids[i].position.x, largeAsteroids[i].position.y, WHITE);
+        DrawRectangleLines(largeAsteroids[i].position.x,
+		           largeAsteroids[i].position.y, 
+			   largeAsteroids[i].hitBox.width, 
+			   largeAsteroids[i].hitBox.height, 
+			   BLACK);
+      }
+      
     } break;
 
       default: break;

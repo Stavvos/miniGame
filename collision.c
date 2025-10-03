@@ -1,24 +1,27 @@
 #include "raylib.h"
 #include "types.h"
 
-void collisionHandler(struct Player* player, struct SmallAsteroid* smallAsteroid, struct MediumAsteroid* mediumAsteroid, struct LargeAsteroid* largeAsteroid)
+void collisionHandler(struct Player* player, struct Game* game, struct SmallAsteroid smallAsteroids[])
 {
-  if (CheckCollisionRecs(player->playerHitBox, smallAsteroid->hitBox))
-  {
-    player->collisionState = HITTING;
+  
+  for (int i = 0; i < game->SMALLASTEROIDCOUNT; i++)
+  {	  
+    if (CheckCollisionRecs(player->playerHitBox, smallAsteroids[i].hitBox))
+    {
+      player->collisionState = HITTING;
+    }
   }
-  else if (CheckCollisionRecs(player->playerHitBox, mediumAsteroid->hitBox))
-  {
-    player->collisionState = HITTING;
-  }
-  else if (CheckCollisionRecs(player->playerHitBox, largeAsteroid->hitBox))
-  {
-    player->collisionState = HITTING;
-  }
-  else
+  
+ /*else
   {
     player->collisionState = NOTHITTING;
-  }
+  }*/
+}
+
+
+void collisionCleanup(struct Player* player)
+{
+  player->collisionState = NOTHITTING;
 }
 
 void knockBack(struct Player* player, struct Screen* screen)

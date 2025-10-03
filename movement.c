@@ -79,7 +79,7 @@ void updatePlayerHitBox(struct Player* player)
   player->playerHitBox.y = player->playerPos.y;
 }
 
-void movementHandler(struct Player* player, struct Screen* screen) {
+void playerMovementHandler(struct Player* player, struct Screen* screen) {
 
 //Update player move state
 switch(player -> playerMoveState)

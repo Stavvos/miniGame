@@ -52,44 +52,68 @@ void initPlayer(struct Player* player)
   player->collisionState = NOTHITTING;
 }
 
-void initAsteroids(struct SmallAsteroid* smallAsteroid, struct MediumAsteroid* mediumAsteroid, struct LargeAsteroid* largeAsteroid, struct SmallAsteroid smallAsteroids[])
+void initAsteroids(struct SmallAsteroid smallAsteroids[], struct MediumAsteroid mediumAsteroids[], struct LargeAsteroid largeAsteroids[], struct Game* game)
 {
-  smallAsteroid->texture = LoadTexture("assets/sprite/world/asteroid.png");
-  smallAsteroid->position = (Vector2){100.f, 100.f};
-  smallAsteroid->hitBox.width = 16;
-  smallAsteroid->hitBox.height = 16;
-  smallAsteroid->hitBox.x = smallAsteroid->position.x;
-  smallAsteroid->hitBox.y = smallAsteroid->position.y;
   
+  Texture2D smallAsteroidTexture = LoadTexture("assets/sprite/world/asteroid.png");
+  Texture2D mediumAsteroidTexture = LoadTexture("assets/sprite/world/asteroidMedium.png");
+  Texture2D largeAsteroidTexture = LoadTexture("assets/sprite/world/asteroidLarge.png");
+
   int offsetX = 20;
   int offsetY = 50;
 
-  for(int i = 0; i < 4; i++)
+  for(int i = 0; i < game->SMALLASTEROIDCOUNT; i++)
   {
-    smallAsteroids[i].texture = LoadTexture("assets/sprite/world/asteroid.png");
+    smallAsteroids[i].texture = smallAsteroidTexture; 
     smallAsteroids[i].position = (Vector2){100.f + offsetX, 100.f + offsetY};
     smallAsteroids[i].hitBox.width = 16;
     smallAsteroids[i].hitBox.height = 16;
-    smallAsteroids[i].hitBox.x = smallAsteroid->position.x;
-    smallAsteroids[i].hitBox.y = smallAsteroid->position.y;
+    smallAsteroids[i].hitBox.x = smallAsteroids[i].position.x;
+    smallAsteroids[i].hitBox.y = smallAsteroids[i].position.y;
 
     offsetX += 20;
     offsetY += 50;
   } 
-
-  mediumAsteroid->texture = LoadTexture("assets/sprite/world/asteroidMedium.png");
-  mediumAsteroid->position = (Vector2){200.f, 600.f};
-  mediumAsteroid->hitBox.width = 32;
-  mediumAsteroid->hitBox.height = 32;
-  mediumAsteroid->hitBox.x = mediumAsteroid->position.x;
-  mediumAsteroid->hitBox.y = mediumAsteroid->position.y;
   
-  largeAsteroid->texture = LoadTexture("assets/sprite/world/asteroidLarge.png");
-  largeAsteroid->position = (Vector2){920.f, 510.f};
-  largeAsteroid->hitBox.width = 65;
-  largeAsteroid->hitBox.height = 65;
-  largeAsteroid->hitBox.x = largeAsteroid->position.x;
-  largeAsteroid->hitBox.y = largeAsteroid->position.y;
+  offsetX = 0;
+  offsetY = 0;
+
+  for (int i = 0; i < game->MEDIUMASTEROIDCOUNT; i++)
+  {
+    mediumAsteroids[i].texture = mediumAsteroidTexture;
+    mediumAsteroids[i].position = (Vector2){200.f + offsetX, 600.f + offsetY};
+    mediumAsteroids[i].hitBox.width = 32;
+    mediumAsteroids[i].hitBox.height = 32;
+    mediumAsteroids[i].hitBox.x = mediumAsteroids[i].position.x;
+    mediumAsteroids[i].hitBox.y = mediumAsteroids[i].position.y;
+    
+    offsetX += 50;
+    offsetY -= 20;
+  }
+  
+  offsetX = 0;
+  offsetY = 0;
+
+  for (int i = 0; i < game->LARGEASTEROIDCOUNT; i++)
+  {
+    largeAsteroids[i].texture = largeAsteroidTexture;
+    largeAsteroids[i].position = (Vector2){920.f + offsetX, 510.f + offsetY};
+    largeAsteroids[i].hitBox.width = 65;
+    largeAsteroids[i].hitBox.height = 65;
+    largeAsteroids[i].hitBox.x = largeAsteroids[i].position.x;
+    largeAsteroids[i].hitBox.y = largeAsteroids[i].position.y;
+
+    offsetX += 100;
+    offsetY -= 20;
+  }
+}
+
+void initGame(struct Game* game)
+{
+  game->SMALLASTEROIDCOUNT = 60;
+  game->MEDIUMASTEROIDCOUNT = 4;
+  game->LARGEASTEROIDCOUNT = 2;
+  game->gameState = PLAYING;
 }
 
 int main(void)
@@ -103,41 +127,40 @@ int main(void)
 
   struct Player player;
   initPlayer(&player);
+  
+  struct Game game;
+  initGame(&game);
 
-  struct SmallAsteroid smallAsteroid;
-  struct MediumAsteroid mediumAsteroid;
-  struct LargeAsteroid largeAsteroid;
-  struct SmallAsteroid smallAsteroids[4];
-  initAsteroids(&smallAsteroid, &mediumAsteroid, &largeAsteroid, smallAsteroids);
+  struct SmallAsteroid smallAsteroids[game.SMALLASTEROIDCOUNT];
+  struct MediumAsteroid mediumAsteroids[game.MEDIUMASTEROIDCOUNT];
+  struct LargeAsteroid largeAsteroids[game.LARGEASTEROIDCOUNT];
+  initAsteroids(smallAsteroids, mediumAsteroids, largeAsteroids, &game);
 
   struct Screen screen;
   screen.gameScreen = MENU;
     
-  struct Game game;
-  game.gameState = PLAYING;
-
   // Main game loop
   while (game.gameState == PLAYING) 
   {
     //state handling
     screenHandler(&screen, &game); 
     controlsHandler(&player);        
-    collisionHandler(&player, &smallAsteroid, &mediumAsteroid, &largeAsteroid);
-    knockBack(&player, &screen);
-    movementHandler(&player, &screen);
-    updatePlayerHitBox( &player);
+    playerMovementHandler(&player, &screen);
+    updatePlayerHitBox(&player);
+    moveAsteroids(smallAsteroids, mediumAsteroids, largeAsteroids, &player, &screen, &game);
+    collisionHandler(&player, &game, smallAsteroids);
     
-    moveAsteroid(&smallAsteroid, smallAsteroids, &player, &screen);
+    //knockBack(&player, &screen);
+    //collisionCleanup(&player); 
     
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
 		                                  getPlayerCollisionStateString(player.collisionState));
-    
-    DrawFPS(0,0);
 
     //Draw
     BeginDrawing();
-      render(&screen, &player, &smallAsteroid, &mediumAsteroid, &largeAsteroid, smallAsteroids);
+      DrawFPS(0,0);
+      render(&screen, &player, &game, smallAsteroids, mediumAsteroids, largeAsteroids);
     EndDrawing();
   }
 
