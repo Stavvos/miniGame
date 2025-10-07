@@ -5,31 +5,42 @@ void collisionHandler(struct Player* player, struct Game* game, struct SmallAste
 {
   
   for (int i = 0; i < game->SMALLASTEROIDCOUNT; i++)
-  {	  
-    if (CheckCollisionRecs(player->playerHitBox, smallAsteroids[i].hitBox))
-    {
-      player->collisionState = HITTING;
+  {
+    if(smallAsteroids[i].collisionState == NOTHITTING)
+    {  
+      if (CheckCollisionRecs(player->playerHitBox, smallAsteroids[i].hitBox))
+      {
+        player->collisionState = HITTING;
+        smallAsteroids[i].collisionState = HITTING;
+      }
     }
   }
   
   for (int i = 0; i < game->MEDIUMASTEROIDCOUNT; i++)
   {	  
-    if (CheckCollisionRecs(player->playerHitBox, mediumAsteroids[i].hitBox))
+    if (mediumAsteroids[i].collisionState == NOTHITTING)
     {
-      player->collisionState = HITTING;
+      if (CheckCollisionRecs(player->playerHitBox, mediumAsteroids[i].hitBox))
+      {
+        player->collisionState = HITTING;
+        mediumAsteroids[i].collisionState = HITTING;
+      }
     }
   }
 
   for (int i = 0; i < game->LARGEASTEROIDCOUNT; i++)
-  {	  
-    if (CheckCollisionRecs(player->playerHitBox, largeAsteroids[i].hitBox))
-    {
-      player->collisionState = HITTING;
+  {	
+    if (largeAsteroids[i].collisionState == NOTHITTING)
+    {  
+      if (CheckCollisionRecs(player->playerHitBox, largeAsteroids[i].hitBox))
+      {
+        player->collisionState = HITTING;
+	largeAsteroids[i].collisionState = HITTING;
+      }
     }
   }
 
 }
-
 
 void collisionCleanup(struct Player* player)
 {

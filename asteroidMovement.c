@@ -6,7 +6,7 @@ void moveAsteroids(struct SmallAsteroid smallAsteroids[], struct MediumAsteroid 
     
   for (int i = 0; i < game->SMALLASTEROIDCOUNT; i++)
   {
-    if (screen->gameScreen == GAMEPLAY)
+    if (screen->gameScreen == GAMEPLAY && smallAsteroids[i].collisionState == NOTHITTING)
       {
         smallAsteroids[i].direction.x = player->playerPos.x - smallAsteroids[i].position.x;
         smallAsteroids[i].direction.y = player->playerPos.y - smallAsteroids[i].position.y;

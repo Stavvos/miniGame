@@ -70,6 +70,7 @@ void initAsteroids(struct SmallAsteroid smallAsteroids[], struct MediumAsteroid 
     smallAsteroids[i].hitBox.height = 16;
     smallAsteroids[i].hitBox.x = smallAsteroids[i].position.x;
     smallAsteroids[i].hitBox.y = smallAsteroids[i].position.y;
+    smallAsteroids[i].collisionState = NOTHITTING;
 
     offsetX += 20;
     offsetY += 50;
@@ -86,7 +87,8 @@ void initAsteroids(struct SmallAsteroid smallAsteroids[], struct MediumAsteroid 
     mediumAsteroids[i].hitBox.height = 32;
     mediumAsteroids[i].hitBox.x = mediumAsteroids[i].position.x;
     mediumAsteroids[i].hitBox.y = mediumAsteroids[i].position.y;
-    
+    mediumAsteroids[i].collisionState = NOTHITTING;
+
     offsetX += 50;
     offsetY -= 20;
   }
@@ -102,6 +104,7 @@ void initAsteroids(struct SmallAsteroid smallAsteroids[], struct MediumAsteroid 
     largeAsteroids[i].hitBox.height = 65;
     largeAsteroids[i].hitBox.x = largeAsteroids[i].position.x;
     largeAsteroids[i].hitBox.y = largeAsteroids[i].position.y;
+    largeAsteroids[i].collisionState = NOTHITTING;
 
     offsetX += 100;
     offsetY -= 20;
@@ -154,7 +157,7 @@ int main(void)
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
  		                                  getPlayerCollisionStateString(player.collisionState));
-    
+        
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
