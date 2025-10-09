@@ -41,17 +41,12 @@ void initPlayer(struct Player* player)
   player->collisionState = NOTHITTING;
 }
 
-void initAsteroids()
-{
-  
-}
-
 void initGame(struct Game* game)
 {
   game->gameState = PLAYING;
 }
 
-void pushAsteroidLeft(asteroid* head, Texture2D texture)
+void pushAsteroidLeft(asteroid* head, Texture2D texture, int offsetX, int offsetY)
 {
   asteroid* current = head;
 
@@ -62,7 +57,7 @@ void pushAsteroidLeft(asteroid* head, Texture2D texture)
 
   current->next = (asteroid*) malloc(sizeof(asteroid));
   current->next->texture = texture;
-  current->next->position = (Vector2){100.f + 200, 100.f + 20};
+  current->next->position = (Vector2){100.f + offsetX, 100.f + offsetY};
   current->next->hitBox.width = 16;
   current->next->hitBox.height = 16;
   current->next->hitBox.x = current->next->position.x;
@@ -87,6 +82,31 @@ void freeAsteroidList(asteroid* head)
   printf("Asteroid inked list memory de-allocated\n\n");
 }
 
+void initAsteroids(asteroid* head)
+{
+  //linked list node test
+  Texture2D smallAsteroidTexture = LoadTexture("assets/sprite/world/asteroid.png");
+  head->texture = smallAsteroidTexture;
+  head->position = (Vector2){100.f, 100.f};
+  head->hitBox.width = 16;
+  head->hitBox.height = 16;
+  head->hitBox.x = head->position.x;
+  head->hitBox.y = head->position.y;
+  head->collisionState = NOTHITTING;
+  head->next = NULL;
+  
+  int offsetX = 5;
+  int offsetY = 5;
+  for (int i = 0; i < 1000; i++)
+  {
+    pushAsteroidLeft(head, smallAsteroidTexture, offsetX, offsetY);
+    offsetX += 5;
+    offsetY += 0;
+  }
+
+}
+
+
 int main(void)
 {
   const int screenWidth = GetScreenWidth();
@@ -107,20 +127,10 @@ int main(void)
   Texture2D mediumAsteroidTexture = LoadTexture("assets/sprite/world/asteroidMedium.png");
   Texture2D largeAsteroidTexture = LoadTexture("assets/sprite/world/asteroidLarge.png");
   
-  //linked list node test
-  Texture2D smallAsteroidTexture = LoadTexture("assets/sprite/world/asteroid.png");
+  //asteroid linked list initialisation 
   asteroid* head = NULL;
   head = (asteroid*) malloc(sizeof(asteroid));
-  head->texture = smallAsteroidTexture;
-  head->position = (Vector2){100.f, 100.f};
-  head->hitBox.width = 16;
-  head->hitBox.height = 16;
-  head->hitBox.x = head->position.x;
-  head->hitBox.y = head->position.y;
-  head->collisionState = NOTHITTING;
-  head->next = NULL;
-
-  pushAsteroidLeft(head, smallAsteroidTexture);
+  initAsteroids(head);
 
   // Main game loop
   while (game.gameState == PLAYING) 

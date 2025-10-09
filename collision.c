@@ -27,7 +27,10 @@ void collisionHandler(struct Player* player, struct Game* game, asteroid** head)
     if (CheckCollisionRecs(player->playerHitBox, current->hitBox))
     {
       player->collisionState = HITTING;
+      
+      asteroid* next = current->next;
       deleteAsteroid(current, previous, head);
+      current = next;
     }
     else //no collision found, move onto the node
     {
