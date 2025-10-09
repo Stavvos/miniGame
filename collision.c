@@ -1,92 +1,44 @@
 #include "raylib.h"
 #include "types.h"
 
-void collisionHandler(struct Player* player, struct Game* game, struct SmallAsteroid smallAsteroids[], struct MediumAsteroid mediumAsteroids[], struct LargeAsteroid largeAsteroids[])
+void deleteAsteroid(asteroid* current, asteroid* previous, asteroid** head)
 {
-  
-  for (int i = 0; i < game->SMALLASTEROIDCOUNT; i++)
+  //remove the head of the linked list
+  if(previous == NULL)
   {
-    if(smallAsteroids[i].collisionState == NOTHITTING)
-    {  
-      if (CheckCollisionRecs(player->playerHitBox, smallAsteroids[i].hitBox))
-      {
-        player->collisionState = HITTING;
-        smallAsteroids[i].collisionState = HITTING;
-      }
-    }
+    *head = current->next;
+    free(current);
   }
+  else //remove other node of the linked list
+  {
+    previous->next = current->next;
+    free(current);
+  }
+}
+
+void collisionHandler(struct Player* player, struct Game* game, asteroid** head)
+{
+ 
+  asteroid* current = *head;
+  asteroid* previous = NULL;
   
-  for (int i = 0; i < game->MEDIUMASTEROIDCOUNT; i++)
-  {	  
-    if (mediumAsteroids[i].collisionState == NOTHITTING)
+  while(current != NULL)
+  {
+    if (CheckCollisionRecs(player->playerHitBox, current->hitBox))
     {
-      if (CheckCollisionRecs(player->playerHitBox, mediumAsteroids[i].hitBox))
-      {
-        player->collisionState = HITTING;
-        mediumAsteroids[i].collisionState = HITTING;
-      }
+      player->collisionState = HITTING;
+      deleteAsteroid(current, previous, head);
     }
-  }
-
-  for (int i = 0; i < game->LARGEASTEROIDCOUNT; i++)
-  {	
-    if (largeAsteroids[i].collisionState == NOTHITTING)
-    {  
-      if (CheckCollisionRecs(player->playerHitBox, largeAsteroids[i].hitBox))
-      {
-        player->collisionState = HITTING;
-	largeAsteroids[i].collisionState = HITTING;
-      }
+    else //no collision found, move onto the node
+    {
+      previous = current;
+      current = current->next;
     }
-  }
-
+  } 
+  
 }
 
 void collisionCleanup(struct Player* player)
 {
   player->collisionState = NOTHITTING;
-}
-
-void knockBack(struct Player* player, struct Screen* screen)
-{
-  if (screen->gameScreen == GAMEPLAY && player->collisionState == HITTING && player->playerMoveState == MOVEFORWARD)
-  {
-    player->playerPos.x = player->playerPos.x + player->knockBack.x;
-    player->playerPos.y = player->playerPos.y + player->knockBack.y;
-  }
-  else if (screen->gameScreen == GAMEPLAY && player->collisionState == HITTING && player->playerMoveState == MOVEBACKWARD)
-  {
-    player->playerPos.x = player->playerPos.x + player->knockUp.x;
-    player->playerPos.y = player->playerPos.y + player->knockUp.y;
-  }
-  else if (screen->gameScreen == GAMEPLAY && player->collisionState == HITTING && player->playerMoveState == MOVELEFT)
-  {
-    player->playerPos.x = player->playerPos.x + player->knockRight.x;
-    player->playerPos.y = player->playerPos.y + player->knockRight.y;
-  }
-  else if (screen->gameScreen == GAMEPLAY && player->collisionState == HITTING && player->playerMoveState == MOVERIGHT)
-  {
-    player->playerPos.x = player->playerPos.x + player->knockLeft.x;
-    player->playerPos.y = player->playerPos.y + player->knockLeft.y;
-  }
-  else if (screen->gameScreen == GAMEPLAY && player->collisionState == HITTING && player->playerMoveState == MOVEUPLEFT)
-  {
-    player->playerPos.x = player->playerPos.x + player->knockDownRight.x;
-    player->playerPos.y = player->playerPos.y + player->knockDownRight.y;
-  }
-  else if (screen->gameScreen == GAMEPLAY && player->collisionState == HITTING && player->playerMoveState == MOVEUPRIGHT)
-  {
-    player->playerPos.x = player->playerPos.x + player->knockDownLeft.x;
-    player->playerPos.y = player->playerPos.y + player->knockDownLeft.y;
-  }
-  else if (screen->gameScreen == GAMEPLAY && player->collisionState == HITTING && player->playerMoveState == MOVEDOWNLEFT)
-  {
-    player->playerPos.x = player->playerPos.x + player->knockUpRight.x;
-    player->playerPos.y = player->playerPos.y + player->knockUpRight.y;
-  }
-  else if (screen->gameScreen == GAMEPLAY && player->collisionState == HITTING && player->playerMoveState == MOVEDOWNRIGHT)
-  {
-    player->playerPos.x = player->playerPos.x + player->knockUpLeft.x;
-    player->playerPos.y = player->playerPos.y + player->knockUpLeft.y;
-  };
 }

@@ -1,69 +1,31 @@
 #include "types.h"
 #include "math.h"
 
-void moveAsteroids(struct SmallAsteroid smallAsteroids[], struct MediumAsteroid mediumAsteroids[], struct LargeAsteroid largeAsteroids[], struct Player* player, struct Screen* screen, struct Game* game)
+void moveAsteroids(struct Player* player, struct Screen* screen, struct Game* game, asteroid* head)
 {
     
-  for (int i = 0; i < game->SMALLASTEROIDCOUNT; i++)
+  if(screen->gameScreen == GAMEPLAY)
   {
-    if (screen->gameScreen == GAMEPLAY && smallAsteroids[i].collisionState == NOTHITTING)
-      {
-        smallAsteroids[i].direction.x = player->playerPos.x - smallAsteroids[i].position.x;
-        smallAsteroids[i].direction.y = player->playerPos.y - smallAsteroids[i].position.y;
+    asteroid* current = head;
 
-        smallAsteroids[i].hypotenuse = sqrt(smallAsteroids[i].direction.x * smallAsteroids[i].direction.x + 
-		                            smallAsteroids[i].direction.y * smallAsteroids[i].direction.y);
+    while(current != NULL)
+    {
+      current->direction.x = player->playerPos.x - current->position.x;
+      current->direction.y = player->playerPos.y - current->position.y;
+
+      current->hypotenuse = sqrt(current->direction.x * current->direction.x + current->direction.y * current->direction.y);
     
-        smallAsteroids[i].direction.x /= smallAsteroids[i].hypotenuse;
-        smallAsteroids[i].direction.y /= smallAsteroids[i].hypotenuse;
+      current->direction.x /= current->hypotenuse;
+      current->direction.y /= current->hypotenuse;
 
-        smallAsteroids[i].position.x += smallAsteroids[i].direction.x;
-        smallAsteroids[i].position.y += smallAsteroids[i].direction.y;
+      current->position.x += current->direction.x;
+      current->position.y += current->direction.y;
 
-        smallAsteroids[i].hitBox.x = smallAsteroids[i].position.x;
-        smallAsteroids[i].hitBox.y = smallAsteroids[i].position.y;
-      }
-  }
-  
-  for (int i = 0; i < game->MEDIUMASTEROIDCOUNT; i++)
-  {
-    if (screen->gameScreen == GAMEPLAY)
-      {
-        mediumAsteroids[i].direction.x = player->playerPos.x - mediumAsteroids[i].position.x;
-        mediumAsteroids[i].direction.y = player->playerPos.y - mediumAsteroids[i].position.y;
+      current->hitBox.x = current->position.x;
+      current->hitBox.y = current->position.y;
 
-        mediumAsteroids[i].hypotenuse = sqrt(mediumAsteroids[i].direction.x * mediumAsteroids[i].direction.x + 
-		                             mediumAsteroids[i].direction.y * mediumAsteroids[i].direction.y);
-    
-        mediumAsteroids[i].direction.x /= mediumAsteroids[i].hypotenuse;
-        mediumAsteroids[i].direction.y /= mediumAsteroids[i].hypotenuse;
-
-        mediumAsteroids[i].position.x += mediumAsteroids[i].direction.x;
-        mediumAsteroids[i].position.y += mediumAsteroids[i].direction.y;
-
-        mediumAsteroids[i].hitBox.x = mediumAsteroids[i].position.x;
-        mediumAsteroids[i].hitBox.y = mediumAsteroids[i].position.y;
-      }
+      current = current->next;
+    }
   }
 
-  for (int i = 0; i < game->LARGEASTEROIDCOUNT; i++)
-  {
-    if (screen->gameScreen == GAMEPLAY)
-      {
-        largeAsteroids[i].direction.x = player->playerPos.x - largeAsteroids[i].position.x;
-        largeAsteroids[i].direction.y = player->playerPos.y - largeAsteroids[i].position.y;
-
-        largeAsteroids[i].hypotenuse = sqrt(largeAsteroids[i].direction.x * largeAsteroids[i].direction.x + 
-		                            largeAsteroids[i].direction.y * largeAsteroids[i].direction.y);
-    
-        largeAsteroids[i].direction.x /= largeAsteroids[i].hypotenuse;
-        largeAsteroids[i].direction.y /= largeAsteroids[i].hypotenuse;
-
-        largeAsteroids[i].position.x += largeAsteroids[i].direction.x;
-        largeAsteroids[i].position.y += largeAsteroids[i].direction.y;
-
-        largeAsteroids[i].hitBox.x = largeAsteroids[i].position.x;
-        largeAsteroids[i].hitBox.y = largeAsteroids[i].position.y;
-      }
-  }
 }

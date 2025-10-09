@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "raylib.h"
 #include "math.h"
 #include "stdio.h"
@@ -28,18 +29,6 @@ void initPlayer(struct Player* player)
   player->moveDownRight = (Vector2){0.707, 0.707};
   player->moveDownLeft = (Vector2){-0.707, 0.707};
   
-  //multiply the up, down, left, etc, vectors by 15 
-  player->knockBack = (Vector2){0, 15};
-  player->knockUp = (Vector2){0, -15};
-  player->knockLeft = (Vector2){-15, 0};
-  player->knockRight = (Vector2){15, 0};
-  
-  //10.605 = 15 * 0.707, i.e the magic number for moving diagonal is 0.707. 
-  player->knockDownLeft = (Vector2){-10.605, 10.605};
-  player->knockDownRight = (Vector2){10.605, 10.605};
-  player->knockUpLeft = (Vector2){-10.605, -10.605};
-  player->knockUpRight = (Vector2){10.605, -10.605};
-
   player->playerPos = (Vector2){300.f, 280.f};
   
   player->playerHitBox.x = player->playerPos.x;
@@ -52,71 +41,50 @@ void initPlayer(struct Player* player)
   player->collisionState = NOTHITTING;
 }
 
-void initAsteroids(struct SmallAsteroid smallAsteroids[], struct MediumAsteroid mediumAsteroids[], struct LargeAsteroid largeAsteroids[], struct Game* game)
+void initAsteroids()
 {
   
-  Texture2D smallAsteroidTexture = LoadTexture("assets/sprite/world/asteroid.png");
-  Texture2D mediumAsteroidTexture = LoadTexture("assets/sprite/world/asteroidMedium.png");
-  Texture2D largeAsteroidTexture = LoadTexture("assets/sprite/world/asteroidLarge.png");
-
-  int offsetX = 20;
-  int offsetY = 50;
-
-  for(int i = 0; i < game->SMALLASTEROIDCOUNT; i++)
-  {
-    smallAsteroids[i].texture = smallAsteroidTexture; 
-    smallAsteroids[i].position = (Vector2){100.f + offsetX, 100.f + offsetY};
-    smallAsteroids[i].hitBox.width = 16;
-    smallAsteroids[i].hitBox.height = 16;
-    smallAsteroids[i].hitBox.x = smallAsteroids[i].position.x;
-    smallAsteroids[i].hitBox.y = smallAsteroids[i].position.y;
-    smallAsteroids[i].collisionState = NOTHITTING;
-
-    offsetX += 20;
-    offsetY += 50;
-  } 
-  
-  offsetX = 0;
-  offsetY = 0;
-
-  for (int i = 0; i < game->MEDIUMASTEROIDCOUNT; i++)
-  {
-    mediumAsteroids[i].texture = mediumAsteroidTexture;
-    mediumAsteroids[i].position = (Vector2){200.f + offsetX, 600.f + offsetY};
-    mediumAsteroids[i].hitBox.width = 32;
-    mediumAsteroids[i].hitBox.height = 32;
-    mediumAsteroids[i].hitBox.x = mediumAsteroids[i].position.x;
-    mediumAsteroids[i].hitBox.y = mediumAsteroids[i].position.y;
-    mediumAsteroids[i].collisionState = NOTHITTING;
-
-    offsetX += 50;
-    offsetY -= 20;
-  }
-  
-  offsetX = 0;
-  offsetY = 0;
-
-  for (int i = 0; i < game->LARGEASTEROIDCOUNT; i++)
-  {
-    largeAsteroids[i].texture = largeAsteroidTexture;
-    largeAsteroids[i].position = (Vector2){920.f + offsetX, 510.f + offsetY};
-    largeAsteroids[i].hitBox.width = 65;
-    largeAsteroids[i].hitBox.height = 65;
-    largeAsteroids[i].hitBox.x = largeAsteroids[i].position.x;
-    largeAsteroids[i].hitBox.y = largeAsteroids[i].position.y;
-    largeAsteroids[i].collisionState = NOTHITTING;
-
-    offsetX += 100;
-    offsetY -= 20;
-  }
 }
 
 void initGame(struct Game* game)
 {
-  game->SMALLASTEROIDCOUNT = 600;
-  game->MEDIUMASTEROIDCOUNT = 4;
-  game->LARGEASTEROIDCOUNT = 2;
   game->gameState = PLAYING;
+}
+
+void pushAsteroidLeft(asteroid* head, Texture2D texture)
+{
+  asteroid* current = head;
+
+  while (current->next != NULL)
+  {
+    current = current->next;
+  }
+
+  current->next = (asteroid*) malloc(sizeof(asteroid));
+  current->next->texture = texture;
+  current->next->position = (Vector2){100.f + 200, 100.f + 20};
+  current->next->hitBox.width = 16;
+  current->next->hitBox.height = 16;
+  current->next->hitBox.x = current->next->position.x;
+  current->next->hitBox.y = current->next->position.y;
+  current->next->collisionState = NOTHITTING;
+  current->next->next = NULL;
+}
+
+void freeAsteroidList(asteroid* head)
+{
+  printf("\n\nDe-allocating asteroid linked list memory\n");
+  asteroid* current = head;
+  asteroid* nextNode;
+  
+  while (current != NULL)
+  {
+      nextNode = current->next;
+      free(current);
+      current = nextNode;
+  }
+
+  printf("Asteroid inked list memory de-allocated\n\n");
 }
 
 int main(void)
@@ -133,14 +101,27 @@ int main(void)
   struct Game game;
   initGame(&game);
 
-  struct SmallAsteroid smallAsteroids[game.SMALLASTEROIDCOUNT];
-  struct MediumAsteroid mediumAsteroids[game.MEDIUMASTEROIDCOUNT];
-  struct LargeAsteroid largeAsteroids[game.LARGEASTEROIDCOUNT];
-  initAsteroids(smallAsteroids, mediumAsteroids, largeAsteroids, &game);
-
   struct Screen screen;
   screen.gameScreen = MENU;
-    
+  
+  Texture2D mediumAsteroidTexture = LoadTexture("assets/sprite/world/asteroidMedium.png");
+  Texture2D largeAsteroidTexture = LoadTexture("assets/sprite/world/asteroidLarge.png");
+  
+  //linked list node test
+  Texture2D smallAsteroidTexture = LoadTexture("assets/sprite/world/asteroid.png");
+  asteroid* head = NULL;
+  head = (asteroid*) malloc(sizeof(asteroid));
+  head->texture = smallAsteroidTexture;
+  head->position = (Vector2){100.f, 100.f};
+  head->hitBox.width = 16;
+  head->hitBox.height = 16;
+  head->hitBox.x = head->position.x;
+  head->hitBox.y = head->position.y;
+  head->collisionState = NOTHITTING;
+  head->next = NULL;
+
+  pushAsteroidLeft(head, smallAsteroidTexture);
+
   // Main game loop
   while (game.gameState == PLAYING) 
   {
@@ -149,10 +130,8 @@ int main(void)
     controlsHandler(&player);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
-    moveAsteroids(smallAsteroids, mediumAsteroids, largeAsteroids, &player, &screen, &game);
-    collisionHandler(&player, &game, smallAsteroids, mediumAsteroids, largeAsteroids);
-    
-    //knockBack(&player, &screen);
+    moveAsteroids(&player, &screen, &game, head);
+    collisionHandler(&player, &game, &head);
     
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
@@ -161,7 +140,7 @@ int main(void)
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
-      render(&screen, &player, &game, smallAsteroids, mediumAsteroids, largeAsteroids);
+      render(&screen, &player, &game, head);
     EndDrawing();
 
     //reset states
@@ -169,6 +148,7 @@ int main(void)
   }
 
   // De-Initialization
+  freeAsteroidList(head);
   CloseWindow();        // Close window and OpenGL context
   return 0;
 }

@@ -32,42 +32,9 @@ typedef enum CollisionState
   HITTING
 } CollisionState;
 
-struct SmallAsteroid
-{
-  Rectangle hitBox;
-  Texture2D texture;
-  Vector2 position;
-  Vector2 direction;
-  float hypotenuse;
-  CollisionState collisionState;
-};
-
-struct MediumAsteroid
-{
-  Rectangle hitBox;
-  Texture2D texture;
-  Vector2 position;
-  Vector2 direction;
-  float hypotenuse;
-  CollisionState collisionState;
-};
-
-struct LargeAsteroid
-{
-  Rectangle hitBox;
-  Texture2D texture;
-  Vector2 position;
-  Vector2 direction;
-  float hypotenuse;
-  CollisionState collisionState;
-};
-
 struct Game
 {
   GameState gameState;
-  int SMALLASTEROIDCOUNT;
-  int MEDIUMASTEROIDCOUNT;
-  int LARGEASTEROIDCOUNT;
 };
 
 struct Screen 
@@ -89,18 +56,18 @@ struct Player
   Vector2 moveUpLeft;
   Vector2 moveDownRight;
   Vector2 moveDownLeft;
-  Vector2 knockBack;
-  Vector2 knockUp;
-  Vector2 knockLeft;
-  Vector2 knockRight;
-  Vector2 knockDownLeft;
-  Vector2 knockDownRight;
-  Vector2 knockUpLeft;
-  Vector2 knockUpRight;
   CollisionState collisionState;
 };
 
+typedef struct Asteroid
+{
+  Rectangle hitBox;
+  Texture2D texture;
+  Vector2 position;
+  Vector2 direction;
+  float hypotenuse;
+  CollisionState collisionState;
+  struct Asteroid* next;
+} asteroid;
+
 #endif
-
-
-
