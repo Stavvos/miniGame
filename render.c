@@ -1,8 +1,7 @@
 #include "raylib.h"
 #include "types.h"
 
-
-void render(struct Screen* screen, struct Player* player, struct Game* game, asteroid* head)
+void render(struct Screen* screen, struct Player* player, struct Game* game, asteroid* head, struct Bullet bullets[])
 {
 
   switch(screen->gameScreen)
@@ -37,7 +36,15 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, ast
 
 	current = current->next;
       }
-            
+
+      for(int i = 0; i < 10; i++)
+      {
+        if(bullets[i].active)
+	{
+	  DrawRectangle(bullets[i].hitBox.x, bullets[i].hitBox.y, bullets[i].hitBox.width, bullets[i].hitBox.height, BLACK);
+	}
+      }
+
     } break;
 
       default: break;

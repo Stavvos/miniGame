@@ -42,6 +42,12 @@ struct Screen
   GameScreen gameScreen; 
 };
 
+struct Bullet
+{
+  Rectangle hitBox;
+  bool active;
+}; 
+
 struct Player 
 {
   Texture2D playerTexture;

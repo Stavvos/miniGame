@@ -37,8 +37,36 @@ void collisionHandler(struct Player* player, struct Game* game, asteroid** head)
       previous = current;
       current = current->next;
     }
-  } 
-  
+  }
+
+}
+
+void bulletHitAsteroid(asteroid** head, struct Bullet bullets[])
+{
+ 
+  for(int i = 0; i < 10; i++)
+  {
+    asteroid* current = *head;
+    asteroid* previous = NULL;
+ 
+    if(bullets[i].active)
+    {
+      while(current != NULL)
+      {
+        if (CheckCollisionRecs(bullets[i].hitBox, current->hitBox))
+        {
+          asteroid* next = current->next;
+          deleteAsteroid(current, previous, head);
+          current = next;
+        }
+        else //no collision found, move onto the node
+        {
+          previous = current;
+          current = current->next;
+        }
+      }
+    }
+  }
 }
 
 void collisionCleanup(struct Player* player)

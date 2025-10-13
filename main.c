@@ -10,6 +10,7 @@
 #include "collision.c"
 #include "testing.c"
 #include "asteroidMovement.c"
+#include "bullet.c"
 
 void initPlayer(struct Player* player)
 {
@@ -46,7 +47,7 @@ void initGame(struct Game* game)
   game->gameState = PLAYING;
 }
 
-void pushAsteroidLeft(asteroid* head, Texture2D texture, int offsetX, int offsetY)
+void pushAsteroid(asteroid* head, Texture2D texture, int offsetX, int offsetY)
 {
   asteroid* current = head;
 
@@ -99,13 +100,12 @@ void initAsteroids(asteroid* head)
   int offsetY = 5;
   for (int i = 0; i < 1000; i++)
   {
-    pushAsteroidLeft(head, smallAsteroidTexture, offsetX, offsetY);
+    pushAsteroid(head, smallAsteroidTexture, offsetX, offsetY);
     offsetX += 5;
     offsetY += 0;
   }
 
 }
-
 
 int main(void)
 {
@@ -131,26 +131,38 @@ int main(void)
   asteroid* head = NULL;
   head = (asteroid*) malloc(sizeof(asteroid));
   initAsteroids(head);
+  
+  //initialise bullets
+  struct Bullet bullets[10];
 
+  for(int i = 0; i < 10; i++)
+  {
+    bullets[i].active = false;
+    bullets[i].hitBox.width = 5;
+    bullets[i].hitBox.height = 5;
+  }
+  
   // Main game loop
   while (game.gameState == PLAYING) 
   {
     //state handling
     screenHandler(&screen, &game); 
-    controlsHandler(&player);        
+    controlsHandler(&player, bullets);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
+    translateBullet(bullets);
     moveAsteroids(&player, &screen, &game, head);
     collisionHandler(&player, &game, &head);
-    
+    bulletHitAsteroid(&head, bullets); 
+
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
- 		                                  getPlayerCollisionStateString(player.collisionState));
+ 		                                                    getPlayerCollisionStateString(player.collisionState));
         
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
-      render(&screen, &player, &game, head);
+      render(&screen, &player, &game, head, bullets);
     EndDrawing();
 
     //reset states
