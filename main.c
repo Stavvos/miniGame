@@ -11,6 +11,7 @@
 #include "testing.c"
 #include "asteroidMovement.c"
 #include "bullet.c"
+#include "audio.c"
 
 void initPlayer(struct Player* player)
 {
@@ -46,7 +47,16 @@ void initGame(struct Game* game)
 {
   game->gameState = PLAYING;
   game->MAXBULLETS = 15;
-  game->activeSoundFX = 0;
+}
+
+void initAudio(struct Audio* audio, struct Game* game, Sound sounds[])
+{
+  audio->activeSoundFX = 0;
+
+  for(int i = 0; i < game->MAXBULLETS; i++)
+  {
+    sounds[i] = LoadSound("assets/sound/fart.mp3");
+  }
 }
 
 void pushAsteroid(asteroid* head, Texture2D texture, int offsetX, int offsetY)
@@ -148,21 +158,20 @@ int main(void)
   struct Bullet bullets[game.MAXBULLETS];
   initBullets(bullets, &game);
   
-  //initialise audio
+  //initialise audio device for raylib
   InitAudioDevice();
-  Sound sounds[10];
   
-  for(int i = 0; i < game.MAXBULLETS; i++)
-  {
-    sounds[i] = LoadSound("assets/sound/fart.mp3");
-  }
-
+  //init audio struct 
+  struct Audio audio;
+  Sound sounds[game.MAXBULLETS];
+  initAudio(&audio, &game, sounds);
+  
   // Main game loop
   while (game.gameState == PLAYING) 
   {
     //state handling
     screenHandler(&screen, &game); 
-    controlsHandler(&player, bullets, &game, sounds);        
+    controlsHandler(&player, bullets, &game, sounds, &audio);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
     translateBullet(bullets, &game);
@@ -172,7 +181,7 @@ int main(void)
 
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
- 		                                                    getPlayerCollisionStateString(player.collisionState));
+ 		                                  getPlayerCollisionStateString(player.collisionState));
         
     //Draw
     BeginDrawing();
@@ -186,10 +195,7 @@ int main(void)
 
   // De-Initialization
   freeAsteroidList(head);
-  for(int i = 0; i < game.MAXBULLETS; i++)
-  {
-    UnloadSound(sounds[i]);
-  }
+  deallocateSoundFX(sounds, &game);
   CloseAudioDevice();
   CloseWindow();        // Close window and OpenGL context
   return 0;

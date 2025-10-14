@@ -36,7 +36,6 @@ struct Game
 {
   GameState gameState;
   int MAXBULLETS;
-  int activeSoundFX;
 };
 
 struct Screen 
@@ -49,6 +48,11 @@ struct Bullet
   Rectangle hitBox;
   bool active;
 }; 
+
+struct Audio
+{
+  int activeSoundFX;
+};
 
 struct Player 
 {
