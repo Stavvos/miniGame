@@ -41,10 +41,10 @@ void collisionHandler(struct Player* player, struct Game* game, asteroid** head)
 
 }
 
-void bulletHitAsteroid(asteroid** head, struct Bullet bullets[])
+void bulletHitAsteroid(asteroid** head, struct Bullet bullets[], struct Game* game)
 {
  
-  for(int i = 0; i < 10; i++)
+  for(int i = 0; i < game->MAXBULLETS; i++)
   {
     asteroid* current = *head;
     asteroid* previous = NULL;

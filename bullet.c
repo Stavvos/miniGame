@@ -1,9 +1,9 @@
 #include "raylib.h"
 #include "types.h"
 
-void translateBullet(struct Bullet bullets[])
+void translateBullet(struct Bullet bullets[], struct Game* game)
 {
-  for(int i = 0; i < 10; i++)
+  for(int i = 0; i < game->MAXBULLETS; i++)
   {
     if (bullets[i].active)
     {

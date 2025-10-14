@@ -45,6 +45,7 @@ void initPlayer(struct Player* player)
 void initGame(struct Game* game)
 {
   game->gameState = PLAYING;
+  game->MAXBULLETS = 15;
 }
 
 void pushAsteroid(asteroid* head, Texture2D texture, int offsetX, int offsetY)
@@ -107,6 +108,16 @@ void initAsteroids(asteroid* head)
 
 }
 
+void initBullets(struct Bullet bullets[], struct Game* game)
+{
+  for(int i = 0; i < game->MAXBULLETS; i++)
+  {
+    bullets[i].active = false;
+    bullets[i].hitBox.width = 5;
+    bullets[i].hitBox.height = 5;
+  }
+}
+
 int main(void)
 {
   const int screenWidth = GetScreenWidth();
@@ -133,27 +144,22 @@ int main(void)
   initAsteroids(head);
   
   //initialise bullets
-  struct Bullet bullets[10];
+  struct Bullet bullets[game.MAXBULLETS];
 
-  for(int i = 0; i < 10; i++)
-  {
-    bullets[i].active = false;
-    bullets[i].hitBox.width = 5;
-    bullets[i].hitBox.height = 5;
-  }
-  
+  initBullets(bullets, &game);
+
   // Main game loop
   while (game.gameState == PLAYING) 
   {
     //state handling
     screenHandler(&screen, &game); 
-    controlsHandler(&player, bullets);        
+    controlsHandler(&player, bullets, &game);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
-    translateBullet(bullets);
+    translateBullet(bullets, &game);
     moveAsteroids(&player, &screen, &game, head);
     collisionHandler(&player, &game, &head);
-    bulletHitAsteroid(&head, bullets); 
+    bulletHitAsteroid(&head, bullets, &game); 
 
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),

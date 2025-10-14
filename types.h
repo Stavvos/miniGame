@@ -35,6 +35,7 @@ typedef enum CollisionState
 struct Game
 {
   GameState gameState;
+  int MAXBULLETS;
 };
 
 struct Screen 
