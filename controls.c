@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "types.h"
 
-void controlsHandler(struct Player* player, struct Bullet bullets[], struct Game* game){
+void controlsHandler(struct Player* player, struct Bullet bullets[], struct Game* game, Sound sounds[]){
 
    if(IsKeyDown(KEY_W))
    {
@@ -46,6 +46,16 @@ void controlsHandler(struct Player* player, struct Bullet bullets[], struct Game
    //shoot
    if(IsKeyPressed(KEY_SPACE))
    {
+     
+     PlaySound(sounds[game->activeSoundFX]);
+
+     game->activeSoundFX++;
+
+     if(game->activeSoundFX == game->MAXBULLETS)
+     {
+       game->activeSoundFX = 0;
+     }
+
      for(int i = 0; i < game->MAXBULLETS; i++)
      {
        if(bullets[i].active == false)

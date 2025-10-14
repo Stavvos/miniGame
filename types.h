@@ -36,6 +36,7 @@ struct Game
 {
   GameState gameState;
   int MAXBULLETS;
+  int activeSoundFX;
 };
 
 struct Screen 

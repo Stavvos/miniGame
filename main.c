@@ -46,6 +46,7 @@ void initGame(struct Game* game)
 {
   game->gameState = PLAYING;
   game->MAXBULLETS = 15;
+  game->activeSoundFX = 0;
 }
 
 void pushAsteroid(asteroid* head, Texture2D texture, int offsetX, int offsetY)
@@ -145,15 +146,23 @@ int main(void)
   
   //initialise bullets
   struct Bullet bullets[game.MAXBULLETS];
-
   initBullets(bullets, &game);
+  
+  //initialise audio
+  InitAudioDevice();
+  Sound sounds[10];
+  
+  for(int i = 0; i < game.MAXBULLETS; i++)
+  {
+    sounds[i] = LoadSound("assets/sound/fart.mp3");
+  }
 
   // Main game loop
   while (game.gameState == PLAYING) 
   {
     //state handling
     screenHandler(&screen, &game); 
-    controlsHandler(&player, bullets, &game);        
+    controlsHandler(&player, bullets, &game, sounds);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
     translateBullet(bullets, &game);
@@ -177,6 +186,11 @@ int main(void)
 
   // De-Initialization
   freeAsteroidList(head);
+  for(int i = 0; i < game.MAXBULLETS; i++)
+  {
+    UnloadSound(sounds[i]);
+  }
+  CloseAudioDevice();
   CloseWindow();        // Close window and OpenGL context
   return 0;
 }
