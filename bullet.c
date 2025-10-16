@@ -1,18 +1,21 @@
 #include "raylib.h"
 #include "types.h"
 
-void translateBullet(struct Bullet bullets[], struct Game* game)
+void translateBullet(struct Bullet bullets[], struct Game* game, struct Screen* screen)
 {
-  for(int i = 0; i < game->MAXBULLETS; i++)
+  if(screen->gameScreen == GAMEPLAY)
   {
-    if (bullets[i].active)
+    for(int i = 0; i < game->MAXBULLETS; i++)
     {
-      bullets[i].hitBox.y -= 5;
-
-      if(bullets[i].hitBox.y < 0)
+      if (bullets[i].active)
       {
-        bullets[i].active = false;
+        bullets[i].hitBox.y -= bullets[i].speed;
+
+        if(bullets[i].hitBox.y < 0)
+        {
+          bullets[i].active = false;
+        }
       }
     }
-  }	  
+  }  
 }

@@ -47,6 +47,7 @@ struct Bullet
 {
   Rectangle hitBox;
   bool active;
+  int speed;
 }; 
 
 struct Audio

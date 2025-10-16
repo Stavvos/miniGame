@@ -126,6 +126,7 @@ void initBullets(struct Bullet bullets[], struct Game* game)
     bullets[i].active = false;
     bullets[i].hitBox.width = 5;
     bullets[i].hitBox.height = 5;
+    bullets[i].speed = 5;
   }
 }
 
@@ -174,7 +175,7 @@ int main(void)
     controlsHandler(&player, bullets, &game, sounds, &audio);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
-    translateBullet(bullets, &game);
+    translateBullet(bullets, &game, &screen);
     moveAsteroids(&player, &screen, &game, head);
     collisionHandler(&player, &game, &head);
     bulletHitAsteroid(&head, bullets, &game); 
