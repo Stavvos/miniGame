@@ -51,6 +51,9 @@ int main(void)
   Sound sounds[game.MAXBULLETS];
   initAudio(&audio, &game, sounds);
   
+  Music soundtrack = LoadMusicStream("assets/musicTracks/emeraldSeas.mp3");
+  PlayMusicStream(soundtrack);
+
   // Main game loop
   while (game.gameState == PLAYING) 
   {
@@ -64,10 +67,11 @@ int main(void)
     collisionHandler(&player, &game, &head);
     bulletHitAsteroid(&head, bullets, &game); 
 
+    UpdateMusicStream(soundtrack);
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
  		                                  getPlayerCollisionStateString(player.collisionState));
-        
+
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
@@ -81,6 +85,7 @@ int main(void)
   // De-Initialization
   freeAsteroidList(head);
   deallocateSoundFX(sounds, &game);
+  UnloadMusicStream(soundtrack);
   CloseAudioDevice();
   CloseWindow();        // Close window and OpenGL context
   return 0;
