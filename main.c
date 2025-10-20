@@ -69,6 +69,9 @@ int main(void)
     offSet += healthBarBackground.width / player.playerHealth;
   }
 
+  //player lives
+  player.playerLives = 3;
+
   // Main game loop
   while (game.gameState == PLAYING) 
   {
@@ -87,8 +90,9 @@ int main(void)
     if(player.playerHealth == 0)
     {
       player.playerHealth = 5;
+      player.playerLives--;
     }
-    
+
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
  		                                  getPlayerCollisionStateString(player.collisionState));
@@ -97,6 +101,8 @@ int main(void)
     BeginDrawing();
       DrawFPS(0,0);
       render(&screen, &player, &game, head, bullets);
+      
+      //draw health bar
       DrawRectangle(healthBarBackground.x, healthBarBackground.y, healthBarBackground.width, healthBarBackground.height, BLACK);
       
       for (int i = 0; i < player.playerHealth; i++)
@@ -108,7 +114,9 @@ int main(void)
 		      healthBarForgroundBlocks[i].height, 
 		      GREEN);
       }
-
+      
+      //draw lives
+      DrawText(TextFormat("Lives %d", player.playerLives), 40, 20, 20, GREEN); 
     EndDrawing();
 
     //reset states

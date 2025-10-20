@@ -71,6 +71,7 @@ struct Player
   Vector2 moveDownLeft;
   CollisionState collisionState;
   int playerHealth;
+  int playerLives;
 };
 
 typedef struct Asteroid
