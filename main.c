@@ -56,8 +56,7 @@ int main(void)
   
   //health bar
   player.playerHealth = 5;
-  const Rectangle healthBarBackground = {10, 20, 50, 10};
-  Rectangle healthBarForgroundBlock = {0, 0, 0, 0};
+  const Rectangle healthBarBackground = {200, 10, 50, 10};
   Rectangle healthBarForgroundBlocks[5];
  
   int offSet = 1; 
@@ -67,7 +66,7 @@ int main(void)
     healthBarForgroundBlocks[i].y = healthBarBackground.y + 1;
     healthBarForgroundBlocks[i].width = healthBarBackground.width - 42;
     healthBarForgroundBlocks[i].height = healthBarBackground.height - 2;
-    offSet += healthBarBackground.x;
+    offSet += healthBarBackground.width / player.playerHealth;
   }
 
   // Main game loop
