@@ -78,11 +78,17 @@ int main(void)
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
     translateBullet(bullets, &game, &screen);
-    moveAsteroids(&player, &screen, &game, head);
+    //moveAsteroids(&player, &screen, &game, head);
     collisionHandler(&player, &game, &head);
     bulletHitAsteroid(&head, bullets, &game); 
-
     UpdateMusicStream(soundtrack);
+    
+    //reset players health 
+    if(player.playerHealth == 0)
+    {
+      player.playerHealth = 5;
+    }
+    
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
  		                                  getPlayerCollisionStateString(player.collisionState));
