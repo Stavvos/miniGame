@@ -46,13 +46,29 @@ int main(void)
   //initialise audio device for raylib
   InitAudioDevice();
   
-  //init audio struct 
+  //init audio  
   struct Audio audio;
   Sound sounds[game.MAXBULLETS];
   initAudio(&audio, &game, sounds);
   
   Music soundtrack = LoadMusicStream("assets/musicTracks/emeraldSeas.mp3");
   PlayMusicStream(soundtrack);
+  
+  //health bar
+  player.playerHealth = 5;
+  const Rectangle healthBarBackground = {10, 20, 50, 10};
+  Rectangle healthBarForgroundBlock = {0, 0, 0, 0};
+  Rectangle healthBarForgroundBlocks[5];
+ 
+  int offSet = 1; 
+  for (int i = 0; i < player.playerHealth; i++)
+  {
+    healthBarForgroundBlocks[i].x = healthBarBackground.x + offSet;
+    healthBarForgroundBlocks[i].y = healthBarBackground.y + 1;
+    healthBarForgroundBlocks[i].width = healthBarBackground.width - 42;
+    healthBarForgroundBlocks[i].height = healthBarBackground.height - 2;
+    offSet += healthBarBackground.x;
+  }
 
   // Main game loop
   while (game.gameState == PLAYING) 
@@ -76,6 +92,18 @@ int main(void)
     BeginDrawing();
       DrawFPS(0,0);
       render(&screen, &player, &game, head, bullets);
+      DrawRectangle(healthBarBackground.x, healthBarBackground.y, healthBarBackground.width, healthBarBackground.height, BLACK);
+      
+      for (int i = 0; i < player.playerHealth; i++)
+      {
+        
+        DrawRectangle(healthBarForgroundBlocks[i].x, 
+		      healthBarForgroundBlocks[i].y, 
+		      healthBarForgroundBlocks[i].width, 
+		      healthBarForgroundBlocks[i].height, 
+		      GREEN);
+      }
+
     EndDrawing();
 
     //reset states
