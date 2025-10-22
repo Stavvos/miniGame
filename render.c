@@ -1,7 +1,75 @@
 #include "raylib.h"
 #include "types.h"
 
-void render(struct Screen* screen, struct Player* player, struct Game* game, asteroid* head, struct Bullet bullets[])
+void drawMenuScreen()
+{
+  DrawText("Press Enter to start the game.", 400, 400, 14, WHITE);
+  DrawText("Press Esc to quit the game.", 400, 450, 14, WHITE);
+}
+
+void drawPlayer(struct Player* player)
+{
+
+  DrawTexture(player->playerTexture, player->playerPos.x, player->playerPos.y, WHITE);
+  DrawRectangleLines(player->playerHitBox.x, 
+		     player->playerHitBox.y, 
+	             player->playerHitBox.width, 
+	             player->playerHitBox.height, 
+		     BLACK);
+}
+
+void drawAsteroids(asteroid* head)
+{
+  asteroid* current = head;
+  while(current != NULL)
+    {
+      DrawTexture(current->texture, current->position.x, current->position.y, WHITE);
+      DrawRectangleLines(current->position.x,
+		         current->position.y, 
+			 current->hitBox.width, 
+			 current->hitBox.height, 
+      			 BLACK);
+      current = current->next;
+    }
+}
+
+void drawBullets(struct Bullet bullets[])
+{
+  for(int i = 0; i < 10; i++)
+  {
+    if(bullets[i].active)
+    {
+      DrawRectangle(bullets[i].hitBox.x, bullets[i].hitBox.y, bullets[i].hitBox.width, bullets[i].hitBox.height, BLACK);
+    }
+  }
+}
+
+void drawHealthBar(struct HealthBar* healthBar)
+{
+  DrawRectangle(healthBar->background.x,
+                healthBar->background.y,
+                healthBar->background.width,
+                healthBar->background.height, 
+		BLACK);
+
+  for (int i = 0; i < PLAYERHEALTH; i++)
+  {
+
+    DrawRectangle(healthBar->forground[i].x,
+                  healthBar->forground[i].y,
+                  healthBar->forground[i].width,
+                  healthBar->forground[i].height,
+                  GREEN);
+  }
+
+}
+
+void drawPlayerLives(struct Player* player)
+{
+  DrawText(TextFormat("Lives %d", player->playerLives), 40, 20, 20, GREEN); 
+}
+
+void render(struct Screen* screen, struct Player* player, struct Game* game, asteroid* head, struct Bullet bullets[], struct HealthBar* healthBar)
 {
 
   switch(screen->gameScreen)
@@ -9,42 +77,19 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, ast
     case MENU:
     {
       ClearBackground(BLACK);
-      DrawText("Press Enter to start the game.", 400, 400, 14, WHITE);
-      DrawText("Press Esc to quit the game.", 400, 450, 14, WHITE);
+      
+      drawMenuScreen();
     } break;
 
     case GAMEPLAY:
     {
       ClearBackground(RAYWHITE);
-      DrawTexture(player->playerTexture, player->playerPos.x, player->playerPos.y, WHITE);
-      DrawRectangleLines(player->playerHitBox.x, 
-		         player->playerHitBox.y, 
-			 player->playerHitBox.width, 
-			 player->playerHitBox.height, 
-			 BLACK);
       
-      
-      asteroid* current = head;
-      while(current != NULL)
-      {
-        DrawTexture(current->texture, current->position.x, current->position.y, WHITE);
-        DrawRectangleLines(current->position.x,
-		           current->position.y, 
-			   current->hitBox.width, 
-			   current->hitBox.height, 
-      			   BLACK);
-
-	current = current->next;
-      }
-
-      for(int i = 0; i < 10; i++)
-      {
-        if(bullets[i].active)
-	{
-	  DrawRectangle(bullets[i].hitBox.x, bullets[i].hitBox.y, bullets[i].hitBox.width, bullets[i].hitBox.height, BLACK);
-	}
-      }
-
+      drawPlayer(player);
+      drawAsteroids(head); 
+      drawBullets(bullets);
+      drawHealthBar(healthBar);
+      drawPlayerLives(player); 
     } break;
 
       default: break;

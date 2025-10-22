@@ -86,26 +86,7 @@ int main(void)
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
-      render(&screen, &player, &game, head, bullets);
-      
-      //draw health bar
-      DrawRectangle(healthBar.background.x, 
-		    healthBar.background.y, 
-		    healthBar.background.width, 
-		    healthBar.background.height, BLACK);
-      
-      for (int i = 0; i < player.playerHealth; i++)
-      {
-        
-        DrawRectangle(healthBar.forground[i].x, 
-		      healthBar.forground[i].y, 
-		      healthBar.forground[i].width, 
-		      healthBar.forground[i].height, 
-		      GREEN);
-      }
-      
-      //draw lives
-      DrawText(TextFormat("Lives %d", player.playerLives), 40, 20, 20, GREEN); 
+      render(&screen, &player, &game, head, bullets, &healthBar);
     EndDrawing();
 
     //reset states
