@@ -29,8 +29,8 @@ int main(void)
   initGame(&game);
 
   struct Screen screen;
-  screen.gameScreen = MENU;
-  
+  initScreen(&screen); 
+
   Texture2D mediumAsteroidTexture = LoadTexture("assets/sprite/world/asteroidMedium.png");
   Texture2D largeAsteroidTexture = LoadTexture("assets/sprite/world/asteroidLarge.png");
   
@@ -63,9 +63,10 @@ int main(void)
   {
     //state handling
     screenHandler(&screen, &game); 
-    controlsHandler(&player, bullets, &game, sounds, &audio);        
+    controlsHandler(&player, &game, sounds, &audio);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
+    bulletSpawnHandler(&player, &game, bullets);
     translateBullet(bullets, &game, &screen);
     moveAsteroids(&player, &screen, &game, head);
     collisionHandler(&player, &game, &head);

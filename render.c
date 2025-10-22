@@ -44,7 +44,7 @@ void drawBullets(struct Bullet bullets[])
   }
 }
 
-void drawHealthBar(struct HealthBar* healthBar)
+void drawHealthBar(struct HealthBar* healthBar, struct Player* player)
 {
   DrawRectangle(healthBar->background.x,
                 healthBar->background.y,
@@ -52,7 +52,7 @@ void drawHealthBar(struct HealthBar* healthBar)
                 healthBar->background.height, 
 		BLACK);
 
-  for (int i = 0; i < PLAYERHEALTH; i++)
+  for (int i = 0; i < player->playerHealth; i++)
   {
 
     DrawRectangle(healthBar->forground[i].x,
@@ -88,7 +88,7 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, ast
       drawPlayer(player);
       drawAsteroids(head); 
       drawBullets(bullets);
-      drawHealthBar(healthBar);
+      drawHealthBar(healthBar, player);
       drawPlayerLives(player); 
     } break;
 

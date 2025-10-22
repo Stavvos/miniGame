@@ -16,6 +16,12 @@ typedef enum PlayerMoveState
   NOMOVE
 } PlayerMoveState;
 
+typedef enum PlayerShootState
+{
+  SHOOTING,
+  NOTSHOOTING
+} PlayerShootState;
+
 typedef enum GameScreen 
 {
   MENU, 
@@ -42,7 +48,8 @@ struct Game
 
 struct Screen 
 {
-  GameScreen gameScreen; 
+  GameScreen gameScreen;
+  int topBoundary; 
 };
 
 struct Bullet
@@ -62,6 +69,7 @@ struct Player
   Texture2D playerTexture;
   Rectangle playerHitBox;
   PlayerMoveState playerMoveState;
+  PlayerShootState playerShootState;
   Vector2 playerPos;
   Vector2 moveUp;
   Vector2 moveDown;
@@ -92,6 +100,5 @@ struct HealthBar
   Rectangle background;
   Rectangle forground[PLAYERHEALTH];
 }; 
-
 
 #endif

@@ -122,4 +122,8 @@ void initHealthBar(struct HealthBar* healthBar)
   }
 }
 
-
+void initScreen(struct Screen* screen)
+{
+  screen->gameScreen = MENU;
+  screen->topBoundary = 0;
+}
