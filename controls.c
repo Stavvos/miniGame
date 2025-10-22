@@ -46,20 +46,10 @@ void controlsHandler(struct Player* player){
    //shoot
    if(IsKeyPressed(KEY_SPACE))
    {
-     
-    /* PlaySound(sounds[audio->activeSoundFX]);
-     
-     audio->activeSoundFX++;
-     
-     //wrap back to start of array 
-     if(audio->activeSoundFX == game->MAXBULLETS)
-     {
-       audio->activeSoundFX = 0;
-     }*/
-          
      player->playerShootState = SHOOTING;     
    }
-    
+   
+   //not moving 
    if (IsKeyUp(KEY_S) && IsKeyUp(KEY_W) && IsKeyUp(KEY_A) && IsKeyUp(KEY_D))
    {
      player->playerMoveState = NOMOVE;
