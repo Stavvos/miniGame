@@ -34,13 +34,28 @@ void spawnBullet(struct Game* game, struct Bullet bullets[], struct Player* play
   }
 }
 
-void bulletSpawnHandler(struct Player* player, struct Game* game, struct Bullet bullets[])
+void playBulletSoundFX(struct Sound sounds[], struct Audio* audio, struct Game* game)
+{
+  PlaySound(sounds[audio->activeSoundFX]);
+
+  audio->activeSoundFX++;
+
+  //wrap back to start of array 
+  if(audio->activeSoundFX == game->MAXBULLETS)
+  {
+    int startIndex = 0;
+    audio->activeSoundFX = startIndex;
+  }
+}
+
+void bulletSpawnHandler(struct Player* player, struct Game* game, struct Bullet bullets[], struct Sound bulletSounds[], struct Audio* audio)
 {
   switch(player->playerShootState)
   {
     case SHOOTING:
     {
       spawnBullet(game, bullets, player);
+      playBulletSoundFX(bulletSounds, audio, game);
       player->playerShootState = NOTSHOOTING; 
     } break;
     

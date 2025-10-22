@@ -64,12 +64,15 @@ void initGame(struct Game* game)
 
 void initAudio(struct Audio* audio, struct Game* game, Sound sounds[])
 {
+  
+  //load bullet soundFX
   audio->activeSoundFX = 0;
 
   for(int i = 0; i < game->MAXBULLETS; i++)
   {
     sounds[i] = LoadSound("assets/sound/fart.mp3");
   }
+
 }
 
 void initPlayer(struct Player* player)

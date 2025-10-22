@@ -48,9 +48,8 @@ int main(void)
   
   //init audio  
   struct Audio audio;
-  Sound sounds[game.MAXBULLETS];
-  initAudio(&audio, &game, sounds);
-  
+  Sound bulletSounds[game.MAXBULLETS];
+  initAudio(&audio, &game, bulletSounds);
   Music soundtrack = LoadMusicStream("assets/musicTracks/emeraldSeas.mp3");
   PlayMusicStream(soundtrack);
   
@@ -58,15 +57,15 @@ int main(void)
   struct HealthBar healthBar;
   initHealthBar(&healthBar);
 
-  // Main game loop
+  //Main game loop
   while (game.gameState == PLAYING) 
   {
     //state handling
     screenHandler(&screen, &game); 
-    controlsHandler(&player, &game, sounds, &audio);        
+    controlsHandler(&player);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
-    bulletSpawnHandler(&player, &game, bullets);
+    bulletSpawnHandler(&player, &game, bullets, bulletSounds, &audio);
     translateBullet(bullets, &game, &screen);
     moveAsteroids(&player, &screen, &game, head);
     collisionHandler(&player, &game, &head);
@@ -94,9 +93,9 @@ int main(void)
     collisionCleanup(&player);
   }
 
-  // De-Initialization
+  //De-Initialization
   freeAsteroidList(head);
-  deallocateSoundFX(sounds, &game);
+  deallocateSoundFX(bulletSounds, &game);
   UnloadMusicStream(soundtrack);
   CloseAudioDevice();
   CloseWindow();        // Close window and OpenGL context
