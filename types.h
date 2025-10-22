@@ -1,6 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#define PLAYERHEALTH 5
+
 typedef enum PlayerMoveState
 {
   MOVEFORWARD, 
@@ -84,5 +86,12 @@ typedef struct Asteroid
   CollisionState collisionState;
   struct Asteroid* next;
 } asteroid;
+
+struct HealthBar
+{
+  Rectangle background;
+  Rectangle forground[PLAYERHEALTH];
+}; 
+
 
 #endif

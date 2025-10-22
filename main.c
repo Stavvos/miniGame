@@ -55,22 +55,8 @@ int main(void)
   PlayMusicStream(soundtrack);
   
   //health bar
-  player.playerHealth = 5;
-  const Rectangle healthBarBackground = {200, 10, 50, 10};
-  Rectangle healthBarForgroundBlocks[5];
- 
-  int offSet = 1; 
-  for (int i = 0; i < player.playerHealth; i++)
-  {
-    healthBarForgroundBlocks[i].x = healthBarBackground.x + offSet;
-    healthBarForgroundBlocks[i].y = healthBarBackground.y + 1;
-    healthBarForgroundBlocks[i].width = healthBarBackground.width - 42;
-    healthBarForgroundBlocks[i].height = healthBarBackground.height - 2;
-    offSet += healthBarBackground.width / player.playerHealth;
-  }
-
-  //player lives
-  player.playerLives = 3;
+  struct HealthBar healthBar;
+  initHealthBar(&healthBar);
 
   // Main game loop
   while (game.gameState == PLAYING) 
@@ -81,7 +67,7 @@ int main(void)
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
     translateBullet(bullets, &game, &screen);
-    //moveAsteroids(&player, &screen, &game, head);
+    moveAsteroids(&player, &screen, &game, head);
     collisionHandler(&player, &game, &head);
     bulletHitAsteroid(&head, bullets, &game); 
     UpdateMusicStream(soundtrack);
@@ -103,15 +89,18 @@ int main(void)
       render(&screen, &player, &game, head, bullets);
       
       //draw health bar
-      DrawRectangle(healthBarBackground.x, healthBarBackground.y, healthBarBackground.width, healthBarBackground.height, BLACK);
+      DrawRectangle(healthBar.background.x, 
+		    healthBar.background.y, 
+		    healthBar.background.width, 
+		    healthBar.background.height, BLACK);
       
       for (int i = 0; i < player.playerHealth; i++)
       {
         
-        DrawRectangle(healthBarForgroundBlocks[i].x, 
-		      healthBarForgroundBlocks[i].y, 
-		      healthBarForgroundBlocks[i].width, 
-		      healthBarForgroundBlocks[i].height, 
+        DrawRectangle(healthBar.forground[i].x, 
+		      healthBar.forground[i].y, 
+		      healthBar.forground[i].width, 
+		      healthBar.forground[i].height, 
 		      GREEN);
       }
       

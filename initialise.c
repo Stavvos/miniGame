@@ -100,4 +100,26 @@ void initPlayer(struct Player* player)
   player->playerTexture = LoadTexture("assets/sprite/player/ship.png");
 
   player->collisionState = NOTHITTING;
+  player->playerHealth = PLAYERHEALTH;
+  player->playerLives = 3;
 }
+
+void initHealthBar(struct HealthBar* healthBar)
+{
+  healthBar->background.x = 200;
+  healthBar->background.y = 10;
+  healthBar->background.width = 50; 
+  healthBar->background.height = 10;
+        
+  int offSet = 1; 
+  for (int i = 0; i < PLAYERHEALTH; i++)
+  {
+    healthBar->forground[i].x = healthBar->background.x + offSet;
+    healthBar->forground[i].y = healthBar->background.y + 1;
+    healthBar->forground[i].width = healthBar->background.width - 42;
+    healthBar->forground[i].height = healthBar->background.height - 2;
+    offSet += healthBar->background.width / PLAYERHEALTH;
+  }
+}
+
+
