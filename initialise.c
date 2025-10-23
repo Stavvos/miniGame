@@ -47,6 +47,7 @@ void initAsteroids(asteroid* head)
 
   int offsetX = 5;
   int offsetY = 5;
+  
   for (int i = 0; i < 1000; i++)
   {
     pushAsteroid(head, smallAsteroidTexture, offsetX, offsetY);
@@ -104,7 +105,7 @@ void initPlayer(struct Player* player)
 
   player->collisionState = NOTHITTING;
   player->playerHealth = PLAYERHEALTH;
-  player->playerLives = 3;
+  player->playerLives = PLAYERLIVES;
 }
 
 void initHealthBar(struct HealthBar* healthBar)

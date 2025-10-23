@@ -3,8 +3,8 @@
 
 void drawMenuScreen()
 {
-  DrawText("Press Enter to start the game.", 400, 400, 14, WHITE);
-  DrawText("Press Esc to quit the game.", 400, 450, 14, WHITE);
+  DrawText("Press ENTER to start the game.", 400, 400, 14, WHITE);
+  DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
 }
 
 void drawPlayer(struct Player* player)
@@ -69,6 +69,13 @@ void drawPlayerLives(struct Player* player)
   DrawText(TextFormat("Lives %d", player->playerLives), 40, 20, 20, GREEN); 
 }
 
+void drawGameOverScreen()
+{
+  DrawText("GAME OVER", 200, 200, 20, WHITE);
+  DrawText("Press ENTER to restart the game.", 400, 400, 14, WHITE);
+  DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
+}
+
 void render(struct Screen* screen, struct Player* player, struct Game* game, asteroid* head, struct Bullet bullets[], struct HealthBar* healthBar)
 {
 
@@ -91,6 +98,12 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, ast
       drawHealthBar(healthBar, player);
       drawPlayerLives(player); 
     } break;
+    
+    case GAMEOVER:
+    {
+      ClearBackground(BLACK);
+      drawGameOverScreen();
+    }
 
       default: break;
   }

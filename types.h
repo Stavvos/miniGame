@@ -2,6 +2,7 @@
 #define TYPES_H
 
 #define PLAYERHEALTH 5
+#define PLAYERLIVES 3
 
 typedef enum PlayerMoveState
 {
@@ -25,7 +26,8 @@ typedef enum PlayerShootState
 typedef enum GameScreen 
 {
   MENU, 
-  GAMEPLAY
+  GAMEPLAY,
+  GAMEOVER
 } GameScreen;
 
 typedef enum GameState 

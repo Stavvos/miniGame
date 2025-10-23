@@ -61,7 +61,7 @@ int main(void)
   while (game.gameState == PLAYING) 
   {
     //state handling
-    screenHandler(&screen, &game); 
+    screenHandler(&screen, &game, &player); 
     controlsHandler(&player);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
@@ -77,6 +77,11 @@ int main(void)
     {
       player.playerHealth = 5;
       player.playerLives--;
+    }
+    
+    if(player.playerLives == -1)
+    {
+      screen.gameScreen = GAMEOVER;
     }
 
     //print states to console
