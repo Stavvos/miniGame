@@ -13,6 +13,8 @@
 #include "bullet.c"
 #include "initialise.c"
 #include "deallocate.c"
+#include "lives.c"
+#include "health.c"
 
 int main(void)
 {
@@ -35,9 +37,9 @@ int main(void)
   Texture2D largeAsteroidTexture = LoadTexture("assets/sprite/world/asteroidLarge.png");
   
   //asteroid linked list initialisation 
-  asteroid* head = NULL;
-  head = (asteroid*) malloc(sizeof(asteroid));
-  initAsteroids(head);
+  struct Asteroid* asteroidHead = NULL;
+  asteroidHead = (struct Asteroid*) malloc(sizeof(struct Asteroid));
+  initAsteroids(asteroidHead);
   
   //initialise bullets
   struct Bullet bullets[game.MAXBULLETS];
@@ -51,7 +53,7 @@ int main(void)
   Sound bulletSounds[game.MAXBULLETS];
   initAudio(&audio, &game, bulletSounds);
   Music soundtrack = LoadMusicStream("assets/musicTracks/emeraldSeas.mp3");
-  PlayMusicStream(soundtrack);
+  PlayMusicStream(soundtrack);//raylib library function
   
   //health bar
   struct HealthBar healthBar;
@@ -61,28 +63,42 @@ int main(void)
   while (game.gameState == PLAYING) 
   {
     //state handling
-    screenHandler(&screen, &game, &player); 
+    screenHandler(&screen, &game, &player);
+    
+    //reset the level
+    if(game.gameState == RESETLEVEL)
+    {
+      //delete the linked list
+      freeAsteroidList(asteroidHead);
+      
+      //initialise the head
+      asteroidHead = NULL; 
+      asteroidHead = (struct Asteroid*) malloc(sizeof(struct Asteroid));
+
+      //initialise the linked list
+      initAsteroids(asteroidHead);   
+
+      //reset player's position
+      player.playerPos = (Vector2){300.f, 280.f};
+      
+      //reset bullets
+      deactivateBullets(bullets, &game); 
+      
+      //set game state to playing
+      game.gameState = PLAYING;
+    }
+
     controlsHandler(&player);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
     bulletSpawnHandler(&player, &game, bullets, bulletSounds, &audio);
     translateBullet(bullets, &game, &screen);
-    moveAsteroids(&player, &screen, &game, head);
-    collisionHandler(&player, &game, &head);
-    bulletHitAsteroid(&head, bullets, &game); 
-    UpdateMusicStream(soundtrack);
-    
-    //reset players health 
-    if(player.playerHealth == 0)
-    {
-      player.playerHealth = 5;
-      player.playerLives--;
-    }
-    
-    if(player.playerLives == -1)
-    {
-      screen.gameScreen = GAMEOVER;
-    }
+    moveAsteroids(&player, &screen, &game, asteroidHead);
+    collisionHandler(&player, &game, &asteroidHead);
+    bulletHitAsteroid(&asteroidHead, bullets, &game); 
+    UpdateMusicStream(soundtrack); //raylib library function
+    updatePlayerHealth(&player);
+    updatePlayerLives(&player, &screen);
 
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
@@ -91,7 +107,7 @@ int main(void)
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
-      render(&screen, &player, &game, head, bullets, &healthBar);
+      render(&screen, &player, &game, asteroidHead, bullets, &healthBar);
     EndDrawing();
 
     //reset states
@@ -99,7 +115,7 @@ int main(void)
   }
 
   //De-Initialization
-  freeAsteroidList(head);
+  freeAsteroidList(asteroidHead);
   deallocateSoundFX(bulletSounds, &game);
   UnloadMusicStream(soundtrack);
   CloseAudioDevice();

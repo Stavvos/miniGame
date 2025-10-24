@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "types.h"
 
-void deleteAsteroid(asteroid* current, asteroid* previous, asteroid** head)
+void deleteAsteroid(struct Asteroid* current, struct Asteroid* previous, struct Asteroid** head)
 {
   //remove the head of the linked list
   if(previous == NULL)
@@ -16,11 +16,11 @@ void deleteAsteroid(asteroid* current, asteroid* previous, asteroid** head)
   }
 }
 
-void collisionHandler(struct Player* player, struct Game* game, asteroid** head)
+void collisionHandler(struct Player* player, struct Game* game, struct Asteroid** head)
 {
  
-  asteroid* current = *head;
-  asteroid* previous = NULL;
+  struct Asteroid* current = *head;
+  struct Asteroid* previous = NULL;
   
   while(current != NULL)
   {
@@ -33,7 +33,7 @@ void collisionHandler(struct Player* player, struct Game* game, asteroid** head)
         player->playerHealth--;      
       }
       
-      asteroid* next = current->next;
+      struct Asteroid* next = current->next;
       deleteAsteroid(current, previous, head);
       current = next;
     }
@@ -46,13 +46,13 @@ void collisionHandler(struct Player* player, struct Game* game, asteroid** head)
 
 }
 
-void bulletHitAsteroid(asteroid** head, struct Bullet bullets[], struct Game* game)
+void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct Game* game)
 {
  
   for(int i = 0; i < game->MAXBULLETS; i++)
   {
-    asteroid* current = *head;
-    asteroid* previous = NULL;
+    struct Asteroid* current = *head;
+    struct Asteroid* previous = NULL;
  
     if(bullets[i].active)
     {
@@ -60,7 +60,7 @@ void bulletHitAsteroid(asteroid** head, struct Bullet bullets[], struct Game* ga
       {
         if (CheckCollisionRecs(bullets[i].hitBox, current->hitBox))
         {
-          asteroid* next = current->next;
+          struct Asteroid* next = current->next;
           deleteAsteroid(current, previous, head);
           current = next;
         }

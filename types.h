@@ -32,7 +32,8 @@ typedef enum GameScreen
 
 typedef enum GameState 
 {
-  PLAYING, 
+  PLAYING,
+  RESETLEVEL, 
   EXIT
 } GameState;
 
@@ -86,7 +87,7 @@ struct Player
   int playerLives;
 };
 
-typedef struct Asteroid
+struct Asteroid
 {
   Rectangle hitBox;
   Texture2D texture;
@@ -95,7 +96,7 @@ typedef struct Asteroid
   float hypotenuse;
   CollisionState collisionState;
   struct Asteroid* next;
-} asteroid;
+};
 
 struct HealthBar
 {

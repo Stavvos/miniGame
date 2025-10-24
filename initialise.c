@@ -12,16 +12,16 @@ void initBullets(struct Bullet bullets[], struct Game* game)
   }
 }
 
-void pushAsteroid(asteroid* head, Texture2D texture, int offsetX, int offsetY)
+void pushAsteroid(struct Asteroid* head, Texture2D texture, int offsetX, int offsetY)
 {
-  asteroid* current = head;
+  struct Asteroid* current = head;
 
   while (current->next != NULL)
   {
     current = current->next;
   }
 
-  current->next = (asteroid*) malloc(sizeof(asteroid));
+  current->next = (struct Asteroid*) malloc(sizeof(struct Asteroid));
   current->next->texture = texture;
   current->next->position = (Vector2){100.f + offsetX, 100.f + offsetY};
   current->next->hitBox.width = 16;
@@ -32,9 +32,9 @@ void pushAsteroid(asteroid* head, Texture2D texture, int offsetX, int offsetY)
   current->next->next = NULL;
 }
 
-void initAsteroids(asteroid* head)
+void initAsteroids(struct Asteroid* head)
 {
-  //linked list node test
+  
   Texture2D smallAsteroidTexture = LoadTexture("assets/sprite/world/asteroid.png");
   head->texture = smallAsteroidTexture;
   head->position = (Vector2){100.f, 100.f};
@@ -48,7 +48,7 @@ void initAsteroids(asteroid* head)
   int offsetX = 5;
   int offsetY = 5;
   
-  for (int i = 0; i < 1000; i++)
+  for (int i = 0; i < 100; i++)
   {
     pushAsteroid(head, smallAsteroidTexture, offsetX, offsetY);
     offsetX += 5;
@@ -93,16 +93,12 @@ void initPlayer(struct Player* player)
   player->moveUpLeft = (Vector2){-0.707, -0.707};
   player->moveDownRight = (Vector2){0.707, 0.707};
   player->moveDownLeft = (Vector2){-0.707, 0.707};
-
   player->playerPos = (Vector2){300.f, 280.f};
-
   player->playerHitBox.x = player->playerPos.x;
   player->playerHitBox.y = player->playerPos.y;
   player->playerHitBox.width = 8;
   player->playerHitBox.height = 9;
-
   player->playerTexture = LoadTexture("assets/sprite/player/ship.png");
-
   player->collisionState = NOTHITTING;
   player->playerHealth = PLAYERHEALTH;
   player->playerLives = PLAYERLIVES;

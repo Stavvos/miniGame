@@ -1,12 +1,12 @@
 #include "types.h"
 #include "math.h"
 
-void moveAsteroids(struct Player* player, struct Screen* screen, struct Game* game, asteroid* head)
+void moveAsteroids(struct Player* player, struct Screen* screen, struct Game* game, struct Asteroid* head)
 {
     
   if(screen->gameScreen == GAMEPLAY)
   {
-    asteroid* current = head;
+    struct Asteroid* current = head;
 
     while(current != NULL)
     {

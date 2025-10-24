@@ -1,6 +1,14 @@
 #include "raylib.h"
 #include "types.h"
 
+void deactivateBullets(struct Bullet bullets[], struct Game* game)
+{
+  for(int i = 0; i < game->MAXBULLETS; i++)
+  {
+    bullets[i].active = false;
+  }
+}
+
 void translateBullet(struct Bullet bullets[], struct Game* game, struct Screen* screen)
 {
   if(screen->gameScreen == GAMEPLAY)

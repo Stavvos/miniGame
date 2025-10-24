@@ -18,9 +18,9 @@ void drawPlayer(struct Player* player)
 		     BLACK);
 }
 
-void drawAsteroids(asteroid* head)
+void drawAsteroids(struct Asteroid* head)
 {
-  asteroid* current = head;
+  struct Asteroid* current = head;
   while(current != NULL)
     {
       DrawTexture(current->texture, current->position.x, current->position.y, WHITE);
@@ -76,7 +76,7 @@ void drawGameOverScreen()
   DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
 }
 
-void render(struct Screen* screen, struct Player* player, struct Game* game, asteroid* head, struct Bullet bullets[], struct HealthBar* healthBar)
+void render(struct Screen* screen, struct Player* player, struct Game* game, struct Asteroid* head, struct Bullet bullets[], struct HealthBar* healthBar)
 {
 
   switch(screen->gameScreen)
