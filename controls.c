@@ -46,7 +46,7 @@ void controlsHandler(struct Player* player){
    //shoot
    if(IsKeyPressed(KEY_SPACE))
    {
-     player->playerShootState = SHOOTING;     
+     player->playerShootState = SHOOTING;
    }
    
    //not moving 

@@ -12,51 +12,6 @@ void initBullets(struct Bullet bullets[], struct Game* game)
   }
 }
 
-void pushAsteroid(struct Asteroid* head, Texture2D texture, int offsetX, int offsetY)
-{
-  struct Asteroid* current = head;
-
-  while (current->next != NULL)
-  {
-    current = current->next;
-  }
-
-  current->next = (struct Asteroid*) malloc(sizeof(struct Asteroid));
-  current->next->texture = texture;
-  current->next->position = (Vector2){100.f + offsetX, 100.f + offsetY};
-  current->next->hitBox.width = 16;
-  current->next->hitBox.height = 16;
-  current->next->hitBox.x = current->next->position.x;
-  current->next->hitBox.y = current->next->position.y;
-  current->next->collisionState = NOTHITTING;
-  current->next->next = NULL;
-}
-
-void initAsteroids(struct Asteroid* head)
-{
-  
-  Texture2D smallAsteroidTexture = LoadTexture("assets/sprite/world/asteroid.png");
-  head->texture = smallAsteroidTexture;
-  head->position = (Vector2){100.f, 100.f};
-  head->hitBox.width = 16;
-  head->hitBox.height = 16;
-  head->hitBox.x = head->position.x;
-  head->hitBox.y = head->position.y;
-  head->collisionState = NOTHITTING;
-  head->next = NULL;
-
-  int offsetX = 5;
-  int offsetY = 5;
-  
-  for (int i = 0; i < 100; i++)
-  {
-    pushAsteroid(head, smallAsteroidTexture, offsetX, offsetY);
-    offsetX += 5;
-    offsetY += 0;
-  }
-
-}
-
 void initGame(struct Game* game)
 {
   game->gameState = PLAYING;

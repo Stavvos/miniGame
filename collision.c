@@ -1,21 +1,6 @@
 #include "raylib.h"
 #include "types.h"
 
-void deleteAsteroid(struct Asteroid* current, struct Asteroid* previous, struct Asteroid** head)
-{
-  //remove the head of the linked list
-  if(previous == NULL)
-  {
-    *head = current->next;
-    free(current);
-  }
-  else //remove other node of the linked list
-  {
-    previous->next = current->next;
-    free(current);
-  }
-}
-
 void collisionHandler(struct Player* player, struct Game* game, struct Asteroid** head)
 {
  

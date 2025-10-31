@@ -2,7 +2,7 @@
 
 rm ./game
 
-if gcc -Wall -pedantic -o game main.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11; then
+if gcc -Wall -pedantic -o game main.c types.c -lraylib -lGL -lm -lpthread -ldl -lrt -lX11; then
   echo compiled
 else
   exit $?

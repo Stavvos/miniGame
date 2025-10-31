@@ -4,6 +4,8 @@
 #define PLAYERHEALTH 5
 #define PLAYERLIVES 3
 
+#include "raylib.h"
+
 typedef enum PlayerMoveState
 {
   MOVEFORWARD, 
@@ -103,5 +105,10 @@ struct HealthBar
   Rectangle background;
   Rectangle forground[PLAYERHEALTH];
 }; 
+
+void deleteAsteroid(struct Asteroid* current, struct Asteroid* previous, struct Asteroid** head);
+void pushAsteroid(struct Asteroid* head, Texture2D texture, int offsetX, int offsetY);
+void initAsteroids(struct Asteroid* head);
+void freeAsteroidList(struct Asteroid* head);
 
 #endif
