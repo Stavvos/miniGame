@@ -15,6 +15,7 @@
 #include "deallocate.c"
 #include "lives.c"
 #include "health.c"
+#include "level.c"
 
 int main(void)
 {
@@ -64,30 +65,7 @@ int main(void)
   {
     //state handling
     screenHandler(&screen, &game, &player);
-    
-    //reset the level
-    if(game.gameState == RESETLEVEL)
-    {
-      //delete the linked list
-      freeAsteroidList(asteroidHead);
-      
-      //initialise the head
-      asteroidHead = NULL; 
-      asteroidHead = (struct Asteroid*) malloc(sizeof(struct Asteroid));
-
-      //initialise the linked list
-      initAsteroids(asteroidHead);   
-
-      //reset player's position
-      player.playerPos = (Vector2){300.f, 280.f};
-      
-      //reset bullets
-      deactivateBullets(bullets, &game); 
-      
-      //set game state to playing
-      game.gameState = PLAYING;
-    }
-
+    levelHandler(&game, &player, bullets, &asteroidHead);
     controlsHandler(&player);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);

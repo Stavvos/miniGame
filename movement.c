@@ -82,7 +82,7 @@ void updatePlayerHitBox(struct Player* player)
 void playerMovementHandler(struct Player* player, struct Screen* screen) {
 
 //Update player move state
-switch(player -> playerMoveState)
+switch(player->playerMoveState)
  {
   case NOMOVE:
   {
