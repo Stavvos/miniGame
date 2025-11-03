@@ -36,8 +36,7 @@ int main(void)
   
   //asteroid linked list initialisation 
   struct Asteroid* asteroidHead = NULL;
-  asteroidHead = (struct Asteroid*) malloc(sizeof(struct Asteroid));
-  initAsteroids(asteroidHead);
+  initialiseLevel("levels/level1.csv", &asteroidHead);
   
   //initialise bullets
   struct Bullet bullets[game.MAXBULLETS];
@@ -56,9 +55,6 @@ int main(void)
   //health bar
   struct HealthBar healthBar;
   initHealthBar(&healthBar);
-  
-  //read the csv file for level 
-  readLevelFile("levels/level1.csv");
 
   //Main game loop
   while (game.gameState == PLAYING) 
@@ -71,7 +67,7 @@ int main(void)
     updatePlayerHitBox(&player);
     bulletSpawnHandler(&player, &game, bullets, bulletSounds, &audio);
     translateBullet(bullets, &game, &screen);
-    //moveAsteroids(&player, &screen, &game, asteroidHead);
+    moveAsteroids(&player, &screen, &game, asteroidHead);
     collisionHandler(&player, &game, &asteroidHead);
     bulletHitAsteroid(&asteroidHead, bullets, &game); 
     UpdateMusicStream(soundtrack); //raylib library function

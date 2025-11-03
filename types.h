@@ -110,9 +110,9 @@ struct HealthBar
 }; 
 
 void deleteAsteroid(struct Asteroid* current, struct Asteroid* previous, struct Asteroid** head);
-void pushAsteroid(struct Asteroid* head, Texture2D texture, int offsetX, int offsetY);
-void initAsteroids(struct Asteroid* head);
+void pushAsteroid(struct Asteroid** head, struct Asteroid* node);
 void freeAsteroidList(struct Asteroid* head);
-void readLevelFile(char* fileName);
+void initialiseLevel(char* fileName, struct Asteroid** head);
+struct Asteroid* createAsteroidNode();
 
 #endif
