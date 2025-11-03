@@ -2,10 +2,43 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void readLevelFile(char* fileName)
+{
+  FILE *filePointer;
+  char row[1024];
+  char *token;
+
+  filePointer = fopen(fileName, "r");
+
+  if (filePointer == NULL)
+  {
+    printf("Error opening level file");
+    return;
+  }
+
+  while(fgets(row, 1024, filePointer) != NULL)
+  {
+
+    printf("Row: %s", row);
+    token = strtok(row, ",");
+    
+    while (token != NULL)
+    {
+      printf("Token: %s\n", token);
+      token = strtok(NULL, ",");
+    }
+  }
+
+  fclose(filePointer);
+}
+
 void initAsteroids(struct Asteroid* head)
 {
 
   Texture2D smallAsteroidTexture = LoadTexture("assets/sprite/world/asteroid.png");
+  Texture2D mediumAsteroidTexture = LoadTexture("assets/sprite/world/asteroidMedium.png");
+  Texture2D largeAsteroidTexture = LoadTexture("assets/sprite/world/asteroidLarge.png");
+
   head->texture = smallAsteroidTexture;
   head->position = (Vector2){100.f, 100.f};
   head->hitBox.width = 16;
@@ -20,7 +53,19 @@ void initAsteroids(struct Asteroid* head)
 
   for (int i = 0; i < 100; i++)
   {
-    pushAsteroid(head, smallAsteroidTexture, offsetX, offsetY);
+    if(i == 10)
+    {
+      pushAsteroid(head, largeAsteroidTexture, offsetX, offsetY);
+    }
+    else if (i == 33)
+    {
+      pushAsteroid(head, mediumAsteroidTexture, offsetX, offsetY);
+    }
+    else
+    {
+      pushAsteroid(head, smallAsteroidTexture, offsetX, offsetY);
+    }
+
     offsetX += 5;
     offsetY += 0;
   }

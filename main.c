@@ -33,9 +33,6 @@ int main(void)
 
   struct Screen screen;
   initScreen(&screen); 
-
-  Texture2D mediumAsteroidTexture = LoadTexture("assets/sprite/world/asteroidMedium.png");
-  Texture2D largeAsteroidTexture = LoadTexture("assets/sprite/world/asteroidLarge.png");
   
   //asteroid linked list initialisation 
   struct Asteroid* asteroidHead = NULL;
@@ -59,6 +56,9 @@ int main(void)
   //health bar
   struct HealthBar healthBar;
   initHealthBar(&healthBar);
+  
+  //read the csv file for level 
+  readLevelFile("levels/level1.csv");
 
   //Main game loop
   while (game.gameState == PLAYING) 
@@ -71,7 +71,7 @@ int main(void)
     updatePlayerHitBox(&player);
     bulletSpawnHandler(&player, &game, bullets, bulletSounds, &audio);
     translateBullet(bullets, &game, &screen);
-    moveAsteroids(&player, &screen, &game, asteroidHead);
+    //moveAsteroids(&player, &screen, &game, asteroidHead);
     collisionHandler(&player, &game, &asteroidHead);
     bulletHitAsteroid(&asteroidHead, bullets, &game); 
     UpdateMusicStream(soundtrack); //raylib library function
@@ -98,5 +98,6 @@ int main(void)
   UnloadMusicStream(soundtrack);
   CloseAudioDevice();
   CloseWindow();        // Close window and OpenGL context
+   
   return 0;
 }

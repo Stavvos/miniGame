@@ -5,6 +5,9 @@
 #define PLAYERLIVES 3
 
 #include "raylib.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 
 typedef enum PlayerMoveState
 {
@@ -110,5 +113,6 @@ void deleteAsteroid(struct Asteroid* current, struct Asteroid* previous, struct 
 void pushAsteroid(struct Asteroid* head, Texture2D texture, int offsetX, int offsetY);
 void initAsteroids(struct Asteroid* head);
 void freeAsteroidList(struct Asteroid* head);
+void readLevelFile(char* fileName);
 
 #endif
