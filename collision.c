@@ -6,7 +6,7 @@ void collisionHandler(struct Player* player, struct Game* game, struct Asteroid*
  
   struct Asteroid* current = *head;
   struct Asteroid* previous = NULL;
-  
+
   while(current != NULL)
   {
     if (CheckCollisionRecs(player->playerHitBox, current->hitBox))

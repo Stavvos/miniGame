@@ -32,13 +32,17 @@ typedef enum GameScreen
 {
   MENU, 
   GAMEPLAY,
-  GAMEOVER
+  GAMEOVER,
+  WONLEVEL,
+  WONGAME
 } GameScreen;
 
 typedef enum GameState 
 {
   PLAYING,
-  RESETLEVEL, 
+  RESETLEVEL,
+  NEXTLEVEL,
+  ENDGAME,
   EXIT
 } GameState;
 
@@ -52,6 +56,8 @@ struct Game
 {
   GameState gameState;
   int MAXBULLETS;
+  int level;
+  int MAXLEVEL;
 };
 
 struct Screen 

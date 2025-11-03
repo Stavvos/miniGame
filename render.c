@@ -3,6 +3,7 @@
 
 void drawMenuScreen()
 {
+  DrawText("GAME PAUSED", 200, 200, 20, WHITE);
   DrawText("Press ENTER to start the game.", 400, 400, 14, WHITE);
   DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
 }
@@ -76,6 +77,20 @@ void drawGameOverScreen()
   DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
 }
 
+void drawLevelWinScreen()
+{
+  DrawText("LEVEL COMPLETED", 200, 200, 20, WHITE);
+  DrawText("Press ENTER to proceed to next level.", 400, 400, 14, WHITE);
+  DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
+}
+
+void drawGameWinScreen()
+{
+  DrawText("CONGRATULATIONS YOU COMPLETED THE GAME!", 200, 200, 20, WHITE);
+  DrawText("Press ENTER to restart the game.", 400, 400, 14, WHITE);
+  DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
+}
+
 void render(struct Screen* screen, struct Player* player, struct Game* game, struct Asteroid* head, struct Bullet bullets[], struct HealthBar* healthBar)
 {
 
@@ -84,14 +99,12 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, str
     case MENU:
     {
       ClearBackground(BLACK);
-      
       drawMenuScreen();
     } break;
 
     case GAMEPLAY:
     {
       ClearBackground(RAYWHITE);
-      
       drawPlayer(player);
       drawAsteroids(head); 
       drawBullets(bullets);
@@ -103,7 +116,19 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, str
     {
       ClearBackground(BLACK);
       drawGameOverScreen();
-    }
+    } break;
+
+    case WONLEVEL:
+    {
+      ClearBackground(BLACK);
+      drawLevelWinScreen();
+    } break;
+
+    case WONGAME:
+    {
+      ClearBackground(BLACK);
+      drawGameWinScreen();
+    } break;
 
       default: break;
   }

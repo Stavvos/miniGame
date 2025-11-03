@@ -36,7 +36,9 @@ int main(void)
   
   //asteroid linked list initialisation 
   struct Asteroid* asteroidHead = NULL;
-  initialiseLevel("levels/level1.csv", &asteroidHead);
+  char *levelFileNames[] = {"levels/level1.csv",
+	                    "levels/level2.csv"};
+  initialiseLevel(levelFileNames[game.level], &asteroidHead);
   
   //initialise bullets
   struct Bullet bullets[game.MAXBULLETS];
@@ -61,7 +63,8 @@ int main(void)
   {
     //state handling
     screenHandler(&screen, &game, &player);
-    levelHandler(&game, &player, bullets, &asteroidHead);
+    levelChangeHandler(&asteroidHead, &game, &screen);
+    levelHandler(&game, &player, bullets, &asteroidHead, levelFileNames);
     controlsHandler(&player);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);

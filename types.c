@@ -129,7 +129,8 @@ void freeAsteroidList(struct Asteroid* head)
     free(current);
     current = nextNode;
   }
-
+  
+  head =  NULL;  
   printf("Asteroid inked list memory de-allocated\n\n");
 }
 
