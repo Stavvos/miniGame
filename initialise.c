@@ -63,8 +63,8 @@ void initPlayer(struct Player* player)
 
 void initHealthBar(struct HealthBar* healthBar)
 {
-  healthBar->background.x = 200;
-  healthBar->background.y = 10;
+  healthBar->background.x = 280;
+  healthBar->background.y = 25;
   healthBar->background.width = 50; 
   healthBar->background.height = 10;
         

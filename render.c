@@ -62,17 +62,18 @@ void drawHealthBar(struct HealthBar* healthBar, struct Player* player)
                   healthBar->forground[i].height,
                   GREEN);
   }
-
+  
+  DrawText("Health ", 200, 20, 20, GREEN);
 }
 
 void drawPlayerLives(struct Player* player)
 {
-  DrawText(TextFormat("Lives %d", player->playerLives), 40, 20, 20, GREEN); 
+  DrawText(TextFormat("Lives %d", player->playerLives), 80, 20, 20, GREEN); 
 }
 
 void drawPlayerScore(struct Player* player)
 {
-  DrawText(TextFormat("Score %d", player->score), 180, 20, 20, GREEN); 
+  DrawText(TextFormat("Score %d", player->score), 360, 20, 20, GREEN); 
 }
 
 void drawGameOverScreen()
