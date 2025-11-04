@@ -31,7 +31,7 @@ void collisionHandler(struct Player* player, struct Game* game, struct Asteroid*
 
 }
 
-void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct Game* game)
+void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct Game* game, struct Player* player)
 {
  
   for(int i = 0; i < game->MAXBULLETS; i++)
@@ -46,6 +46,7 @@ void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct G
         if (CheckCollisionRecs(bullets[i].hitBox, current->hitBox))
         {
           struct Asteroid* next = current->next;
+          player->score += current->points;	  
           deleteAsteroid(current, previous, head);
           current = next;
         }

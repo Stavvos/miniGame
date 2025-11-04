@@ -96,6 +96,7 @@ struct Player
   CollisionState collisionState;
   int playerHealth;
   int playerLives;
+  int score;
 };
 
 struct Asteroid
@@ -106,6 +107,7 @@ struct Asteroid
   Vector2 direction;
   float hypotenuse;
   CollisionState collisionState;
+  int points;
   struct Asteroid* next;
 };
 

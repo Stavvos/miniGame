@@ -23,7 +23,6 @@ void initGame(struct Game* game)
 void initAudio(struct Audio* audio, struct Game* game, Sound sounds[])
 {
   
-  //load bullet soundFX
   audio->activeSoundFX = 0;
 
   for(int i = 0; i < game->MAXBULLETS; i++)
@@ -59,6 +58,7 @@ void initPlayer(struct Player* player)
   player->collisionState = NOTHITTING;
   player->playerHealth = PLAYERHEALTH;
   player->playerLives = PLAYERLIVES;
+  player->score = 0;
 }
 
 void initHealthBar(struct HealthBar* healthBar)

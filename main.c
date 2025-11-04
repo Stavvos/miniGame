@@ -72,7 +72,7 @@ int main(void)
     translateBullet(bullets, &game, &screen);
     moveAsteroids(&player, &screen, &game, asteroidHead);
     collisionHandler(&player, &game, &asteroidHead);
-    bulletHitAsteroid(&asteroidHead, bullets, &game); 
+    bulletHitAsteroid(&asteroidHead, bullets, &game, &player); 
     UpdateMusicStream(soundtrack); //raylib library function
     updatePlayerHealth(&player);
     updatePlayerLives(&player, &screen);

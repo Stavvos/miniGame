@@ -82,9 +82,10 @@ void levelHandler(struct Game* game, struct Player* player, struct Bullet bullet
       //initialise the linked list
       initialiseLevel(levelFileNames[game->level], asteroidHead);
       
-      //reset player's position
+      //reset player's position and score
       player->playerPos = (Vector2){300.f, 280.f};
-
+      player->score = 0;
+      
       //reset bullets
       deactivateBullets(bullets, game);
 

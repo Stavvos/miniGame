@@ -70,6 +70,11 @@ void drawPlayerLives(struct Player* player)
   DrawText(TextFormat("Lives %d", player->playerLives), 40, 20, 20, GREEN); 
 }
 
+void drawPlayerScore(struct Player* player)
+{
+  DrawText(TextFormat("Score %d", player->score), 180, 20, 20, GREEN); 
+}
+
 void drawGameOverScreen()
 {
   DrawText("GAME OVER", 200, 200, 20, WHITE);
@@ -109,7 +114,8 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, str
       drawAsteroids(head); 
       drawBullets(bullets);
       drawHealthBar(healthBar, player);
-      drawPlayerLives(player); 
+      drawPlayerLives(player);
+      drawPlayerScore(player); 
     } break;
     
     case GAMEOVER:
