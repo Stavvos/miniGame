@@ -16,6 +16,7 @@
 #include "lives.c"
 #include "health.c"
 #include "level.c"
+#include "invulnFrames.c"
 
 int main(void)
 {
@@ -76,6 +77,7 @@ int main(void)
     UpdateMusicStream(soundtrack); //raylib library function
     updatePlayerHealth(&player);
     updatePlayerLives(&player, &screen);
+    updateInvulnFrames(&player);
 
     //print states to console
     printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),

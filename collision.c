@@ -9,7 +9,7 @@ void collisionHandler(struct Player* player, struct Game* game, struct Asteroid*
 
   while(current != NULL)
   {
-    if (CheckCollisionRecs(player->playerHitBox, current->hitBox))
+    if (CheckCollisionRecs(player->playerHitBox, current->hitBox) && player->invulnFrames == 0)
     {
       player->collisionState = HITTING;
       

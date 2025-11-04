@@ -7,5 +7,6 @@ void updatePlayerHealth(struct Player* player)
   {
     player->playerHealth = 5;
     player->playerLives--;
+    player->invulnFrames = INVULNFRAMES;
   }
 }

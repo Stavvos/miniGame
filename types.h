@@ -3,6 +3,7 @@
 
 #define PLAYERHEALTH 5
 #define PLAYERLIVES 3
+#define INVULNFRAMES 60
 
 #include "raylib.h"
 #include <stdio.h>
@@ -97,6 +98,8 @@ struct Player
   int playerHealth;
   int playerLives;
   int score;
+  int invulnFrames;
+  bool invulnRenderPlayer;
 };
 
 struct Asteroid

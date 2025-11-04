@@ -59,6 +59,8 @@ void initPlayer(struct Player* player)
   player->playerHealth = PLAYERHEALTH;
   player->playerLives = PLAYERLIVES;
   player->score = 0;
+  player->invulnFrames = 0;
+  player->invulnRenderPlayer = true;
 }
 
 void initHealthBar(struct HealthBar* healthBar)

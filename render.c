@@ -10,13 +10,15 @@ void drawMenuScreen()
 
 void drawPlayer(struct Player* player)
 {
-
-  DrawTexture(player->playerTexture, player->playerPos.x, player->playerPos.y, WHITE);
-  DrawRectangleLines(player->playerHitBox.x, 
-		     player->playerHitBox.y, 
-	             player->playerHitBox.width, 
-	             player->playerHitBox.height, 
-		     BLACK);
+  if(player->invulnRenderPlayer)
+  {
+    DrawTexture(player->playerTexture, player->playerPos.x, player->playerPos.y, BLACK);
+    DrawRectangleLines(player->playerHitBox.x, 
+		       player->playerHitBox.y, 
+	               player->playerHitBox.width, 
+	               player->playerHitBox.height, 
+		       BLACK);
+  }
 }
 
 void drawAsteroids(struct Asteroid* head)
