@@ -38,7 +38,8 @@ int main(void)
   //asteroid linked list initialisation 
   struct Asteroid* asteroidHead = NULL;
   char *levelFileNames[] = {"levels/level1.csv",
-	                    "levels/level2.csv"};
+	                    "levels/level2.csv",
+  			    "levels/level3.csv"};
   initialiseLevel(levelFileNames[game.level], &asteroidHead);
   
   //initialise bullets

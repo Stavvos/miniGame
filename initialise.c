@@ -17,7 +17,7 @@ void initGame(struct Game* game)
   game->gameState = PLAYING;
   game->MAXBULLETS = 15;
   game->level = 0;
-  game->MAXLEVEL = 1;
+  game->MAXLEVEL = 2;
 }
 
 void initAudio(struct Audio* audio, struct Game* game, Sound sounds[])
