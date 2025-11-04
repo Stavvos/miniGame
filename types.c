@@ -6,16 +6,12 @@ struct Asteroid* createAsteroidNode()
 {
   struct Asteroid* node = (struct Asteroid*)malloc(sizeof(struct Asteroid));
   
-  if(node == NULL)
+  if (node == NULL)
   {
     printf("Failed to allocate memory for asteroid node\n");
     exit(1);
   }
   
-  //-1 is a defualt value used for determening if a value has been read from file. -1 chosen because co-ords will
-  ////never be -1 in the csv file
-  node->position.x = -1;
-  node->position.y = -1;
   node->collisionState = NOTHITTING;
   node->next = NULL;
   
@@ -42,19 +38,14 @@ void pushAsteroid(struct Asteroid** head, struct Asteroid* node)
 
 }
 
-void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D smallAsteroidTexture, Texture2D mediumAsteroidTexture, Texture2D largeAsteroidTexture)
+void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D smallAsteroidTexture, Texture2D mediumAsteroidTexture, Texture2D largeAsteroidTexture, int tokenNum)
 {
-  //position.x initially set to -1 and -1 will never be in the csv file. the "s\n" 
-  //accounts for newline char for end of csv line. 
-  //
-  //EXAMPLE: first token = 200, node->postion.x = -1, now set to 200, next token = 100, 
-  //node->position.y = -1, set to 100, next token = s, node->texture = smallAsteroidTexture. 
-  if (node->position.x == -1)
+  if (tokenNum == 0)
   {
     node->position.x = atoi(token);
     node->hitBox.x = atoi(token);
   }
-  else if (node->position.y == -1)
+  else if (tokenNum == 1)
   {
     node->position.y = atoi(token);
     node->hitBox.y = atoi(token);
@@ -80,7 +71,7 @@ void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D sm
     node->hitBox.height = 64;
     node->points = 300;
   }
- 
+
 }
 
 void initialiseLevel(char* fileName, struct Asteroid** head)
@@ -101,16 +92,18 @@ void initialiseLevel(char* fileName, struct Asteroid** head)
   Texture2D mediumAsteroidTexture = LoadTexture("assets/sprite/world/asteroidMedium.png");
   Texture2D largeAsteroidTexture = LoadTexture("assets/sprite/world/asteroidLarge.png");
 
-  while(fgets(row, 1024, filePointer) != NULL)
+  while (fgets(row, 1024, filePointer) != NULL)
   {
 
+    int tokenNum = 0;
     token = strtok(row, ",");
     struct Asteroid *node = createAsteroidNode();
-
+    
     while (token != NULL)
     {
-      assignTokenToAsteroidValue(node, token, smallAsteroidTexture, mediumAsteroidTexture, largeAsteroidTexture);
+      assignTokenToAsteroidValue(node, token, smallAsteroidTexture, mediumAsteroidTexture, largeAsteroidTexture, tokenNum);
       token = strtok(NULL, ",");
+      tokenNum++;
     }
 
     pushAsteroid(head, node);
@@ -140,12 +133,12 @@ void freeAsteroidList(struct Asteroid* head)
 void deleteAsteroid(struct Asteroid* current, struct Asteroid* previous, struct Asteroid** head)
 {
   //remove the head of the linked list
-  if(previous == NULL)
+  if (previous == NULL)
   {
     *head = current->next;
     free(current);
   }
-  else //remove other node of the linked list
+  else //remove non-head node of the linked list
   { 
     previous->next = current->next;
     free(current);
