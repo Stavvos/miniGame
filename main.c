@@ -54,11 +54,22 @@ int main(void)
   Sound bulletSounds[game.MAXBULLETS];
   initAudio(&audio, &game, bulletSounds);
   Music soundtrack = LoadMusicStream("assets/musicTracks/emeraldSeas.mp3");
-  PlayMusicStream(soundtrack);//raylib library function
+  PlayMusicStream(soundtrack); //raylib library function
   
   //health bar
   struct HealthBar healthBar;
   initHealthBar(&healthBar);
+
+  //pickup item
+  struct LifePickup lifePickup;
+  lifePickup.active = true;
+  lifePickup.position = (Vector2){400, 500};
+  lifePickup.texture = LoadTexture("assets/sprite/world/pickup.png");
+  lifePickup.hitBox.x = lifePickup.position.x;
+  lifePickup.hitBox.y = lifePickup.position.y;
+  lifePickup.hitBox.width = 16;
+  lifePickup.hitBox.height = 16;
+
 
   //Main game loop
   while (game.gameState == PLAYING) 
@@ -87,7 +98,7 @@ int main(void)
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
-      render(&screen, &player, &game, asteroidHead, bullets, &healthBar);
+      render(&screen, &player, &game, asteroidHead, bullets, &healthBar, &lifePickup);
     EndDrawing();
 
     //reset states

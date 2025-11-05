@@ -102,6 +102,14 @@ struct Player
   bool invulnRenderPlayer;
 };
 
+struct LifePickup
+{
+  Texture2D texture;
+  Vector2 position;
+  bool active;
+  Rectangle hitBox;
+};
+
 struct Asteroid
 {
   Rectangle hitBox;

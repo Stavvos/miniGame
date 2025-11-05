@@ -67,6 +67,7 @@ void screenHandler(struct Screen* screen, struct Game* game, struct Player* play
 	player->playerLives = PLAYERLIVES;
 	player->playerHealth = PLAYERHEALTH;
 	game->gameState = RESETLEVEL;
+	player->score = 0;
       }
 
       if(IsKeyPressed(KEY_ESCAPE))

@@ -3,7 +3,8 @@
 void levelChangeHandler(struct Asteroid** head, struct Game* game, struct Screen* gameScreen)
 {
   struct Asteroid* current = *head;
-
+  
+  //if no asteroids in linked list
   if(current == NULL) 
   {
     if(game->level < game->MAXLEVEL)
@@ -14,10 +15,9 @@ void levelChangeHandler(struct Asteroid** head, struct Game* game, struct Screen
     }
     else
     {
-      printf("you won\n");
       game->gameState = ENDGAME;
       gameScreen->gameScreen = WONGAME;
-      game->level = 0; 
+      game->level = 0;
     }
   }
 
@@ -84,8 +84,7 @@ void levelHandler(struct Game* game, struct Player* player, struct Bullet bullet
       
       //reset player's position and score
       player->playerPos = (Vector2){300.f, 280.f};
-      player->score = 0;
-      
+
       //reset bullets
       deactivateBullets(bullets, game);
 

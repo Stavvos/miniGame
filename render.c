@@ -99,7 +99,17 @@ void drawGameWinScreen()
   DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
 }
 
-void render(struct Screen* screen, struct Player* player, struct Game* game, struct Asteroid* head, struct Bullet bullets[], struct HealthBar* healthBar)
+void drawLifePickup(struct LifePickup* lifePickup)
+{
+  DrawTexture(lifePickup->texture, lifePickup->position.x, lifePickup->position.y, WHITE);
+  DrawRectangleLines(lifePickup->position.x,
+		     lifePickup->position.y, 
+		     lifePickup->hitBox.width, 
+	             lifePickup->hitBox.height, 
+      	             BLACK);
+}
+
+void render(struct Screen* screen, struct Player* player, struct Game* game, struct Asteroid* head, struct Bullet bullets[], struct HealthBar* healthBar, struct LifePickup* lifePickup)
 {
 
   switch(screen->gameScreen)
@@ -118,7 +128,8 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, str
       drawBullets(bullets);
       drawHealthBar(healthBar, player);
       drawPlayerLives(player);
-      drawPlayerScore(player); 
+      drawPlayerScore(player);
+      drawLifePickup(lifePickup); 
     } break;
     
     case GAMEOVER:
