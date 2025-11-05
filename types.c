@@ -50,6 +50,14 @@ void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D sm
     node->position.y = atoi(token);
     node->hitBox.y = atoi(token);
   }
+  else if (strcmp(token, "t") == 0 && tokenNum == 2)
+  {
+    node->hasItem = true;
+  }
+  else if (strcmp(token, "f") == 0 && tokenNum == 2)
+  {
+    node->hasItem = false;
+  }
   else if (strcmp(token, "s\n") == 0)
   {
     node->texture = smallAsteroidTexture;

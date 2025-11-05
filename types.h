@@ -59,6 +59,7 @@ struct Game
   int MAXBULLETS;
   int level;
   int MAXLEVEL;
+  bool resetItemLocation;
 };
 
 struct Screen 
@@ -119,6 +120,7 @@ struct Asteroid
   float hypotenuse;
   CollisionState collisionState;
   int points;
+  bool hasItem;
   struct Asteroid* next;
 };
 

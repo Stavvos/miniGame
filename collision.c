@@ -1,7 +1,21 @@
 #include "raylib.h"
 #include "types.h"
 
-void collisionHandler(struct Player* player, struct Game* game, struct Asteroid** head)
+void moveItemToHitAsteroid(struct Asteroid* current, struct LifePickup* lifePickup, struct Game* game)
+{
+  if(current->hasItem == true)
+  {
+    printf("\n\n%f\n\n", current->position.x);
+    printf("\n\n%f\n\n", current->position.y);
+
+    lifePickup->position.x = current->position.x;
+    lifePickup->position.y = current->position.y;
+    lifePickup->hitBox.x = current->position.x;
+    lifePickup->hitBox.y = current->position.y;
+  }	  
+}
+
+void asteroidPlayerCollisionHandler(struct Player* player, struct Game* game, struct Asteroid** head)
 {
  
   struct Asteroid* current = *head;
@@ -31,7 +45,7 @@ void collisionHandler(struct Player* player, struct Game* game, struct Asteroid*
 
 }
 
-void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct Game* game, struct Player* player)
+void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct Game* game, struct Player* player, struct LifePickup* lifePickup)
 {
  
   for(int i = 0; i < game->MAXBULLETS; i++)
@@ -46,11 +60,12 @@ void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct G
         if (CheckCollisionRecs(bullets[i].hitBox, current->hitBox))
         {
           struct Asteroid* next = current->next;
-          player->score += current->points;	  
+          player->score += current->points;
+          moveItemToHitAsteroid(current, lifePickup, game);
           deleteAsteroid(current, previous, head);
           current = next;
         }
-        else //no collision found, move onto the node
+        else //no collision found, move onto the next node
         {
           previous = current;
           current = current->next;

@@ -17,6 +17,7 @@
 #include "health.c"
 #include "level.c"
 #include "invulnFrames.c"
+#include "item.c"
 
 int main(void)
 {
@@ -62,8 +63,8 @@ int main(void)
 
   //pickup item
   struct LifePickup lifePickup;
-  lifePickup.active = true;
-  lifePickup.position = (Vector2){400, 500};
+  lifePickup.active = false;
+  lifePickup.position = (Vector2){40, 50};
   lifePickup.texture = LoadTexture("assets/sprite/world/pickup.png");
   lifePickup.hitBox.x = lifePickup.position.x;
   lifePickup.hitBox.y = lifePickup.position.y;
@@ -78,24 +79,25 @@ int main(void)
     screenHandler(&screen, &game, &player);
     levelChangeHandler(&asteroidHead, &game, &screen);
     levelHandler(&game, &player, bullets, &asteroidHead, levelFileNames);
+    resetLifePickupLocation(&lifePickup, &game);
     controlsHandler(&player);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
     bulletSpawnHandler(&player, &game, bullets, bulletSounds, &audio);
     translateBullet(bullets, &game, &screen);
-    //moveAsteroids(&player, &screen, &game, asteroidHead);
-    collisionHandler(&player, &game, &asteroidHead);
+    moveAsteroids(&player, &screen, &game, asteroidHead);
+    asteroidPlayerCollisionHandler(&player, &game, &asteroidHead);
     itemCollisionHandler(&lifePickup, &player);
-    bulletHitAsteroid(&asteroidHead, bullets, &game, &player); 
+    bulletHitAsteroid(&asteroidHead, bullets, &game, &player, &lifePickup); 
     UpdateMusicStream(soundtrack); //raylib library function
     updatePlayerHealth(&player);
     updatePlayerLives(&player, &screen);
     updateInvulnFrames(&player);
 
     //print states to console
-    printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
+    /*printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
  		                                  getPlayerCollisionStateString(player.collisionState));
-
+    */
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
