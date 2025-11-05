@@ -60,6 +60,14 @@ void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct G
   }
 }
 
+void itemCollisionHandler(struct LifePickup* lifePickup, struct Player* player)
+{
+  if(CheckCollisionRecs(lifePickup->hitBox, player->playerHitBox))
+  {
+    printf("\nhitting the item\n");
+  }
+}
+
 void collisionCleanup(struct Player* player)
 {
   player->collisionState = NOTHITTING;
