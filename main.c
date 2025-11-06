@@ -63,15 +63,7 @@ int main(void)
 
   //pickup item
   struct LifePickup lifePickup;
-  lifePickup.active = false;
-  lifePickup.position = (Vector2){40, 50};
-  lifePickup.texture = LoadTexture("assets/sprite/world/pickup.png");
-  lifePickup.hitBox.x = lifePickup.position.x;
-  lifePickup.hitBox.y = lifePickup.position.y;
-  lifePickup.hitBox.width = 16;
-  lifePickup.hitBox.height = 16;
-  lifePickup.speed = 2;
-
+  initItem(&lifePickup);
 
   //Main game loop
   while (game.gameState == PLAYING) 
@@ -86,7 +78,7 @@ int main(void)
     updatePlayerHitBox(&player);
     bulletSpawnHandler(&player, &game, bullets, bulletSounds, &audio);
     translateBullet(bullets, &game, &screen);
-//    moveAsteroids(&player, &screen, &game, asteroidHead);
+    moveAsteroids(&player, &screen, &game, asteroidHead);
     asteroidPlayerCollisionHandler(&player, &game, &asteroidHead);
     itemCollisionHandler(&lifePickup, &player, &game);
     bulletHitAsteroid(&asteroidHead, bullets, &game, &player, &lifePickup); 

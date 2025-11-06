@@ -1,6 +1,19 @@
 #include "raylib.h"
 #include "types.h"
 
+
+void initItem(struct LifePickup* lifePickup)
+{
+  lifePickup->active = false;
+  lifePickup->position = (Vector2){40, 50};
+  lifePickup->texture = LoadTexture("assets/sprite/world/pickup.png");
+  lifePickup->hitBox.x = lifePickup->position.x;
+  lifePickup->hitBox.y = lifePickup->position.y;
+  lifePickup->hitBox.width = 16;
+  lifePickup->hitBox.height = 16;
+  lifePickup->speed = 2;
+}
+
 void initBullets(struct Bullet bullets[], struct Game* game)
 {
   for(int i = 0; i < game->MAXBULLETS; i++)
