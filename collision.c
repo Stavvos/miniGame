@@ -12,6 +12,7 @@ void moveItemToHitAsteroid(struct Asteroid* current, struct LifePickup* lifePick
     lifePickup->position.y = current->position.y;
     lifePickup->hitBox.x = current->position.x;
     lifePickup->hitBox.y = current->position.y;
+    lifePickup->active = true;
   }	  
 }
 

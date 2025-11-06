@@ -108,6 +108,7 @@ struct LifePickup
   Texture2D texture;
   Vector2 position;
   bool active;
+  int speed;
   Rectangle hitBox;
 };
 

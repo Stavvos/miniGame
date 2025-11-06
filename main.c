@@ -70,6 +70,7 @@ int main(void)
   lifePickup.hitBox.y = lifePickup.position.y;
   lifePickup.hitBox.width = 16;
   lifePickup.hitBox.height = 16;
+  lifePickup.speed = 2;
 
 
   //Main game loop
@@ -93,6 +94,7 @@ int main(void)
     updatePlayerHealth(&player);
     updatePlayerLives(&player, &screen);
     updateInvulnFrames(&player);
+    moveItem(&lifePickup, screenHeight);
 
     //print states to console
     /*printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
