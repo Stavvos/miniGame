@@ -19,6 +19,21 @@
 #include "invulnFrames.c"
 #include "item.c"
 
+
+void drawExplosion(struct Explosion* explosion)
+{
+  DrawTexture(explosion->texture[explosion->index], explosion->position.x, explosion->position.y, WHITE);
+
+  if(explosion->index == MAXEXPLOSIONFRAMES)
+  {
+    explosion->index = 0;
+  }
+  else
+  {
+    explosion->index++;
+  }
+}
+
 int main(void)
 {
   const int screenWidth = GetScreenWidth();
@@ -64,6 +79,20 @@ int main(void)
   //pickup item
   struct LifePickup lifePickup;
   initItem(&lifePickup);
+  
+  //explosion
+  struct Explosion explosion;
+  
+  explosion.texture[0] = LoadTexture("assets/sprite/explosion/explosion1.png");
+  explosion.texture[1] = LoadTexture("assets/sprite/explosion/explosion2.png");
+  explosion.texture[2] = LoadTexture("assets/sprite/explosion/explosion3.png");
+  explosion.texture[3] = LoadTexture("assets/sprite/explosion/explosion4.png");
+  explosion.texture[4] = LoadTexture("assets/sprite/explosion/explosion5.png");
+  explosion.texture[5] = LoadTexture("assets/sprite/explosion/explosion6.png");
+  explosion.texture[6] = LoadTexture("assets/sprite/explosion/explosion7.png");
+  explosion.texture[7] = LoadTexture("assets/sprite/explosion/explosion8.png");
+  explosion.index = 0;
+  explosion.position = (Vector2){500, 500};
 
   //Main game loop
   while (game.gameState == PLAYING) 
@@ -96,6 +125,7 @@ int main(void)
     BeginDrawing();
       DrawFPS(0,0);
       render(&screen, &player, &game, asteroidHead, bullets, &healthBar, &lifePickup);
+      drawExplosion(&explosion);
     EndDrawing();
 
     //reset states

@@ -4,6 +4,7 @@
 #define PLAYERHEALTH 5
 #define PLAYERLIVES 3
 #define INVULNFRAMES 60
+#define MAXEXPLOSIONFRAMES 8 
 
 #include "raylib.h"
 #include <stdio.h>
@@ -130,6 +131,13 @@ struct HealthBar
   Rectangle background;
   Rectangle forground[PLAYERHEALTH];
 }; 
+
+struct Explosion
+{
+  Texture2D texture[MAXEXPLOSIONFRAMES];
+  int index;
+  Vector2 position;
+};
 
 void deleteAsteroid(struct Asteroid* current, struct Asteroid* previous, struct Asteroid** head);
 void pushAsteroid(struct Asteroid** head, struct Asteroid* node);
