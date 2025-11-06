@@ -86,9 +86,9 @@ int main(void)
     updatePlayerHitBox(&player);
     bulletSpawnHandler(&player, &game, bullets, bulletSounds, &audio);
     translateBullet(bullets, &game, &screen);
-    moveAsteroids(&player, &screen, &game, asteroidHead);
+//    moveAsteroids(&player, &screen, &game, asteroidHead);
     asteroidPlayerCollisionHandler(&player, &game, &asteroidHead);
-    itemCollisionHandler(&lifePickup, &player);
+    itemCollisionHandler(&lifePickup, &player, &game);
     bulletHitAsteroid(&asteroidHead, bullets, &game, &player, &lifePickup); 
     UpdateMusicStream(soundtrack); //raylib library function
     updatePlayerHealth(&player);

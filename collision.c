@@ -76,11 +76,24 @@ void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct G
   }
 }
 
-void itemCollisionHandler(struct LifePickup* lifePickup, struct Player* player)
+void itemCollisionHandler(struct LifePickup* lifePickup, struct Player* player, struct Game* game)
 {
-  if(CheckCollisionRecs(lifePickup->hitBox, player->playerHitBox))
+  if(CheckCollisionRecs(lifePickup->hitBox, player->playerHitBox) && lifePickup->active == true)
   {
-    printf("\nhitting the item\n");
+    printf("\n\nHitting\n\n");
+    if(player->playerHealth == PLAYERHEALTH)
+    {
+      player->playerLives++;
+      lifePickup->active = false;
+      game->resetItemLocation = true;
+
+    }
+    else
+    {
+      player->playerHealth = PLAYERHEALTH;
+      lifePickup->active = false;
+      game->resetItemLocation = true;
+    }
   }
 }
 

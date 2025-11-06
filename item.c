@@ -18,5 +18,6 @@ void moveItem(struct LifePickup* lifePickup, int screenHeight)
   if(lifePickup->active == true)
   {
     lifePickup->position.y += lifePickup->speed;
+    lifePickup->hitBox.y += lifePickup->speed;
   }
 }
