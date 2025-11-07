@@ -101,3 +101,31 @@ void initScreen(struct Screen* screen)
   screen->gameScreen = MENU;
   screen->topBoundary = 0;
 }
+
+void initExplosions(struct Explosion explosions[])
+{
+  Texture2D texture1 = LoadTexture("assets/sprite/explosion/explosion1.png");
+  Texture2D texture2 = LoadTexture("assets/sprite/explosion/explosion2.png");
+  Texture2D texture3 = LoadTexture("assets/sprite/explosion/explosion3.png");
+  Texture2D texture4 = LoadTexture("assets/sprite/explosion/explosion4.png");
+  Texture2D texture5 = LoadTexture("assets/sprite/explosion/explosion5.png");
+  Texture2D texture6 = LoadTexture("assets/sprite/explosion/explosion6.png");
+  Texture2D texture7 = LoadTexture("assets/sprite/explosion/explosion7.png");
+  Texture2D texture8 = LoadTexture("assets/sprite/explosion/explosion8.png");
+
+  for (int i = 0; i < 10; i++)
+  {
+    explosions[i].texture[0] = texture1;
+    explosions[i].texture[1] = texture2;
+    explosions[i].texture[2] = texture3;
+    explosions[i].texture[3] = texture4;
+    explosions[i].texture[4] = texture5;
+    explosions[i].texture[5] = texture6;
+    explosions[i].texture[6] = texture7;
+    explosions[i].texture[7] = texture8;
+    explosions[i].index = 0;
+    explosions[i].active = false;
+    explosions[i].playSound = false;
+    explosions[i].sound = LoadSound("assets/sound/fart2.mp3");
+  }
+}
