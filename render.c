@@ -109,7 +109,29 @@ void drawLifePickup(struct LifePickup* lifePickup)
       	             BLACK);
 }
 
-void render(struct Screen* screen, struct Player* player, struct Game* game, struct Asteroid* head, struct Bullet bullets[], struct HealthBar* healthBar, struct LifePickup* lifePickup)
+void drawExplosions(struct Explosion explosions[])
+{
+  for (int i = 0; i < 10; i++)
+  {
+    if (explosions[i].active == true)
+    {
+      DrawTexture(explosions[i].texture[explosions[i].index],
+                  explosions[i].position.x,
+                  explosions[i].position.y,
+                  WHITE);
+      explosions[i].index++;
+    }
+
+    if(explosions[i].index == MAXEXPLOSIONFRAMES)
+    {
+      explosions[i].index = 0;
+      explosions[i].active = false;
+    }
+
+  }
+}
+
+void render(struct Screen* screen, struct Player* player, struct Game* game, struct Asteroid* head, struct Bullet bullets[], struct HealthBar* healthBar, struct LifePickup* lifePickup, struct Explosion explosions[])
 {
 
   switch(screen->gameScreen)
@@ -129,7 +151,8 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, str
       drawHealthBar(healthBar, player);
       drawPlayerLives(player);
       drawPlayerScore(player);
-      drawLifePickup(lifePickup); 
+      drawLifePickup(lifePickup);
+      drawExplosions(explosions); 
     } break;
     
     case GAMEOVER:

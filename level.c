@@ -23,7 +23,7 @@ void levelChangeHandler(struct Asteroid** head, struct Game* game, struct Screen
 
 }
 
-void levelHandler(struct Game* game, struct Player* player, struct Bullet bullets[], struct Asteroid** asteroidHead, char* levelFileNames[])
+void levelHandler(struct Game* game, struct Player* player, struct Bullet bullets[], struct Asteroid** asteroidHead, char* levelFileNames[], struct Explosion explosions[])
 {
   switch(game->gameState)
   {
@@ -37,12 +37,15 @@ void levelHandler(struct Game* game, struct Player* player, struct Bullet bullet
 
       //initialise the linked list
       initialiseLevel(levelFileNames[game->level], asteroidHead);
-      
+           
       //reset player's position
       player->playerPos = (Vector2){300.f, 280.f};
 
       //reset bullets
       deactivateBullets(bullets, game);
+      
+      //reset explosions
+      resetExplosions(explosions);
 
       //set game state to playing
       game->gameState = PLAYING;
@@ -65,6 +68,9 @@ void levelHandler(struct Game* game, struct Player* player, struct Bullet bullet
 
       //reset bullets
       deactivateBullets(bullets, game);
+      
+      //reset explosions
+      resetExplosions(explosions);
 
       //set game state to playing
       game->gameState = PLAYING;
@@ -87,6 +93,9 @@ void levelHandler(struct Game* game, struct Player* player, struct Bullet bullet
 
       //reset bullets
       deactivateBullets(bullets, game);
+      
+      //reset explosions
+      resetExplosions(explosions);
 
       //set game state to playing
       game->gameState = PLAYING;

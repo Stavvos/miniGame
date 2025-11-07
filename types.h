@@ -146,6 +146,7 @@ void deleteAsteroid(struct Asteroid* current, struct Asteroid* previous, struct 
 void pushAsteroid(struct Asteroid** head, struct Asteroid* node);
 void freeAsteroidList(struct Asteroid* head);
 void initialiseLevel(char* fileName, struct Asteroid** head);
+void resetExplosions(struct Explosion explosions[]);
 struct Asteroid* createAsteroidNode();
 
 #endif

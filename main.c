@@ -20,28 +20,6 @@
 #include "item.c"
 #include "audio.c"
 
-void drawExplosions(struct Explosion explosions[])
-{
-  for (int i = 0; i < 10; i++)
-  { 
-    if (explosions[i].active == true)
-    {
-      DrawTexture(explosions[i].texture[explosions[i].index], 
-		  explosions[i].position.x, 
-		  explosions[i].position.y, 
-		  WHITE);
-      explosions[i].index++;
-    }
-
-    if(explosions[i].index == MAXEXPLOSIONFRAMES)
-    {
-      explosions[i].index = 0;
-      explosions[i].active = false;
-    }
-    
-  }
-}
-
 int main(void)
 {
   const int screenWidth = GetScreenWidth();
@@ -122,7 +100,7 @@ int main(void)
     //state handling
     screenHandler(&screen, &game, &player);
     levelChangeHandler(&asteroidHead, &game, &screen);
-    levelHandler(&game, &player, bullets, &asteroidHead, levelFileNames);
+    levelHandler(&game, &player, bullets, &asteroidHead, levelFileNames, explosionArray);
     resetLifePickupLocation(&lifePickup, &game);
     controlsHandler(&player);        
     playerMovementHandler(&player, &screen);
@@ -148,8 +126,7 @@ int main(void)
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
-      render(&screen, &player, &game, asteroidHead, bullets, &healthBar, &lifePickup);
-      drawExplosions(explosionArray);
+      render(&screen, &player, &game, asteroidHead, bullets, &healthBar, &lifePickup, explosionArray);
     EndDrawing();
 
     //reset states
