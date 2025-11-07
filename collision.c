@@ -15,7 +15,7 @@ void moveItemToHitAsteroid(struct Asteroid* current, struct LifePickup* lifePick
 
 void activateExplosionSoundFX(struct Explosion explosions[], struct Asteroid* current)
 {
-  for (int i = 0; i < 10; i++)
+  for (int i = 0; i < MAXEXPLOSIONS; i++)
   {
     if(explosions[i].active == false)
     {

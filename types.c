@@ -155,7 +155,7 @@ void deleteAsteroid(struct Asteroid* current, struct Asteroid* previous, struct 
 
 void resetExplosions(struct Explosion explosions[])
 {
-  for (int i = 0; i < 10; i++)
+  for (int i = 0; i < MAXEXPLOSIONS; i++)
   {
     explosions[i].active = false;
     explosions[i].index = 0;

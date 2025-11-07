@@ -5,6 +5,7 @@
 #define PLAYERLIVES 3
 #define INVULNFRAMES 60
 #define MAXEXPLOSIONFRAMES 8 
+#define MAXEXPLOSIONS 10
 
 #include "raylib.h"
 #include <stdio.h>

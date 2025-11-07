@@ -10,7 +10,7 @@ void deallocateShootingSoundFX(Sound sounds[], struct Game* game)
 
 void deallocateExplosionSoundFX(struct Explosion explosions[])
 {
-  for(int i = 0; i < 10; i++)
+  for(int i = 0; i < MAXEXPLOSIONS; i++)
   {
     UnloadSound(explosions[i].sound);
   }

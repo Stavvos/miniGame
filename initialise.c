@@ -113,7 +113,7 @@ void initExplosions(struct Explosion explosions[])
   Texture2D texture7 = LoadTexture("assets/sprite/explosion/explosion7.png");
   Texture2D texture8 = LoadTexture("assets/sprite/explosion/explosion8.png");
 
-  for (int i = 0; i < 10; i++)
+  for (int i = 0; i < MAXEXPLOSIONS; i++)
   {
     explosions[i].texture[0] = texture1;
     explosions[i].texture[1] = texture2;

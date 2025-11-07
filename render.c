@@ -111,7 +111,7 @@ void drawLifePickup(struct LifePickup* lifePickup)
 
 void drawExplosions(struct Explosion explosions[])
 {
-  for (int i = 0; i < 10; i++)
+  for (int i = 0; i < MAXEXPLOSIONS; i++)
   {
     if (explosions[i].active == true)
     {

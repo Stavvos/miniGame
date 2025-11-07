@@ -68,7 +68,7 @@ int main(void)
   initItem(&lifePickup);
   
   //explosion animation
-  struct Explosion explosionArray[10];
+  struct Explosion explosionArray[MAXEXPLOSIONS];
   initExplosions(explosionArray);
 
   //Main game loop
