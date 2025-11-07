@@ -137,6 +137,9 @@ struct Explosion
   Texture2D texture[MAXEXPLOSIONFRAMES];
   int index;
   Vector2 position;
+  bool active;
+  bool playSound;
+  Sound sound; 
 };
 
 void deleteAsteroid(struct Asteroid* current, struct Asteroid* previous, struct Asteroid** head);

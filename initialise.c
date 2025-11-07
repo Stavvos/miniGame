@@ -72,6 +72,7 @@ void initPlayer(struct Player* player)
   player->collisionState = NOTHITTING;
   player->playerHealth = PLAYERHEALTH;
   player->playerLives = PLAYERLIVES;
+  player->playerShootState = NOTSHOOTING;
   player->score = 0;
   player->invulnFrames = 0;
   player->invulnRenderPlayer = true;

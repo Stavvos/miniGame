@@ -18,19 +18,27 @@
 #include "level.c"
 #include "invulnFrames.c"
 #include "item.c"
+#include "audio.c"
 
-
-void drawExplosion(struct Explosion* explosion)
+void drawExplosions(struct Explosion explosions[])
 {
-  DrawTexture(explosion->texture[explosion->index], explosion->position.x, explosion->position.y, WHITE);
+  for (int i = 0; i < 10; i++)
+  { 
+    if (explosions[i].active == true)
+    {
+      DrawTexture(explosions[i].texture[explosions[i].index], 
+		  explosions[i].position.x, 
+		  explosions[i].position.y, 
+		  WHITE);
+      explosions[i].index++;
+    }
 
-  if(explosion->index == MAXEXPLOSIONFRAMES)
-  {
-    explosion->index = 0;
-  }
-  else
-  {
-    explosion->index++;
+    if(explosions[i].index == MAXEXPLOSIONFRAMES)
+    {
+      explosions[i].index = 0;
+      explosions[i].active = false;
+    }
+    
   }
 }
 
@@ -81,18 +89,32 @@ int main(void)
   initItem(&lifePickup);
   
   //explosion
-  struct Explosion explosion;
+  struct Explosion explosionArray[10];
   
-  explosion.texture[0] = LoadTexture("assets/sprite/explosion/explosion1.png");
-  explosion.texture[1] = LoadTexture("assets/sprite/explosion/explosion2.png");
-  explosion.texture[2] = LoadTexture("assets/sprite/explosion/explosion3.png");
-  explosion.texture[3] = LoadTexture("assets/sprite/explosion/explosion4.png");
-  explosion.texture[4] = LoadTexture("assets/sprite/explosion/explosion5.png");
-  explosion.texture[5] = LoadTexture("assets/sprite/explosion/explosion6.png");
-  explosion.texture[6] = LoadTexture("assets/sprite/explosion/explosion7.png");
-  explosion.texture[7] = LoadTexture("assets/sprite/explosion/explosion8.png");
-  explosion.index = 0;
-  explosion.position = (Vector2){500, 500};
+  Texture2D texture1 = LoadTexture("assets/sprite/explosion/explosion1.png");
+  Texture2D texture2 = LoadTexture("assets/sprite/explosion/explosion2.png");
+  Texture2D texture3 = LoadTexture("assets/sprite/explosion/explosion3.png");
+  Texture2D texture4 = LoadTexture("assets/sprite/explosion/explosion4.png");
+  Texture2D texture5 = LoadTexture("assets/sprite/explosion/explosion5.png");
+  Texture2D texture6 = LoadTexture("assets/sprite/explosion/explosion6.png");
+  Texture2D texture7 = LoadTexture("assets/sprite/explosion/explosion7.png");
+  Texture2D texture8 = LoadTexture("assets/sprite/explosion/explosion8.png");
+
+  for (int i = 0; i < 10; i++)
+  { 
+    explosionArray[i].texture[0] = texture1;
+    explosionArray[i].texture[1] = texture2;
+    explosionArray[i].texture[2] = texture3;
+    explosionArray[i].texture[3] = texture4;
+    explosionArray[i].texture[4] = texture5;
+    explosionArray[i].texture[5] = texture6;
+    explosionArray[i].texture[6] = texture7;
+    explosionArray[i].texture[7] = texture8;
+    explosionArray[i].index = 0;
+    explosionArray[i].active = false;
+    explosionArray[i].playSound = false;
+    explosionArray[i].sound = LoadSound("assets/sound/fart2.mp3"); 
+  }
 
   //Main game loop
   while (game.gameState == PLAYING) 
@@ -110,22 +132,24 @@ int main(void)
     moveAsteroids(&player, &screen, &game, asteroidHead);
     asteroidPlayerCollisionHandler(&player, &game, &asteroidHead);
     itemCollisionHandler(&lifePickup, &player, &game);
-    bulletHitAsteroid(&asteroidHead, bullets, &game, &player, &lifePickup); 
+    bulletHitAsteroid(&asteroidHead, bullets, &game, &player, &lifePickup, explosionArray); 
     UpdateMusicStream(soundtrack); //raylib library function
     updatePlayerHealth(&player);
     updatePlayerLives(&player, &screen);
     updateInvulnFrames(&player);
     moveItem(&lifePickup, screenHeight);
+    playExplosionSound(explosionArray);
 
     //print states to console
     /*printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
  		                                  getPlayerCollisionStateString(player.collisionState));
     */
+
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
       render(&screen, &player, &game, asteroidHead, bullets, &healthBar, &lifePickup);
-      drawExplosion(&explosion);
+      drawExplosions(explosionArray);
     EndDrawing();
 
     //reset states
@@ -134,7 +158,8 @@ int main(void)
 
   //De-Initialization
   freeAsteroidList(asteroidHead);
-  deallocateSoundFX(bulletSounds, &game);
+  deallocateShootingSoundFX(bulletSounds, &game);
+  deallocateExplosionSoundFX(explosionArray);
   UnloadMusicStream(soundtrack);
   CloseAudioDevice();
   CloseWindow();        // Close window and OpenGL context

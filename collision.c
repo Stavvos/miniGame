@@ -5,15 +5,26 @@ void moveItemToHitAsteroid(struct Asteroid* current, struct LifePickup* lifePick
 {
   if(current->hasItem == true)
   {
-    printf("\n\n%f\n\n", current->position.x);
-    printf("\n\n%f\n\n", current->position.y);
-
     lifePickup->position.x = current->position.x;
     lifePickup->position.y = current->position.y;
     lifePickup->hitBox.x = current->position.x;
     lifePickup->hitBox.y = current->position.y;
     lifePickup->active = true;
   }	  
+}
+
+void activateExplosionSoundFX(struct Explosion explosions[], struct Asteroid* current)
+{
+  for (int i = 0; i < 10; i++)
+  {
+    if(explosions[i].active == false)
+    {
+      explosions[i].active = true;
+      explosions[i].playSound = true;
+      explosions[i].position = current->position;
+      break; //exit loop
+    }
+  }
 }
 
 void asteroidPlayerCollisionHandler(struct Player* player, struct Game* game, struct Asteroid** head)
@@ -46,7 +57,7 @@ void asteroidPlayerCollisionHandler(struct Player* player, struct Game* game, st
 
 }
 
-void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct Game* game, struct Player* player, struct LifePickup* lifePickup)
+void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct Game* game, struct Player* player, struct LifePickup* lifePickup, struct Explosion explosions[])
 {
  
   for(int i = 0; i < game->MAXBULLETS; i++)
@@ -62,6 +73,7 @@ void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct G
         {
           struct Asteroid* next = current->next;
           player->score += current->points;
+          activateExplosionSoundFX(explosions, current); 
           moveItemToHitAsteroid(current, lifePickup, game);
           deleteAsteroid(current, previous, head);
           current = next;
