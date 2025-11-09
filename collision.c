@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include "types.h"
 
-void moveItemToHitAsteroid(struct Asteroid* current, struct LifePickup* lifePickup, struct Game* game)
+void moveItemToHitAsteroid(struct Asteroid* current, struct LifePickup* lifePickup)
 {
   if(current->hasItem == true)
   {
@@ -22,12 +22,12 @@ void activateExplosionSoundFX(struct Explosion explosions[], struct Asteroid* cu
       explosions[i].active = true;
       explosions[i].playSound = true;
       explosions[i].position = current->position;
-      break; //exit loop
+      break; //exit loop 
     }
   }
 }
 
-void asteroidPlayerCollisionHandler(struct Player* player, struct Game* game, struct Asteroid** head)
+void asteroidPlayerCollisionHandler(struct Player* player, struct Asteroid** head)
 {
  
   struct Asteroid* current = *head;
@@ -57,10 +57,10 @@ void asteroidPlayerCollisionHandler(struct Player* player, struct Game* game, st
 
 }
 
-void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct Game* game, struct Player* player, struct LifePickup* lifePickup, struct Explosion explosions[])
+void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct Player* player, struct LifePickup* lifePickup, struct Explosion explosions[])
 {
  
-  for(int i = 0; i < game->MAXBULLETS; i++)
+  for(int i = 0; i < MAXBULLETS; i++)
   {
     struct Asteroid* current = *head;
     struct Asteroid* previous = NULL;
@@ -74,7 +74,7 @@ void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct G
           struct Asteroid* next = current->next;
           player->score += current->points;
           activateExplosionSoundFX(explosions, current); 
-          moveItemToHitAsteroid(current, lifePickup, game);
+          moveItemToHitAsteroid(current, lifePickup);
           deleteAsteroid(current, previous, head);
           current = next;
         }
@@ -92,7 +92,6 @@ void itemCollisionHandler(struct LifePickup* lifePickup, struct Player* player, 
 {
   if(CheckCollisionRecs(lifePickup->hitBox, player->playerHitBox) && lifePickup->active == true)
   {
-    printf("\n\nHitting\n\n");
     if(player->playerHealth == PLAYERHEALTH)
     {
       player->playerLives++;

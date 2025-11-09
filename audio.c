@@ -11,3 +11,15 @@ void playExplosionSound(struct Explosion explosions[])
     }
   }
 }
+
+void playBulletSound(struct Bullet bullets[])
+{
+  for (int i = 0; i < 15; i++)
+  {
+    if(bullets[i].playSound == true)
+    {
+      PlaySound(bullets[i].sound); 
+      bullets[i].playSound = false;
+    }
+  }
+}

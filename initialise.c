@@ -1,7 +1,6 @@
 #include "raylib.h"
 #include "types.h"
 
-
 void initItem(struct LifePickup* lifePickup)
 {
   lifePickup->active = false;
@@ -14,36 +13,25 @@ void initItem(struct LifePickup* lifePickup)
   lifePickup->speed = 2;
 }
 
-void initBullets(struct Bullet bullets[], struct Game* game)
+void initBullets(struct Bullet bullets[])
 {
-  for(int i = 0; i < game->MAXBULLETS; i++)
+  for(int i = 0; i < MAXBULLETS; i++)
   {
     bullets[i].active = false;
     bullets[i].hitBox.width = 5;
     bullets[i].hitBox.height = 5;
     bullets[i].speed = 5;
+    bullets[i].sound = LoadSound("assets/sound/fart.mp3"); 
+    bullets[i].playSound = false; 
   }
 }
 
 void initGame(struct Game* game)
 {
   game->gameState = PLAYING;
-  game->MAXBULLETS = 15;
   game->level = 0;
   game->MAXLEVEL = 2;
   game->resetItemLocation = false;
-}
-
-void initAudio(struct Audio* audio, struct Game* game, Sound sounds[])
-{
-  
-  audio->activeSoundFX = 0;
-
-  for(int i = 0; i < game->MAXBULLETS; i++)
-  {
-    sounds[i] = LoadSound("assets/sound/fart.mp3");
-  }
-
 }
 
 void initPlayer(struct Player* player)

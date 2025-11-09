@@ -3,7 +3,7 @@
 
 void deactivateBullets(struct Bullet bullets[], struct Game* game)
 {
-  for(int i = 0; i < game->MAXBULLETS; i++)
+  for(int i = 0; i < MAXBULLETS; i++)
   {
     bullets[i].active = false;
   }
@@ -13,7 +13,7 @@ void translateBullet(struct Bullet bullets[], struct Game* game, struct Screen* 
 {
   if(screen->gameScreen == GAMEPLAY)
   {
-    for(int i = 0; i < game->MAXBULLETS; i++)
+    for(int i = 0; i < MAXBULLETS; i++)
     {
       if (bullets[i].active)
       {
@@ -28,42 +28,28 @@ void translateBullet(struct Bullet bullets[], struct Game* game, struct Screen* 
   }  
 }
 
-void spawnBullet(struct Game* game, struct Bullet bullets[], struct Player* player)
+void spawnBullet(struct Bullet bullets[], struct Player* player)
 {
-  for(int i = 0; i < game->MAXBULLETS; i++)
+  for(int i = 0; i < MAXBULLETS; i++)
   {
     if(bullets[i].active == false)
     {
       bullets[i].hitBox.x = (player->playerPos.x + player->playerHitBox.x) / 2;
       bullets[i].hitBox.y = player->playerPos.y;
       bullets[i].active = true;
+      bullets[i].playSound = true;
       break;
     }
   }
 }
 
-void playBulletSoundFX(struct Sound sounds[], struct Audio* audio, struct Game* game)
-{
-  PlaySound(sounds[audio->activeSoundFX]);
-
-  audio->activeSoundFX++;
-
-  //wrap back to start of array 
-  if(audio->activeSoundFX == game->MAXBULLETS)
-  {
-    int startIndex = 0;
-    audio->activeSoundFX = startIndex;
-  }
-}
-
-void bulletSpawnHandler(struct Player* player, struct Game* game, struct Bullet bullets[], struct Sound bulletSounds[], struct Audio* audio)
+void bulletSpawnHandler(struct Player* player, struct Bullet bullets[])
 {
   switch(player->playerShootState)
   {
     case SHOOTING:
     {
-      spawnBullet(game, bullets, player);
-      playBulletSoundFX(bulletSounds, audio, game);
+      spawnBullet(bullets, player);
       player->playerShootState = NOTSHOOTING; 
     } break;
     

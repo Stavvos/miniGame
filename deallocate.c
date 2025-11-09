@@ -1,10 +1,10 @@
 #include "raylib.h"
 
-void deallocateShootingSoundFX(Sound sounds[], struct Game* game)
+void deallocateShootingSoundFX(struct Bullet bullets[])
 {
-  for(int i = 0; i < game->MAXBULLETS; i++)
+  for(int i = 0; i < MAXBULLETS; i++)
   {
-    UnloadSound(sounds[i]);
+    UnloadSound(bullets[i].sound);
   }
 }
 

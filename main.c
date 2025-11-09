@@ -45,20 +45,16 @@ int main(void)
   
   initialiseLevel(levelFileNames[game.level], &asteroidHead);
   
-  //initialise bullets
-  struct Bullet bullets[game.MAXBULLETS];
-  initBullets(bullets, &game);
-  
-  //initialise audio device for raylib
+  //initialise audio device for raylib. ALL AUDIO FILE LOADING MUST BE DONE AFTER THIS CALL
   InitAudioDevice();
-  
-  //init audio  
-  struct Audio audio;
-  Sound bulletSounds[game.MAXBULLETS];
-  initAudio(&audio, &game, bulletSounds);
+
+  //initialise bullets
+  struct Bullet bullets[MAXBULLETS];
+  initBullets(bullets);
+ 
   Music soundtrack = LoadMusicStream("assets/musicTracks/emeraldSeas.mp3");
   PlayMusicStream(soundtrack); //raylib library function
-  
+   
   //health bar
   struct HealthBar healthBar;
   initHealthBar(&healthBar);
@@ -82,18 +78,19 @@ int main(void)
     controlsHandler(&player);        
     playerMovementHandler(&player, &screen);
     updatePlayerHitBox(&player);
-    bulletSpawnHandler(&player, &game, bullets, bulletSounds, &audio);
+    bulletSpawnHandler(&player, bullets);
     translateBullet(bullets, &game, &screen);
     moveAsteroids(&player, &screen, &game, asteroidHead);
-    asteroidPlayerCollisionHandler(&player, &game, &asteroidHead);
+    asteroidPlayerCollisionHandler(&player, &asteroidHead);
     itemCollisionHandler(&lifePickup, &player, &game);
-    bulletHitAsteroid(&asteroidHead, bullets, &game, &player, &lifePickup, explosionArray); 
+    bulletHitAsteroid(&asteroidHead, bullets, &player, &lifePickup, explosionArray); 
     UpdateMusicStream(soundtrack); //raylib library function
     updatePlayerHealth(&player);
     updatePlayerLives(&player, &screen);
     updateInvulnFrames(&player);
     moveItem(&lifePickup, screenHeight);
     playExplosionSound(explosionArray);
+    playBulletSound(bullets);
 
     //print states to console
     /*printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
@@ -112,7 +109,7 @@ int main(void)
 
   //De-Initialization
   freeAsteroidList(asteroidHead);
-  deallocateShootingSoundFX(bulletSounds, &game);
+  deallocateShootingSoundFX(bullets);
   deallocateExplosionSoundFX(explosionArray);
   UnloadMusicStream(soundtrack);
   CloseAudioDevice();

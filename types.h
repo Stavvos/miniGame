@@ -6,6 +6,7 @@
 #define INVULNFRAMES 60
 #define MAXEXPLOSIONFRAMES 8 
 #define MAXEXPLOSIONS 10
+#define MAXBULLETS 15
 
 #include "raylib.h"
 #include <stdio.h>
@@ -58,7 +59,6 @@ typedef enum CollisionState
 struct Game
 {
   GameState gameState;
-  int MAXBULLETS;
   int level;
   int MAXLEVEL;
   bool resetItemLocation;
@@ -73,14 +73,11 @@ struct Screen
 struct Bullet
 {
   Rectangle hitBox;
-  bool active;
   int speed;
+  bool active;
+  bool playSound; 
+  Sound sound;
 }; 
-
-struct Audio
-{
-  int activeSoundFX;
-};
 
 struct Player 
 {
