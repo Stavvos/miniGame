@@ -140,6 +140,7 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, str
     {
       ClearBackground(BLACK);
       drawMenuScreen();
+      drawPlayerScore(player);
     } break;
 
     case GAMEPLAY:
@@ -159,18 +160,21 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, str
     {
       ClearBackground(BLACK);
       drawGameOverScreen();
+      drawPlayerScore(player);
     } break;
 
     case WONLEVEL:
     {
       ClearBackground(BLACK);
       drawLevelWinScreen();
+      drawPlayerScore(player);
     } break;
 
     case WONGAME:
     {
       ClearBackground(BLACK);
       drawGameWinScreen();
+      drawPlayerScore(player);
     } break;
 
       default: break;
