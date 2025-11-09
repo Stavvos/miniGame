@@ -88,7 +88,7 @@ int main(void)
     updatePlayerHealth(&player);
     updatePlayerLives(&player, &screen);
     updateInvulnFrames(&player);
-    moveItem(&lifePickup, screenHeight);
+    moveItem(&lifePickup, &screen);
     playExplosionSound(explosionArray);
     playBulletSound(bullets);
 

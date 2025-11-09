@@ -13,9 +13,9 @@ void resetLifePickupLocation(struct LifePickup* lifePickup, struct Game* game)
   }
 }
 
-void moveItem(struct LifePickup* lifePickup, int screenHeight)
+void moveItem(struct LifePickup* lifePickup, struct Screen* screen)
 {
-  if(lifePickup->active == true)
+  if(lifePickup->active == true && screen->gameScreen == GAMEPLAY)
   {
     lifePickup->position.y += lifePickup->speed;
     lifePickup->hitBox.y += lifePickup->speed;
