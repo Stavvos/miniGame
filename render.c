@@ -78,25 +78,30 @@ void drawPlayerScore(struct Player* player)
   DrawText(TextFormat("Score %d", player->score), 360, 20, 20, GREEN); 
 }
 
-void drawGameOverScreen()
+void drawGameOverScreen(struct Player* player)
 {
   DrawText("GAME OVER", 200, 200, 20, WHITE);
-  DrawText("Press ENTER to restart the game.", 400, 400, 14, WHITE);
-  DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
+  DrawText(TextFormat("Score %d", player->score), 400, 400, 20, WHITE); 
+  DrawText("Press ENTER to restart the game.", 400, 450, 14, WHITE);
+  DrawText("Press ESC to quit the game.", 400, 500, 14, WHITE);
 }
 
-void drawLevelWinScreen()
+void drawLevelWinScreen(struct Player* player)
 {
   DrawText("LEVEL COMPLETED", 200, 200, 20, WHITE);
-  DrawText("Press ENTER to proceed to next level.", 400, 400, 14, WHITE);
-  DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
+  DrawText(TextFormat("Lives %d", player->playerLives), 400, 300, 20, WHITE); 
+  DrawText(TextFormat("Health %d", player->playerHealth), 400, 350, 20, WHITE); 
+  DrawText(TextFormat("Score %d", player->score), 400, 400, 20, WHITE); 
+  DrawText("Press ENTER to proceed to next level.", 400, 450, 14, WHITE);
+  DrawText("Press ESC to quit the game.", 400, 500, 14, WHITE);
 }
 
-void drawGameWinScreen()
+void drawGameWinScreen(struct Player* player)
 {
   DrawText("CONGRATULATIONS YOU COMPLETED THE GAME!", 200, 200, 20, WHITE);
-  DrawText("Press ENTER to restart the game.", 400, 400, 14, WHITE);
-  DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
+  DrawText(TextFormat("Score %d", player->score), 400, 400, 20, WHITE); 
+  DrawText("Press ENTER to restart the game.", 400, 450, 14, WHITE);
+  DrawText("Press ESC to quit the game.", 400, 500, 14, WHITE);
 }
 
 void drawLifePickup(struct LifePickup* lifePickup)
@@ -141,6 +146,8 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, str
       ClearBackground(BLACK);
       drawMenuScreen();
       drawPlayerScore(player);
+      drawPlayerLives(player);
+      drawHealthBar(healthBar, player);
     } break;
 
     case GAMEPLAY:
@@ -159,22 +166,19 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, str
     case GAMEOVER:
     {
       ClearBackground(BLACK);
-      drawGameOverScreen();
-      drawPlayerScore(player);
+      drawGameOverScreen(player);
     } break;
 
     case WONLEVEL:
     {
       ClearBackground(BLACK);
-      drawLevelWinScreen();
-      drawPlayerScore(player);
+      drawLevelWinScreen(player);
     } break;
 
     case WONGAME:
     {
       ClearBackground(BLACK);
-      drawGameWinScreen();
-      drawPlayerScore(player);
+      drawGameWinScreen(player);
     } break;
 
       default: break;
