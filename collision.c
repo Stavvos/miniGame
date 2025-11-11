@@ -13,7 +13,7 @@ void moveItemToHitAsteroid(struct Asteroid* current, struct LifePickup* lifePick
   }	  
 }
 
-void activateExplosionSoundFX(struct Explosion explosions[], struct Asteroid* current)
+void activateExplosionFX(struct Explosion explosions[], struct Asteroid* current)
 {
   for (int i = 0; i < MAXEXPLOSIONS; i++)
   {
@@ -73,10 +73,17 @@ void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct P
         {
           struct Asteroid* next = current->next;
           player->score += current->points;
-          activateExplosionSoundFX(explosions, current); 
-          moveItemToHitAsteroid(current, lifePickup);
-          deleteAsteroid(current, previous, head);
-          current = next;
+	  current->health -= 1;
+	  bullets[i].active = false;
+
+	  if(current->health == 0)
+	  {
+            deleteAsteroid(current, previous, head);
+            activateExplosionFX(explosions, current); 
+            moveItemToHitAsteroid(current, lifePickup);
+	  }
+
+	  current = next;
         }
         else //no collision found, move onto the next node
         {

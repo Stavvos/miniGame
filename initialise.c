@@ -10,7 +10,7 @@ void initItem(struct LifePickup* lifePickup)
   lifePickup->hitBox.y = lifePickup->position.y;
   lifePickup->hitBox.width = 16;
   lifePickup->hitBox.height = 16;
-  lifePickup->speed = 2;
+  lifePickup->speed = 200;
 }
 
 void initBullets(struct Bullet bullets[])
@@ -20,7 +20,7 @@ void initBullets(struct Bullet bullets[])
     bullets[i].active = false;
     bullets[i].hitBox.width = 5;
     bullets[i].hitBox.height = 5;
-    bullets[i].speed = 5;
+    bullets[i].speed = 200;
     bullets[i].sound = LoadSound("assets/sound/fart.mp3"); 
     bullets[i].playSound = false; 
   }
@@ -64,6 +64,7 @@ void initPlayer(struct Player* player)
   player->score = 0;
   player->invulnFrames = 0;
   player->invulnRenderPlayer = true;
+  player->speed = 100.0;
 }
 
 void initHealthBar(struct HealthBar* healthBar)

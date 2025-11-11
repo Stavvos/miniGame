@@ -18,8 +18,8 @@ void moveAsteroids(struct Player* player, struct Screen* screen, struct Game* ga
       current->direction.x /= current->hypotenuse;
       current->direction.y /= current->hypotenuse;
 
-      current->position.x += current->direction.x;
-      current->position.y += current->direction.y;
+      current->position.x += current->direction.x * game->deltaTime * current->speed;
+      current->position.y += current->direction.y * game->deltaTime * current->speed;
 
       current->hitBox.x = current->position.x;
       current->hitBox.y = current->position.y;

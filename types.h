@@ -62,6 +62,7 @@ struct Game
   int level;
   int MAXLEVEL;
   bool resetItemLocation;
+  float deltaTime; 
 };
 
 struct Screen 
@@ -100,6 +101,7 @@ struct Player
   int score;
   int invulnFrames;
   bool invulnRenderPlayer;
+  float speed;
 };
 
 struct LifePickup
@@ -121,6 +123,8 @@ struct Asteroid
   CollisionState collisionState;
   int points;
   bool hasItem;
+  int speed;
+  int health;
   struct Asteroid* next;
 };
 

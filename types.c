@@ -64,6 +64,8 @@ void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D sm
     node->hitBox.width = 16;
     node->hitBox.height = 16;
     node->points = 100;
+    node->speed = 70;
+    node->health = 1;
   }
   else if (strcmp(token, "m\n") == 0)
   {
@@ -71,6 +73,8 @@ void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D sm
     node->hitBox.width = 32;
     node->hitBox.height = 32;
     node->points = 200;
+    node->speed = 80;
+    node->health = 2;
   }
   else if (strcmp(token, "l\n") == 0)
   {
@@ -78,6 +82,8 @@ void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D sm
     node->hitBox.width = 64;
     node->hitBox.height = 64;
     node->points = 300;
+    node->speed = 100;
+    node->health = 3;
   }
 
 }

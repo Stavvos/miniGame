@@ -25,7 +25,7 @@ int main(void)
   const int screenWidth = GetScreenWidth();
   const int screenHeight = GetScreenHeight();	
   InitWindow(screenWidth, screenHeight, "game");
-  SetTargetFPS(60);
+  SetTargetFPS(60);//max fps for game is 60
   HideCursor();
 
   struct Player player;
@@ -71,12 +71,14 @@ int main(void)
   while (game.gameState == PLAYING) 
   {
     //state handling
+    game.deltaTime = GetFrameTime();
+    
     screenHandler(&screen, &game, &player);
     levelChangeHandler(&asteroidHead, &game, &screen);
     levelHandler(&game, &player, bullets, &asteroidHead, levelFileNames, explosionArray);
     resetLifePickupLocation(&lifePickup, &game);
     controlsHandler(&player);        
-    playerMovementHandler(&player, &screen);
+    playerMovementHandler(&player, &screen, &game);
     updatePlayerHitBox(&player);
     bulletSpawnHandler(&player, bullets);
     translateBullet(bullets, &game, &screen);
@@ -88,7 +90,7 @@ int main(void)
     updatePlayerHealth(&player);
     updatePlayerLives(&player, &screen);
     updateInvulnFrames(&player);
-    moveItem(&lifePickup, &screen);
+    moveItem(&lifePickup, &screen, &game);
     playExplosionSound(explosionArray);
     playBulletSound(bullets);
 

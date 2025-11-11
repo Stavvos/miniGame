@@ -17,7 +17,7 @@ void translateBullet(struct Bullet bullets[], struct Game* game, struct Screen* 
     {
       if (bullets[i].active)
       {
-        bullets[i].hitBox.y -= bullets[i].speed;
+        bullets[i].hitBox.y -= bullets[i].speed * game->deltaTime;
 
         if(bullets[i].hitBox.y < 0)
         {

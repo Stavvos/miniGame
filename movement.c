@@ -1,74 +1,74 @@
 #include "types.h"
 
-void movingForward(struct Player* player, struct Screen* screen){  
+void movingForward(struct Player* player, struct Screen* screen, struct Game* game){  
   
   if(screen->gameScreen == GAMEPLAY)
   {
-    player->playerPos.x = player->playerPos.x + player->moveUp.x;
-    player->playerPos.y = player->playerPos.y + player->moveUp.y; 
+    player->playerPos.x += player->moveUp.x * game->deltaTime * player->speed;
+    player->playerPos.y += player->moveUp.y * game->deltaTime * player->speed; 
   };
 }
 
-void movingBackward(struct Player* player, struct Screen* screen){
+void movingBackward(struct Player* player, struct Screen* screen, struct Game* game){
   
   if(screen->gameScreen == GAMEPLAY)
   {
-    player->playerPos.x = player->playerPos.x + player->moveDown.x;
-    player->playerPos.y = player->playerPos.y + player->moveDown.y;
+    player->playerPos.x += player->moveDown.x * game->deltaTime * player->speed;
+    player->playerPos.y += player->moveDown.y * game->deltaTime * player->speed;
   };
 }
 
-void movingLeft(struct Player* player, struct Screen* screen){
+void movingLeft(struct Player* player, struct Screen* screen, struct Game* game){
   
   if(screen->gameScreen == GAMEPLAY)
   {
-    player->playerPos.x = player->playerPos.x + player->moveLeft.x; 
-    player->playerPos.y = player->playerPos.y + player->moveLeft.y;   
+    player->playerPos.x += player->moveLeft.x * game->deltaTime * player->speed; 
+    player->playerPos.y += player->moveLeft.y * game->deltaTime * player->speed;   
   };
 }
 
-void movingRight(struct Player* player, struct Screen* screen){
+void movingRight(struct Player* player, struct Screen* screen, struct Game* game){
   
   if(screen->gameScreen == GAMEPLAY)
   {
-    player->playerPos.x = player->playerPos.x + player->moveRight.x;
-    player->playerPos.y = player->playerPos.y + player->moveRight.y;
+    player->playerPos.x += player->moveRight.x * game->deltaTime * player->speed;
+    player->playerPos.y += player->moveRight.y * game->deltaTime * player->speed;
   };
 }
 
-void movingUpRight(struct Player* player, struct Screen* screen){
+void movingUpRight(struct Player* player, struct Screen* screen, struct Game* game){
   
   if(screen->gameScreen == GAMEPLAY)
   {
-    player->playerPos.x = player->playerPos.x + player->moveUpRight.x;
-    player->playerPos.y = player->playerPos.y + player->moveUpRight.y;  
+    player->playerPos.x += player->moveUpRight.x * game->deltaTime * player->speed;
+    player->playerPos.y += player->moveUpRight.y * game->deltaTime * player->speed;  
   };
 }
 
-void movingUpLeft(struct Player* player, struct Screen* screen){
+void movingUpLeft(struct Player* player, struct Screen* screen, struct Game* game){
   
   if(screen->gameScreen == GAMEPLAY)
   {
-    player->playerPos.x = player->playerPos.x + player->moveUpLeft.x;
-    player->playerPos.y = player->playerPos.y + player->moveUpLeft.y;  
+    player->playerPos.x += player->moveUpLeft.x * game->deltaTime * player->speed;
+    player->playerPos.y += player->moveUpLeft.y * game->deltaTime * player->speed;  
   };
 }
 
-void movingDownRight(struct Player* player, struct Screen* screen){
+void movingDownRight(struct Player* player, struct Screen* screen, struct Game* game){
 
   if(screen->gameScreen == GAMEPLAY)
   {
-    player->playerPos.x = player->playerPos.x + player->moveDownRight.x;
-    player->playerPos.y = player->playerPos.y + player->moveDownRight.y;
+    player->playerPos.x += player->moveDownRight.x * game->deltaTime * player->speed;
+    player->playerPos.y += player->moveDownRight.y * game->deltaTime * player->speed;
   };
 }
 
-void movingDownLeft(struct Player* player, struct Screen* screen){
+void movingDownLeft(struct Player* player, struct Screen* screen, struct Game* game){
 
   if(screen->gameScreen == GAMEPLAY)
   {
-    player->playerPos.x = player->playerPos.x + player->moveDownLeft.x;
-    player->playerPos.y = player->playerPos.y + player->moveDownLeft.y;
+    player->playerPos.x += player->moveDownLeft.x * game->deltaTime * player->speed;
+    player->playerPos.y += player->moveDownLeft.y * game->deltaTime * player->speed;
   };
 }
 
@@ -79,7 +79,7 @@ void updatePlayerHitBox(struct Player* player)
   player->playerHitBox.y = player->playerPos.y;
 }
 
-void playerMovementHandler(struct Player* player, struct Screen* screen) {
+void playerMovementHandler(struct Player* player, struct Screen* screen, struct Game* game) {
 
 //Update player move state
 switch(player->playerMoveState)
@@ -91,42 +91,42 @@ switch(player->playerMoveState)
 
   case MOVEFORWARD:
   {
-    movingForward(player, screen);
+    movingForward(player, screen, game);
   } break;
 
   case MOVEBACKWARD:
   {
-    movingBackward(player, screen);
+    movingBackward(player, screen, game);
   } break;
 
   case MOVELEFT:
   {
-    movingLeft(player, screen); 
+    movingLeft(player, screen, game); 
   } break;
 
   case MOVERIGHT:
   {
-    movingRight(player, screen); 
+    movingRight(player, screen, game); 
   } break;
 
   case MOVEUPRIGHT:
   {
-    movingUpRight(player, screen);
+    movingUpRight(player, screen, game);
   } break;
 
   case MOVEUPLEFT:
   {
-    movingUpLeft(player, screen);
+    movingUpLeft(player, screen, game);
   } break;
 
   case MOVEDOWNLEFT:
   {
-    movingDownLeft(player, screen);
+    movingDownLeft(player, screen, game);
   } break;
   
   case MOVEDOWNRIGHT:
   {
-    movingDownRight(player, screen);
+    movingDownRight(player, screen, game);
   } break;
 
   default: break;
