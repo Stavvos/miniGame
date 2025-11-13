@@ -105,6 +105,7 @@ struct Player
   int invulnFrames;
   bool invulnRenderPlayer;
   float speed;
+  int hitTally;
 };
 
 struct LifePickup

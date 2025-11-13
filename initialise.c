@@ -65,6 +65,7 @@ void initPlayer(struct Player* player)
   player->invulnFrames = 0;
   player->invulnRenderPlayer = true;
   player->speed = 100.0;
+  player->hitTally = 0;
 }
 
 void initHealthBar(struct HealthBar* healthBar)
