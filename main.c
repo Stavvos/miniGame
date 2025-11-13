@@ -88,8 +88,8 @@ int main(void)
     itemCollisionHandler(&lifePickup, &player, &game);
     bulletHitAsteroid(&asteroidHead, bullets, &player, &lifePickup, explosionArray); 
     UpdateMusicStream(soundtrack); //raylib library function
-    updatePlayerHealth(&player);
-    updatePlayerLives(&player, &screen);
+    resetPlayerHealth(&player);
+    handlePlayerDeath(&player, &screen);
     updateInvulnFrames(&player);
     moveItem(&lifePickup, &screen, &game);
     playExplosionSound(explosionArray);
