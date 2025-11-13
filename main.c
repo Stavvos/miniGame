@@ -83,7 +83,7 @@ int main(void)
     updatePlayerHitBox(&player);
     bulletSpawnHandler(&player, bullets);
     translateBullet(bullets, &game, &screen);
-    //moveAsteroids(&player, &screen, &game, asteroidHead);
+    moveAsteroids(&player, &screen, &game, asteroidHead);
     asteroidPlayerCollisionHandler(&player, &asteroidHead);
     itemCollisionHandler(&lifePickup, &player, &game);
     bulletHitAsteroid(&asteroidHead, bullets, &player, &lifePickup, explosionArray); 
@@ -95,8 +95,6 @@ int main(void)
     playExplosionSound(explosionArray);
     playBulletSound(bullets);
    
-  //  printf("height: %f Pos %f \n", screen.height, player.playerPos.y);
-    
     //print states to console
     /*printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
  		                                  getPlayerCollisionStateString(player.collisionState));
