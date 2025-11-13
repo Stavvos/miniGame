@@ -37,8 +37,8 @@ void asteroidPlayerCollisionHandler(struct Player* player, struct Asteroid** hea
   {
     if (CheckCollisionRecs(player->playerHitBox, current->hitBox) && player->invulnFrames == 0)
     {
-      player->hitTally++; 
       struct Asteroid* next = current->next;
+      player->hitTally += current->damage;
       deleteAsteroid(current, previous, head);
       current = next;
     }

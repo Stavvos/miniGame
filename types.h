@@ -129,6 +129,8 @@ struct Asteroid
   bool hasItem;
   int speed;
   int health;
+  int damage;
+  int noMoveFrames;
   struct Asteroid* next;
 };
 

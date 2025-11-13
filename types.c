@@ -39,7 +39,7 @@ void pushAsteroid(struct Asteroid** head, struct Asteroid* node)
 }
 
 void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D smallAsteroidTexture, Texture2D mediumAsteroidTexture, Texture2D largeAsteroidTexture, int tokenNum)
-{
+{ 
   if (tokenNum == 0)
   {
     node->position.x = atoi(token);
@@ -66,6 +66,7 @@ void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D sm
     node->points = 100;
     node->speed = 70;
     node->health = 1;
+    node->damage = 1;
   }
   else if (strcmp(token, "m\n") == 0)
   {
@@ -75,6 +76,7 @@ void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D sm
     node->points = 200;
     node->speed = 80;
     node->health = 2;
+    node->damage = 2;
   }
   else if (strcmp(token, "l\n") == 0)
   {
@@ -84,6 +86,7 @@ void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D sm
     node->points = 300;
     node->speed = 100;
     node->health = 3;
+    node->damage = 3;
   }
 
 }
