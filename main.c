@@ -24,9 +24,8 @@ int main(void)
 {
   int screenWidth = GetMonitorWidth(0);
   int screenHeight = GetMonitorHeight(0);
-  InitWindow(0, 0, "game");
-//  ToggleFullscreen();
-  SetWindowState(FLAG_FULLSCREEN_MODE);
+  InitWindow(screenWidth, screenHeight, "game");
+  ToggleFullscreen();
   SetTargetFPS(60);//max fps for game is 60
   HideCursor();
 
