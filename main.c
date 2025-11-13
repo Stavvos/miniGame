@@ -22,9 +22,11 @@
 
 int main(void)
 {
-  const int screenWidth = GetScreenWidth();
-  const int screenHeight = GetScreenHeight();	
-  InitWindow(screenWidth, screenHeight, "game");
+  int screenWidth = GetMonitorWidth(0);
+  int screenHeight = GetMonitorHeight(0);
+  InitWindow(0, 0, "game");
+//  ToggleFullscreen();
+  SetWindowState(FLAG_FULLSCREEN_MODE);
   SetTargetFPS(60);//max fps for game is 60
   HideCursor();
 
@@ -35,7 +37,7 @@ int main(void)
   initGame(&game);
 
   struct Screen screen;
-  initScreen(&screen); 
+  initScreen(&screen, &player); 
   
   //asteroid linked list initialisation 
   struct Asteroid* asteroidHead = NULL;
@@ -82,7 +84,7 @@ int main(void)
     updatePlayerHitBox(&player);
     bulletSpawnHandler(&player, bullets);
     translateBullet(bullets, &game, &screen);
-    moveAsteroids(&player, &screen, &game, asteroidHead);
+    //moveAsteroids(&player, &screen, &game, asteroidHead);
     asteroidPlayerCollisionHandler(&player, &asteroidHead);
     itemCollisionHandler(&lifePickup, &player, &game);
     bulletHitAsteroid(&asteroidHead, bullets, &player, &lifePickup, explosionArray); 
@@ -93,7 +95,9 @@ int main(void)
     moveItem(&lifePickup, &screen, &game);
     playExplosionSound(explosionArray);
     playBulletSound(bullets);
-
+   
+  //  printf("height: %f Pos %f \n", screen.height, player.playerPos.y);
+    
     //print states to console
     /*printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
  		                                  getPlayerCollisionStateString(player.collisionState));

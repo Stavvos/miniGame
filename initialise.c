@@ -85,10 +85,15 @@ void initHealthBar(struct HealthBar* healthBar)
   }
 }
 
-void initScreen(struct Screen* screen)
+void initScreen(struct Screen* screen, struct Player* player)
 {
   screen->gameScreen = MENU;
-  screen->topBoundary = 0;
+  screen->topBoundary = 0.0;
+  screen->leftBoundary = 0.0;
+  screen->rightBoundary = GetScreenWidth();
+  screen->bottomBoundary = GetScreenHeight();
+  screen->rightBoundary -= player->playerHitBox.width; 
+  screen->bottomBoundary -= player->playerHitBox.height; 
 }
 
 void initExplosions(struct Explosion explosions[])

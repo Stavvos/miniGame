@@ -68,7 +68,10 @@ struct Game
 struct Screen 
 {
   GameScreen gameScreen;
-  int topBoundary; 
+  float topBoundary;
+  float leftBoundary;
+  float bottomBoundary;
+  float rightBoundary; 
 };
 
 struct Bullet
