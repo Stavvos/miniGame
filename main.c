@@ -83,7 +83,7 @@ int main(void)
     updatePlayerHitBox(&player);
     bulletSpawnHandler(&player, bullets);
     translateBullet(bullets, &game, &screen);
-    moveAsteroids(&player, &screen, &game, asteroidHead);
+    //moveAsteroids(&player, &screen, &game, asteroidHead);
     asteroidPlayerCollisionHandler(&player, &asteroidHead);
     itemCollisionHandler(&lifePickup, &player, &game);
     bulletHitAsteroid(&asteroidHead, bullets, &player, &lifePickup, explosionArray); 
