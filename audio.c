@@ -23,3 +23,15 @@ void playBulletSound(struct Bullet bullets[])
     }
   }
 }
+
+void playCollisionSound(struct CollisionSound collisionSounds[])
+{
+  for (int i = 0; i < COLLISIONSOUNDS; i++)
+  {
+    if(collisionSounds[i].active == true)
+    {
+      PlaySound(collisionSounds[i].sound);
+      collisionSounds[i].active = false;
+    }
+  }
+}

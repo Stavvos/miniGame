@@ -124,3 +124,12 @@ void initExplosions(struct Explosion explosions[])
     explosions[i].sound = LoadSound("assets/sound/fart2.mp3");
   }
 }
+
+void initCollisionSounds(struct CollisionSound collisionSounds[])
+{
+  for (int i = 0; i < COLLISIONSOUNDS; i++)
+  {
+    collisionSounds[i].active = false;
+    collisionSounds[i].sound = LoadSound("assets/sound/enemyHurt.mp3");
+  }
+}

@@ -7,6 +7,7 @@
 #define MAXEXPLOSIONFRAMES 8 
 #define MAXEXPLOSIONS 10
 #define MAXBULLETS 15
+#define COLLISIONSOUNDS 20
 
 #include "raylib.h"
 #include <stdio.h>
@@ -148,6 +149,12 @@ struct Explosion
   bool active;
   bool playSound;
   Sound sound; 
+};
+
+struct CollisionSound
+{
+  bool active;
+  Sound sound;
 };
 
 void deleteAsteroid(struct Asteroid* current, struct Asteroid* previous, struct Asteroid** head);

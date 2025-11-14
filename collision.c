@@ -27,7 +27,19 @@ void activateExplosionFX(struct Explosion explosions[], struct Asteroid* current
   }
 }
 
-void asteroidPlayerCollisionHandler(struct Player* player, struct Asteroid** head)
+void activateCollisionSoundFX(struct CollisionSound collisionSounds[])
+{
+  for (int i = 0; i < COLLISIONSOUNDS; i++)
+  {
+    if (collisionSounds[i].active == false)
+    {
+      collisionSounds[i].active = true;
+      break;
+    }
+  }
+}
+
+void asteroidPlayerCollisionHandler(struct Player* player, struct Asteroid** head, struct CollisionSound collisionSounds[])
 {
  
   struct Asteroid* current = *head;
@@ -39,6 +51,7 @@ void asteroidPlayerCollisionHandler(struct Player* player, struct Asteroid** hea
     {
       struct Asteroid* next = current->next;
       player->hitTally += current->damage;
+      activateCollisionSoundFX(collisionSounds);
       deleteAsteroid(current, previous, head);
       current = next;
     }

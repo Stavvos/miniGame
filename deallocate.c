@@ -16,3 +16,10 @@ void deallocateExplosionSoundFX(struct Explosion explosions[])
   }
 }
 
+void deallocateCollisionSounds(struct CollisionSound collisionSounds[])
+{
+  for (int i = 0; i < COLLISIONSOUNDS; i++)
+  {
+   UnloadSound(collisionSounds[i].sound);
+  } 
+}

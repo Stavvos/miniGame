@@ -67,6 +67,10 @@ int main(void)
   //explosion animation
   struct Explosion explosionArray[MAXEXPLOSIONS];
   initExplosions(explosionArray);
+  
+  // player hit asteroid sounds
+  struct CollisionSound collisionSounds[COLLISIONSOUNDS];
+  initCollisionSounds(collisionSounds); 
 
   //Main game loop
   while (game.gameState == PLAYING) 
@@ -83,8 +87,8 @@ int main(void)
     updatePlayerHitBox(&player);
     bulletSpawnHandler(&player, bullets);
     translateBullet(bullets, &game, &screen);
-    //moveAsteroids(&player, &screen, &game, asteroidHead);
-    asteroidPlayerCollisionHandler(&player, &asteroidHead);
+    moveAsteroids(&player, &screen, &game, asteroidHead);
+    asteroidPlayerCollisionHandler(&player, &asteroidHead, collisionSounds);
     itemCollisionHandler(&lifePickup, &player, &game);
     bulletHitAsteroid(&asteroidHead, bullets, &player, &lifePickup, explosionArray); 
     UpdateMusicStream(soundtrack); //raylib library function
@@ -95,7 +99,8 @@ int main(void)
     moveItem(&lifePickup, &screen, &game);
     playExplosionSound(explosionArray);
     playBulletSound(bullets);
-   
+    playCollisionSound(collisionSounds);
+
     //print states to console
     /*printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
  		                                  getPlayerCollisionStateString(player.collisionState));
@@ -115,7 +120,8 @@ int main(void)
   freeAsteroidList(asteroidHead);
   deallocateShootingSoundFX(bullets);
   deallocateExplosionSoundFX(explosionArray);
-  UnloadMusicStream(soundtrack);
+  deallocateCollisionSounds(collisionSounds);
+  UnloadMusicStream(soundtrack);//ray libe function
   CloseAudioDevice();
   CloseWindow();        // Close window and OpenGL context
    
