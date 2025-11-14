@@ -1,22 +1,27 @@
 #include "types.h"
 
-void levelChangeHandler(struct Asteroid** head, struct Game* game, struct Screen* gameScreen)
+void levelChangeHandler(struct Asteroid** head, struct Game* game, struct Screen* screen, struct Player* player)
 {
   struct Asteroid* current = *head;
   
   if(current == NULL) 
   {
-    if(game->level < game->MAXLEVEL)
+    if(game->level < game->MAXLEVEL && player->playerLives >= 0)
     {
       game->level++;
       game->gameState = RESETLEVEL;
-      gameScreen->gameScreen = WONLEVEL;
+      screen->gameScreen = WONLEVEL;
+    }
+    else if (game->level == game->MAXLEVEL && player->playerLives >= 0)
+    {
+      game->gameState = ENDGAME;
+      screen->gameScreen = WONGAME;
+      game->level = 0;
     }
     else
     {
       game->gameState = ENDGAME;
-      gameScreen->gameScreen = WONGAME;
-      game->level = 0;
+      screen->gameScreen = GAMEOVER;   
     }
   }
 }

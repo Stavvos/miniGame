@@ -79,7 +79,7 @@ int main(void)
     game.deltaTime = GetFrameTime();
     
     screenHandler(&screen, &game, &player);
-    levelChangeHandler(&asteroidHead, &game, &screen);
+    levelChangeHandler(&asteroidHead, &game, &screen, &player);
     levelHandler(&game, &player, bullets, &asteroidHead, levelFileNames, explosionArray);
     resetLifePickupLocation(&lifePickup, &game);
     controlsHandler(&player);        
