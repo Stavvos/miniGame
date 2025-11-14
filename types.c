@@ -38,7 +38,7 @@ void pushAsteroid(struct Asteroid** head, struct Asteroid* node)
 
 }
 
-void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D smallAsteroidTexture, Texture2D mediumAsteroidTexture, Texture2D largeAsteroidTexture, int tokenNum)
+void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D smallAsteroidTexture, Texture2D mediumAsteroidTexture, Texture2D mediumAsteroidTexture2, Texture2D largeAsteroidTexture, Texture2D largeAsteroidTexture2, Texture2D largeAsteroidTexture3, int tokenNum)
 { 
   if (tokenNum == 0)
   {
@@ -60,7 +60,8 @@ void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D sm
   }
   else if (strcmp(token, "s\n") == 0)
   {
-    node->texture = smallAsteroidTexture;
+    node->currentTexture = 0;
+    node->texture[node->currentTexture] = smallAsteroidTexture;
     node->hitBox.width = 16;
     node->hitBox.height = 16;
     node->points = 100;
@@ -70,7 +71,9 @@ void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D sm
   }
   else if (strcmp(token, "m\n") == 0)
   {
-    node->texture = mediumAsteroidTexture;
+    node->currentTexture = 0;
+    node->texture[0] = mediumAsteroidTexture;
+    node->texture[1] = mediumAsteroidTexture2;
     node->hitBox.width = 32;
     node->hitBox.height = 32;
     node->points = 200;
@@ -80,7 +83,10 @@ void assignTokenToAsteroidValue(struct Asteroid* node, char* token, Texture2D sm
   }
   else if (strcmp(token, "l\n") == 0)
   {
-    node->texture = largeAsteroidTexture;
+    node->currentTexture = 0;
+    node->texture[0] = largeAsteroidTexture;
+    node->texture[1] = largeAsteroidTexture2;
+    node->texture[2] = largeAsteroidTexture3;
     node->hitBox.width = 64;
     node->hitBox.height = 64;
     node->points = 300;
@@ -107,7 +113,10 @@ void initialiseLevel(char* fileName, struct Asteroid** head)
   
   Texture2D smallAsteroidTexture = LoadTexture("assets/sprite/world/asteroid.png");
   Texture2D mediumAsteroidTexture = LoadTexture("assets/sprite/world/asteroidMedium.png");
+  Texture2D mediumAsteroidTexture2 = LoadTexture("assets/sprite/world/asteroidMedium2.png");
   Texture2D largeAsteroidTexture = LoadTexture("assets/sprite/world/asteroidLarge.png");
+  Texture2D largeAsteroidTexture2 = LoadTexture("assets/sprite/world/asteroidLarge2.png");
+  Texture2D largeAsteroidTexture3 = LoadTexture("assets/sprite/world/asteroidLarge3.png");
 
   while (fgets(row, 1024, filePointer) != NULL)
   {
@@ -118,7 +127,9 @@ void initialiseLevel(char* fileName, struct Asteroid** head)
     
     while (token != NULL)
     {
-      assignTokenToAsteroidValue(node, token, smallAsteroidTexture, mediumAsteroidTexture, largeAsteroidTexture, tokenNum);
+      assignTokenToAsteroidValue(node, token, smallAsteroidTexture, 
+		                 mediumAsteroidTexture, mediumAsteroidTexture2, largeAsteroidTexture, 
+				 largeAsteroidTexture2, largeAsteroidTexture3, tokenNum);
       token = strtok(NULL, ",");
       tokenNum++;
     }

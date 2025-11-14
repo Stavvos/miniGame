@@ -80,7 +80,8 @@ void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct P
         {
           struct Asteroid* next = current->next;
           player->score += current->points;
-	  current->health -= 1;
+	  current->health--;
+	  current->currentTexture++;
 	  bullets[i].active = false;
 
 	  if(current->health == 0)

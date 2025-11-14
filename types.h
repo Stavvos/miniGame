@@ -8,6 +8,7 @@
 #define MAXEXPLOSIONS 10
 #define MAXBULLETS 15
 #define COLLISIONSOUNDS 20
+#define MAXTEXTURES 3
 
 #include "raylib.h"
 #include <stdio.h>
@@ -121,7 +122,7 @@ struct LifePickup
 struct Asteroid
 {
   Rectangle hitBox;
-  Texture2D texture;
+  Texture2D texture[MAXTEXTURES];
   Vector2 position;
   Vector2 direction;
   float hypotenuse;
@@ -132,6 +133,7 @@ struct Asteroid
   int health;
   int damage;
   int noMoveFrames;
+  int currentTexture;
   struct Asteroid* next;
 };
 

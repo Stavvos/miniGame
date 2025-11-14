@@ -26,7 +26,7 @@ void drawAsteroids(struct Asteroid* head)
   struct Asteroid* current = head;
   while(current != NULL)
     {
-      DrawTexture(current->texture, current->position.x, current->position.y, WHITE);
+      DrawTexture(current->texture[current->currentTexture], current->position.x, current->position.y, WHITE);
       DrawRectangleLines(current->position.x,
 		         current->position.y, 
 			 current->hitBox.width, 
