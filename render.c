@@ -5,8 +5,22 @@ void drawMenuScreen()
 {
   DrawText("GAME PAUSED", 200, 200, 20, WHITE);
   DrawText("Press ENTER to start the game.", 400, 400, 14, WHITE);
-  DrawText("Press ESC to quit the game.", 400, 450, 14, WHITE);
+  DrawText("Press C to see controls.", 400, 450, 14, WHITE);
+  DrawText("Press ESC to quit the game.", 400, 500, 14, WHITE);
 }
+
+void drawControlsScreen()
+{
+  DrawText("CONTROLS", 200, 200, 20, WHITE);
+  DrawText("W = Move Up", 400, 400, 14, WHITE);
+  DrawText("A = Move Left", 400, 450, 14, WHITE);
+  DrawText("S = Move Down", 400, 500, 14, WHITE);
+  DrawText("D = Move Right", 400, 550, 14, WHITE);
+  DrawText("SPACEBAR = Shoot", 400, 600, 14, WHITE);
+  DrawText("ESC = Pause Game.", 400, 650, 14, WHITE);
+  DrawText("Press ENTER to return to menu.", 400, 700, 14, WHITE);
+}
+
 
 void drawPlayer(struct Player* player)
 {
@@ -148,6 +162,12 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, str
       drawPlayerScore(player);
       drawPlayerLives(player);
       drawHealthBar(healthBar, player);
+    } break;
+    
+    case CONTROLS:
+    {
+      ClearBackground(BLACK);
+      drawControlsScreen();
     } break;
 
     case GAMEPLAY:

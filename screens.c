@@ -8,20 +8,33 @@ void screenHandler(struct Screen* screen, struct Game* game, struct Player* play
   {
     case MENU:
     {
-      if(IsKeyPressed(KEY_ENTER))
+      if (IsKeyPressed(KEY_ENTER))
       {
         screen->gameScreen = GAMEPLAY;
       }
+      
+      if (IsKeyPressed(KEY_C))
+      {
+        screen->gameScreen = CONTROLS;
+      }
 
-      if(IsKeyPressed(KEY_ESCAPE))
+      if (IsKeyPressed(KEY_ESCAPE))
       {
         game->gameState = EXIT;
+      }
+    } break;
+    
+    case CONTROLS:
+    {
+      if (IsKeyPressed(KEY_ENTER))
+      {
+        screen->gameScreen = MENU;
       }
     } break;
 
     case GAMEPLAY:
     {
-      if(IsKeyPressed(KEY_ESCAPE))
+      if (IsKeyPressed(KEY_ESCAPE))
       {
         screen->gameScreen = MENU;
       }
@@ -29,7 +42,7 @@ void screenHandler(struct Screen* screen, struct Game* game, struct Player* play
     
     case GAMEOVER:
     {
-      if(IsKeyPressed(KEY_ENTER))
+      if (IsKeyPressed(KEY_ENTER))
       {
         screen->gameScreen = GAMEPLAY;
 	player->playerLives = PLAYERLIVES;
@@ -40,7 +53,7 @@ void screenHandler(struct Screen* screen, struct Game* game, struct Player* play
 	game->resetItemLocation = true;
       }
 
-      if(IsKeyPressed(KEY_ESCAPE))
+      if (IsKeyPressed(KEY_ESCAPE))
       {
         game->gameState = EXIT;
       }
@@ -48,14 +61,14 @@ void screenHandler(struct Screen* screen, struct Game* game, struct Player* play
     
     case WONLEVEL:
     {
-      if(IsKeyPressed(KEY_ENTER))
+      if (IsKeyPressed(KEY_ENTER))
       {
         screen->gameScreen = GAMEPLAY;
 	game->gameState = RESETLEVEL;
 	game->resetItemLocation = true;
       }
 
-      if(IsKeyPressed(KEY_ESCAPE))
+      if (IsKeyPressed(KEY_ESCAPE))
       {
         game->gameState = EXIT;
       }
@@ -63,7 +76,7 @@ void screenHandler(struct Screen* screen, struct Game* game, struct Player* play
     
     case WONGAME:
     {
-      if(IsKeyPressed(KEY_ENTER))
+      if (IsKeyPressed(KEY_ENTER))
       {
 	screen->gameScreen = GAMEPLAY;
 	player->playerLives = PLAYERLIVES;
@@ -73,7 +86,7 @@ void screenHandler(struct Screen* screen, struct Game* game, struct Player* play
 	game->resetItemLocation = true;
       }
 
-      if(IsKeyPressed(KEY_ESCAPE))
+      if (IsKeyPressed(KEY_ESCAPE))
       {
         game->gameState = EXIT;
       }

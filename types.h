@@ -37,6 +37,7 @@ typedef enum PlayerShootState
 typedef enum GameScreen 
 {
   MENU, 
+  CONTROLS,
   GAMEPLAY,
   GAMEOVER,
   WONLEVEL,
