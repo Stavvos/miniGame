@@ -118,6 +118,8 @@ struct LifePickup
   bool active;
   int speed;
   Rectangle hitBox;
+  Sound sound;
+  bool collision;
 };
 
 struct Asteroid

@@ -35,3 +35,12 @@ void playCollisionSound(struct CollisionSound collisionSounds[])
     }
   }
 }
+
+void playItemPickupSound(struct LifePickup* lifePickup)
+{
+  if (lifePickup->collision == true)
+  {
+    PlaySound(lifePickup->sound);
+    lifePickup->collision = false;
+  }
+}

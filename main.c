@@ -100,7 +100,8 @@ int main(void)
     playExplosionSound(explosionArray);
     playBulletSound(bullets);
     playCollisionSound(collisionSounds);
-
+    playItemPickupSound(&lifePickup);
+    
     //print states to console
     /*printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
  		                                  getPlayerCollisionStateString(player.collisionState));

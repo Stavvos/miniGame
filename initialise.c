@@ -11,6 +11,8 @@ void initItem(struct LifePickup* lifePickup)
   lifePickup->hitBox.width = 16;
   lifePickup->hitBox.height = 16;
   lifePickup->speed = 200;
+  lifePickup->sound = LoadSound("assets/sound/pickupCoin.wav");
+  lifePickup->collision = false;
 }
 
 void initBullets(struct Bullet bullets[])
@@ -21,7 +23,7 @@ void initBullets(struct Bullet bullets[])
     bullets[i].hitBox.width = 5;
     bullets[i].hitBox.height = 5;
     bullets[i].speed = 200;
-    bullets[i].sound = LoadSound("assets/sound/fart.mp3"); 
+    bullets[i].sound = LoadSound("assets/sound/laserShoot.wav"); 
     bullets[i].playSound = false; 
   }
 }
@@ -121,7 +123,7 @@ void initExplosions(struct Explosion explosions[])
     explosions[i].index = 0;
     explosions[i].active = false;
     explosions[i].playSound = false;
-    explosions[i].sound = LoadSound("assets/sound/fart2.mp3");
+    explosions[i].sound = LoadSound("assets/sound/explosion.wav");
   }
 }
 
@@ -130,6 +132,6 @@ void initCollisionSounds(struct CollisionSound collisionSounds[])
   for (int i = 0; i < COLLISIONSOUNDS; i++)
   {
     collisionSounds[i].active = false;
-    collisionSounds[i].sound = LoadSound("assets/sound/enemyHurt.mp3");
+    collisionSounds[i].sound = LoadSound("assets/sound/hitHurt.wav");
   }
 }

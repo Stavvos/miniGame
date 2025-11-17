@@ -111,6 +111,7 @@ void itemCollisionHandler(struct LifePickup* lifePickup, struct Player* player, 
     {
       player->playerLives++;
       lifePickup->active = false;
+      lifePickup->collision = true;
       game->resetItemLocation = true;
 
     }
@@ -118,6 +119,7 @@ void itemCollisionHandler(struct LifePickup* lifePickup, struct Player* player, 
     {
       player->playerHealth = PLAYERHEALTH;
       lifePickup->active = false;
+      lifePickup->collision = true;
       game->resetItemLocation = true;
     }
   }

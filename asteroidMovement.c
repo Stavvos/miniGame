@@ -17,9 +17,13 @@ void moveAsteroids(struct Player* player, struct Screen* screen, struct Game* ga
     
       current->direction.x /= current->hypotenuse;
       current->direction.y /= current->hypotenuse;
-
-      current->position.x += current->direction.x * game->deltaTime * current->speed;
-      current->position.y += current->direction.y * game->deltaTime * current->speed;
+     
+      //minimise the asteroids stacking ontop of one another 
+      float randomOffsetX = ((rand() % 100) - 50) * 0.01;  
+      float randomOffsetY = ((rand() % 100)- 50) * 0.01;  
+      
+      current->position.x += (randomOffsetX + current->direction.x) * game->deltaTime * current->speed;
+      current->position.y += (randomOffsetY + current->direction.y) * game->deltaTime * current->speed;
 
       current->hitBox.x = current->position.x;
       current->hitBox.y = current->position.y;
