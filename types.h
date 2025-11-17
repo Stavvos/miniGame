@@ -120,6 +120,7 @@ struct LifePickup
   Rectangle hitBox;
   Sound sound;
   bool collision;
+  Vector2 defaultLocation;
 };
 
 struct Asteroid

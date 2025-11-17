@@ -4,10 +4,9 @@ void resetLifePickupLocation(struct LifePickup* lifePickup, struct Game* game)
 {
   if(game->resetItemLocation == true)
   {
-    lifePickup->position.x = 40;
-    lifePickup->position.y = 50;
-    lifePickup->hitBox.x = 40;
-    lifePickup->hitBox.y = 50;
+    lifePickup->position = lifePickup->defaultLocation;
+    lifePickup->hitBox.x = lifePickup->defaultLocation.x;
+    lifePickup->hitBox.y = lifePickup->defaultLocation.y;
     game->resetItemLocation = false;
     lifePickup->active = false;
   }
