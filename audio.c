@@ -14,7 +14,7 @@ void playExplosionSound(struct Explosion explosions[])
 
 void playBulletSound(struct Bullet bullets[])
 {
-  for (int i = 0; i < 15; i++)
+  for (int i = 0; i < MAXBULLETS; i++)
   {
     if(bullets[i].playSound == true)
     {

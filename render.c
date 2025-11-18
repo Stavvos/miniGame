@@ -52,7 +52,7 @@ void drawAsteroids(struct Asteroid* head)
 
 void drawBullets(struct Bullet bullets[])
 {
-  for(int i = 0; i < 10; i++)
+  for(int i = 0; i < MAXBULLETS; i++)
   {
     if(bullets[i].active)
     {

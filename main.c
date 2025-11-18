@@ -25,6 +25,7 @@ int main(void)
   int screenWidth = GetMonitorWidth(0);
   int screenHeight = GetMonitorHeight(0);
   InitWindow(screenWidth, screenHeight, "game");
+  screenHeight = GetMonitorHeight(0);
   ToggleFullscreen();
   SetTargetFPS(60);//max fps for game is 60
   HideCursor();
@@ -42,8 +43,17 @@ int main(void)
   struct Asteroid* asteroidHead = NULL;
   char *levelFileNames[] = {"levels/level1.csv",
 	                    "levels/level2.csv",
-  			    "levels/level3.csv"};
+  			    "levels/level3.csv",
+  			    "levels/level4.csv",
+  			    "levels/level5.csv",
+  			    "levels/level6.csv",
+  			    "levels/level7.csv",
+  			    "levels/level8.csv",
+  			    "levels/level9.csv",
+  			    "levels/level10.csv"};
   
+  //char *levelFileNames[] = {"levels/level10.csv"};
+
   initialiseLevel(levelFileNames[game.level], &asteroidHead);
   
   //initialise audio device for raylib. ALL AUDIO FILE LOADING MUST BE DONE AFTER THIS CALL
@@ -79,7 +89,7 @@ int main(void)
     game.deltaTime = GetFrameTime();
     
     screenHandler(&screen, &game, &player);
-    levelChangeHandler(&asteroidHead, &game, &screen, &player);
+    levelChangeHandler(&asteroidHead, &game, &screen, &player, &lifePickup);
     levelHandler(&game, &player, bullets, &asteroidHead, levelFileNames, explosionArray);
     resetLifePickupLocation(&lifePickup, &game);
     controlsHandler(&player);        
@@ -97,6 +107,7 @@ int main(void)
     handlePlayerDeath(&player, &screen);
     updateInvulnFrames(&player);
     moveItem(&lifePickup, &screen, &game);
+    checkItemOffScreen(&lifePickup, screenHeight, &game);
     playExplosionSound(explosionArray);
     playBulletSound(bullets);
     playCollisionSound(collisionSounds);

@@ -22,7 +22,7 @@ void activateExplosionFX(struct Explosion explosions[], struct Asteroid* current
       explosions[i].active = true;
       explosions[i].playSound = true;
       explosions[i].position = current->position;
-      break; //exit loop 
+      break;  
     }
   }
 }

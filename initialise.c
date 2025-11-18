@@ -33,7 +33,7 @@ void initGame(struct Game* game)
 {
   game->gameState = PLAYING;
   game->level = 0;
-  game->MAXLEVEL = 2;
+  game->MAXLEVEL = 10;
   game->resetItemLocation = false;
 }
 
@@ -67,7 +67,7 @@ void initPlayer(struct Player* player)
   player->score = 0;
   player->invulnFrames = 0;
   player->invulnRenderPlayer = true;
-  player->speed = 100.0;
+  player->speed = 150.0;
   player->hitTally = 0;
 }
 
