@@ -50,9 +50,13 @@ int main(void)
   			    "levels/level7.csv",
   			    "levels/level8.csv",
   			    "levels/level9.csv",
-  			    "levels/level10.csv"};
+  			    "levels/level10.csv",
+  			    "levels/level11.csv",
+  			    "levels/level12.csv",
+  			    "levels/level13.csv",};
   
-  //char *levelFileNames[] = {"levels/level10.csv"};
+
+  //char *levelFileNames[] = {"levels/level13.csv"};
 
   initialiseLevel(levelFileNames[game.level], &asteroidHead);
   
