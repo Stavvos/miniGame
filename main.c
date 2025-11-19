@@ -51,8 +51,6 @@ int main(void)
   			    "levels/level11.csv",
   			    "levels/level12.csv",
   			    "levels/level13.csv",};
-  
-
 
   initialiseLevel(levelFileNames[game.level], &asteroidHead);
   

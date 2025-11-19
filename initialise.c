@@ -4,7 +4,7 @@
 void initItem(struct LifePickup* lifePickup)
 {
   lifePickup->active = false;
-  lifePickup->defaultLocation = (Vector2){-10, -10};
+  lifePickup->defaultLocation = (Vector2){-100, -100};
   lifePickup->position = lifePickup->defaultLocation;
   lifePickup->hitBox.x = lifePickup->defaultLocation.x;
   lifePickup->hitBox.y = lifePickup->defaultLocation.y;
