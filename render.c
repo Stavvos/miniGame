@@ -27,11 +27,6 @@ void drawPlayer(struct Player* player)
   if(player->invulnRenderPlayer)
   {
     DrawTexture(player->playerTexture, player->playerPos.x, player->playerPos.y, BLACK);
-    DrawRectangleLines(player->playerHitBox.x, 
-		       player->playerHitBox.y, 
-	               player->playerHitBox.width, 
-	               player->playerHitBox.height, 
-		       BLACK);
   }
 }
 
@@ -41,11 +36,6 @@ void drawAsteroids(struct Asteroid* head)
   while(current != NULL)
     {
       DrawTexture(current->texture[current->currentTexture], current->position.x, current->position.y, WHITE);
-      DrawRectangleLines(current->position.x,
-		         current->position.y, 
-			 current->hitBox.width, 
-			 current->hitBox.height, 
-      			 BLACK);
       current = current->next;
     }
 }
@@ -121,11 +111,6 @@ void drawGameWinScreen(struct Player* player)
 void drawLifePickup(struct LifePickup* lifePickup)
 {
   DrawTexture(lifePickup->texture, lifePickup->position.x, lifePickup->position.y, WHITE);
-  DrawRectangleLines(lifePickup->position.x,
-		     lifePickup->position.y, 
-		     lifePickup->hitBox.width, 
-	             lifePickup->hitBox.height, 
-      	             BLACK);
 }
 
 void drawExplosions(struct Explosion explosions[])
