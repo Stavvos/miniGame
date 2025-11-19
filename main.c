@@ -22,10 +22,7 @@
 
 int main(void)
 {
-  int screenWidth = GetMonitorWidth(0);
-  int screenHeight = GetMonitorHeight(0);
-  InitWindow(screenWidth, screenHeight, "game");
-  screenHeight = GetMonitorHeight(0);
+  InitWindow(0, 0, "game");
   ToggleFullscreen();
   SetTargetFPS(60);//max fps for game is 60
   HideCursor();
@@ -56,7 +53,6 @@ int main(void)
   			    "levels/level13.csv",};
   
 
-  //char *levelFileNames[] = {"levels/level13.csv"};
 
   initialiseLevel(levelFileNames[game.level], &asteroidHead);
   
@@ -111,17 +107,12 @@ int main(void)
     handlePlayerDeath(&player, &screen);
     updateInvulnFrames(&player);
     moveItem(&lifePickup, &screen, &game);
-    checkItemOffScreen(&lifePickup, screenHeight, &game);
+    checkItemOffScreen(&lifePickup, &screen, &game);
     playExplosionSound(explosionArray);
     playBulletSound(bullets);
     playCollisionSound(collisionSounds);
     playItemPickupSound(&lifePickup);
     
-    //print states to console
-    /*printf("Move-state:%s Collision-state:%s \n", getPlayerMoveStateString(player.playerMoveState),
- 		                                  getPlayerCollisionStateString(player.collisionState));
-    */
-
     //Draw
     BeginDrawing();
       DrawFPS(0,0);

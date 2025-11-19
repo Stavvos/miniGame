@@ -21,9 +21,9 @@ void moveItem(struct LifePickup* lifePickup, struct Screen* screen, struct Game*
   }
 }
 
-void checkItemOffScreen(struct LifePickup* lifePickup, double screenHeight, struct Game* game)
+void checkItemOffScreen(struct LifePickup* lifePickup, struct Screen* screen, struct Game* game)
 {
-  if (lifePickup->position.y > screenHeight)
+  if (lifePickup->position.y > screen->bottomBoundary)
   {
     game->resetItemLocation = true;
   } 
