@@ -5,27 +5,27 @@
 
 - Install cmake using: 
   
-  ```sudo apt install cmake
+  ```sudo apt install cmake```
 
 - in the terminal navigate to the project's root directory 
 
 - to create the build folder run the command: 
   
-  ```cmake -B build
+  ```cmake -B build```
 
 - navigate to the build folder you just created using: cd build
 
 - now run the command while inside the build folder: 
 
-  ```cmake --build . --parallel
+  ```cmake --build . --parallel```
 
 - now navigate back to the root directory using: 
   
-  ```cd ../
+  ```cd ../```
 
 - finally to run the application use: 
   
-   ```./build/game
+   ```./build/game```
 
 # Installation Windows 10 as of 20/11/2025
 
