@@ -33,7 +33,7 @@ void initGame(struct Game* game)
 {
   game->gameState = PLAYING;
   game->level = 0;
-  game->MAXLEVEL = 10;
+  game->MAXLEVEL = 13;
   game->resetItemLocation = false;
 }
 
