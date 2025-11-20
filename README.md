@@ -3,19 +3,29 @@
 
 # Installation Ubuntu Linux
 
-- Install cmake using: sudo apt install cmake
+- Install cmake using: 
+  
+  ```sudo apt install cmake
 
 - in the terminal navigate to the project's root directory 
 
-- to create the build folder run the command: cmake -B build
+- to create the build folder run the command: 
+  
+  ```cmake -B build
 
 - navigate to the build folder you just created using: cd build
 
-- now run the command while inside the build folder: cmake --build . --parallel
+- now run the command while inside the build folder: 
 
-- now navigate back to the root directory using: cd ../
+  ```cmake --build . --parallel
 
-- finally to run the application use: ./build/game
+- now navigate back to the root directory using: 
+  
+  ```cd ../
+
+- finally to run the application use: 
+  
+   ```./build/game
 
 # Installation Windows 10 as of 20/11/2025
 
@@ -25,7 +35,7 @@
 
 - Once you've downloaded the cmake installer run it and follow the prompts. 
 
-- Now that you have cmake navigate to the project's root folder using powershell. You can achive this by right clicking on the  root folder and selecting "open in terminal".
+- Now that you have cmake navigate to the project's root folder using powershell. You can achieve this by right-clicking on the  root folder and selecting "open in terminal".
 
 - Now create the build folder using: mkdir build.
 
