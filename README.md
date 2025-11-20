@@ -11,7 +11,9 @@
 
 - to create the build folder run the command: 
   
-  ```cmake -B build```
+  ```
+  cmake -B build
+  ```
 
 - navigate to the build folder you just created using: cd build
 
