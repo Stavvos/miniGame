@@ -1,7 +1,7 @@
 # miniGame
 - A small single player game based on Asteroids. It uses the raylib library which is open source and be found here: https://github.com/raysan5/raylib .  
 
-# Installation Ubuntu Linux
+# Installation Ubuntu Linux as of 20/11/2025
 
 - Install cmake using: 
   
@@ -17,8 +17,11 @@
   cmake -B build
   ```
 
-- navigate to the build folder you just created using: cd build
+- navigate to the build folder you just created using: 
 
+  ```
+  cd build
+  ```
 - now run the command while inside the build folder: 
 
   ```
