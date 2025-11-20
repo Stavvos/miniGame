@@ -5,7 +5,9 @@
 
 - Install cmake using: 
   
-  ```sudo apt install cmake```
+  ```
+  sudo apt install cmake
+  ```
 
 - in the terminal navigate to the project's root directory 
 
@@ -19,15 +21,21 @@
 
 - now run the command while inside the build folder: 
 
-  ```cmake --build . --parallel```
+  ```
+  cmake --build . --parallel
+  ```
 
 - now navigate back to the root directory using: 
   
-  ```cd ../```
+  ```
+  cd ../
+  ```
 
 - finally to run the application use: 
   
-   ```./build/game```
+   ```
+   ./build/game
+   ```
 
 # Installation Windows 10 as of 20/11/2025
 
@@ -39,14 +47,27 @@
 
 - Now that you have cmake navigate to the project's root folder using powershell. You can achieve this by right-clicking on the  root folder and selecting "open in terminal".
 
-- Now create the build folder using: mkdir build.
+- Now create the build folder using: 
 
-- Run this command to generate a visual studio project: cmake -S . -B build
+  ```
+  mkdir build
+  ```
 
-- Now build the project using: cmake --build build --config Release
+- Run this command to generate a visual studio project: 
 
-- Finally run the application using: .\build\Release\game.exe
+  ```
+  cmake -S . -B build
+  ```
+- Now build the project using: 
 
+  ```
+  cmake --build build --config Release
+  ```
+- Finally run the application using: 
+  
+  ```
+  .\build\Release\game.exe
+  ```
 ## Gameplay Footage
 
 ![Gameplay Footage GIF](https://github.com/stavvos/miniGame/raw/main/assets/video/demo.gif)
