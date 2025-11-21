@@ -5,6 +5,7 @@
 #define PLAYERLIVES 3
 #define INVULNFRAMES 60
 #define MAXEXPLOSIONFRAMES 8 
+#define MAXEXPLOSIONFRAMESBIG 7 
 #define MAXEXPLOSIONS 10
 #define MAXBULLETS 25
 #define COLLISIONSOUNDS 20
@@ -58,6 +59,13 @@ typedef enum CollisionState
   NOTHITTING,
   HITTING
 } CollisionState;
+
+typedef enum AsteroidType
+{
+  SMALL,
+  MEDIUM,
+  LARGE
+} AsteroidType;
 
 struct Game
 {
@@ -138,6 +146,7 @@ struct Asteroid
   int damage;
   int noMoveFrames;
   int currentTexture;
+  AsteroidType asteroidType;
   struct Asteroid* next;
 };
 
@@ -148,6 +157,16 @@ struct HealthBar
 }; 
 
 struct Explosion
+{
+  Texture2D texture[MAXEXPLOSIONFRAMES];
+  int index;
+  Vector2 position;
+  bool active;
+  bool playSound;
+  Sound sound; 
+};
+
+struct BigExplosion
 {
   Texture2D texture[MAXEXPLOSIONFRAMES];
   int index;

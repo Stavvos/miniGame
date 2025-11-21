@@ -75,7 +75,9 @@ int main(void)
   //explosion animation
   struct Explosion explosionArray[MAXEXPLOSIONS];
   initExplosions(explosionArray);
-  
+  struct BigExplosion bigExplosionArray[MAXEXPLOSIONS];
+  initBigExplosions(bigExplosionArray);
+
   // player hit asteroid sounds
   struct CollisionSound collisionSounds[COLLISIONSOUNDS];
   initCollisionSounds(collisionSounds); 
@@ -98,7 +100,7 @@ int main(void)
     moveAsteroids(&player, &screen, &game, asteroidHead);
     asteroidPlayerCollisionHandler(&player, &asteroidHead, collisionSounds);
     itemCollisionHandler(&lifePickup, &player, &game);
-    bulletHitAsteroid(&asteroidHead, bullets, &player, &lifePickup, explosionArray); 
+    bulletHitAsteroid(&asteroidHead, bullets, &player, &lifePickup, explosionArray, bigExplosionArray); 
     UpdateMusicStream(soundtrack); //raylib library function
     decrementPlayerHealth(&player);
     resetPlayerHealth(&player);
@@ -106,7 +108,7 @@ int main(void)
     updateInvulnFrames(&player);
     moveItem(&lifePickup, &screen, &game);
     checkItemOffScreen(&lifePickup, &screen, &game);
-    playExplosionSound(explosionArray);
+    playExplosionSound(explosionArray, bigExplosionArray);
     playBulletSound(bullets);
     playCollisionSound(collisionSounds);
     playItemPickupSound(&lifePickup);
@@ -114,7 +116,7 @@ int main(void)
     //Draw
     BeginDrawing();
       DrawFPS(0,0);
-      render(&screen, &player, &game, asteroidHead, bullets, &healthBar, &lifePickup, explosionArray);
+      render(&screen, &player, &game, asteroidHead, bullets, &healthBar, &lifePickup, explosionArray, bigExplosionArray);
     EndDrawing();
 
     //reset states
@@ -124,7 +126,7 @@ int main(void)
   //De-Initialization
   freeAsteroidList(asteroidHead);
   deallocateShootingSoundFX(bullets);
-  deallocateExplosionSoundFX(explosionArray);
+  deallocateExplosionSoundFX(explosionArray, bigExplosionArray);
   deallocateCollisionSounds(collisionSounds);
   UnloadMusicStream(soundtrack);//ray libe function
   CloseAudioDevice();

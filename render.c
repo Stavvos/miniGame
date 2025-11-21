@@ -113,7 +113,7 @@ void drawLifePickup(struct LifePickup* lifePickup)
   DrawTexture(lifePickup->texture, lifePickup->position.x, lifePickup->position.y, WHITE);
 }
 
-void drawExplosions(struct Explosion explosions[])
+void drawExplosions(struct Explosion explosions[], struct BigExplosion bigExplosions[])
 {
   for (int i = 0; i < MAXEXPLOSIONS; i++)
   {
@@ -133,9 +133,28 @@ void drawExplosions(struct Explosion explosions[])
     }
 
   }
+
+  for (int i = 0; i < MAXEXPLOSIONS; i++)
+  {
+    if (bigExplosions[i].active == true)
+    {
+      DrawTexture(bigExplosions[i].texture[bigExplosions[i].index],
+                  bigExplosions[i].position.x,
+                  bigExplosions[i].position.y,
+                  WHITE);
+      bigExplosions[i].index++;
+    }
+
+    if(bigExplosions[i].index == MAXEXPLOSIONFRAMESBIG)
+    {
+      bigExplosions[i].index = 0;
+      bigExplosions[i].active = false;
+    }
+
+  }
 }
 
-void render(struct Screen* screen, struct Player* player, struct Game* game, struct Asteroid* head, struct Bullet bullets[], struct HealthBar* healthBar, struct LifePickup* lifePickup, struct Explosion explosions[])
+void render(struct Screen* screen, struct Player* player, struct Game* game, struct Asteroid* head, struct Bullet bullets[], struct HealthBar* healthBar, struct LifePickup* lifePickup, struct Explosion explosions[], struct BigExplosion bigExplosions[])
 {
 
   switch(screen->gameScreen)
@@ -165,7 +184,7 @@ void render(struct Screen* screen, struct Player* player, struct Game* game, str
       drawPlayerLives(player);
       drawPlayerScore(player);
       drawLifePickup(lifePickup);
-      drawExplosions(explosions); 
+      drawExplosions(explosions, bigExplosions); 
     } break;
     
     case GAMEOVER:

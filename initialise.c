@@ -128,6 +128,32 @@ void initExplosions(struct Explosion explosions[])
   }
 }
 
+void initBigExplosions(struct BigExplosion explosions[])
+{
+  Texture2D texture1 = LoadTexture("assets/sprite/bigExplosion/bigExplosion1.png");
+  Texture2D texture2 = LoadTexture("assets/sprite/bigExplosion/bigExplosion2.png");
+  Texture2D texture3 = LoadTexture("assets/sprite/bigExplosion/bigExplosion3.png");
+  Texture2D texture4 = LoadTexture("assets/sprite/bigExplosion/bigExplosion4.png");
+  Texture2D texture5 = LoadTexture("assets/sprite/bigExplosion/bigExplosion5.png");
+  Texture2D texture6 = LoadTexture("assets/sprite/bigExplosion/bigExplosion6.png");
+  Texture2D texture7 = LoadTexture("assets/sprite/bigExplosion/bigExplosion7.png");
+
+  for (int i = 0; i < MAXEXPLOSIONS; i++)
+  {
+    explosions[i].texture[0] = texture1;
+    explosions[i].texture[1] = texture2;
+    explosions[i].texture[2] = texture3;
+    explosions[i].texture[3] = texture4;
+    explosions[i].texture[4] = texture5;
+    explosions[i].texture[5] = texture6;
+    explosions[i].texture[6] = texture7;
+    explosions[i].index = 0;
+    explosions[i].active = false;
+    explosions[i].playSound = false;
+    explosions[i].sound = LoadSound("assets/sound/explosion.wav");
+  }
+}
+
 void initCollisionSounds(struct CollisionSound collisionSounds[])
 {
   for (int i = 0; i < COLLISIONSOUNDS; i++)

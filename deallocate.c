@@ -8,11 +8,16 @@ void deallocateShootingSoundFX(struct Bullet bullets[])
   }
 }
 
-void deallocateExplosionSoundFX(struct Explosion explosions[])
+void deallocateExplosionSoundFX(struct Explosion explosions[], struct BigExplosion bigExplosions[])
 {
   for(int i = 0; i < MAXEXPLOSIONS; i++)
   {
     UnloadSound(explosions[i].sound);
+  }
+
+  for(int i = 0; i < MAXEXPLOSIONS; i++)
+  {
+    UnloadSound(bigExplosions[i].sound);
   }
 }
 

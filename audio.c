@@ -1,13 +1,22 @@
 #include "types.h"
 
-void playExplosionSound(struct Explosion explosions[])
+void playExplosionSound(struct Explosion explosions[], struct BigExplosion bigExplosions[])
 {
-  for (int i = 0; i < 10; i++)
+  for (int i = 0; i < MAXEXPLOSIONS; i++)
   {
     if(explosions[i].playSound == true)
     {
       PlaySound(explosions[i].sound); 
       explosions[i].playSound = false;
+    }
+  }
+
+  for (int i = 0; i < MAXEXPLOSIONS; i++)
+  {
+    if(bigExplosions[i].playSound == true)
+    {
+      PlaySound(bigExplosions[i].sound); 
+      bigExplosions[i].playSound = false;
     }
   }
 }

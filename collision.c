@@ -13,16 +13,33 @@ void moveItemToHitAsteroid(struct Asteroid* current, struct LifePickup* lifePick
   }	  
 }
 
-void activateExplosionFX(struct Explosion explosions[], struct Asteroid* current)
+void activateExplosionFX(struct Explosion explosions[], struct BigExplosion bigExplosions[], struct Asteroid* current)
 {
-  for (int i = 0; i < MAXEXPLOSIONS; i++)
+  
+  if(current->asteroidType == SMALL || current->asteroidType == MEDIUM)
   {
-    if(explosions[i].active == false)
+    for (int i = 0; i < MAXEXPLOSIONS; i++)
     {
-      explosions[i].active = true;
-      explosions[i].playSound = true;
-      explosions[i].position = current->position;
-      break;  
+      if(explosions[i].active == false)
+      {
+        explosions[i].active = true;
+        explosions[i].playSound = true;
+        explosions[i].position = current->position;
+        break;  
+      }
+    }
+  }
+  else
+  {
+    for (int i = 0; i < MAXEXPLOSIONS; i++)
+    {
+      if(bigExplosions[i].active == false)
+      {
+        bigExplosions[i].active = true;
+        bigExplosions[i].playSound = true;
+        bigExplosions[i].position = current->position;
+        break;  
+      }
     }
   }
 }
@@ -64,7 +81,7 @@ void asteroidPlayerCollisionHandler(struct Player* player, struct Asteroid** hea
 
 }
 
-void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct Player* player, struct LifePickup* lifePickup, struct Explosion explosions[])
+void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct Player* player, struct LifePickup* lifePickup, struct Explosion explosions[], struct BigExplosion bigExplosions[])
 {
  
   for(int i = 0; i < MAXBULLETS; i++)
@@ -87,7 +104,7 @@ void bulletHitAsteroid(struct Asteroid** head, struct Bullet bullets[], struct P
 	  if(current->health == 0)
 	  {
             deleteAsteroid(current, previous, head);
-            activateExplosionFX(explosions, current); 
+            activateExplosionFX(explosions, bigExplosions, current); 
             moveItemToHitAsteroid(current, lifePickup);
 	  }
 
