@@ -3,7 +3,7 @@
 
 # Installation Ubuntu Linux as of 20/11/2025
 
-- Make sure you have a C compilier installed. You can use what you like, gcc is a good option. 
+- Make sure you have a C compiler installed. You can use what you like, gcc is a good option. 
 
 - Install cmake using: 
   
@@ -43,6 +43,8 @@
    ```
 
 # Installation Windows 10 as of 20/11/2025
+
+- Make sure you have a C compiler installed. You can use whatever compiler you like, but installing Visual Studio is an easy, non-technical option.
 
 - Install cmake. There are many ways to do this on windows but a simple GUI based way is as follows. Go to: https://cmake.org/download/ 
 
