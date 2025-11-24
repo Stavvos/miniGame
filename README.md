@@ -3,6 +3,8 @@
 
 # Installation Ubuntu Linux as of 20/11/2025
 
+- Make sure you have a C compilier installed. You can use what you like, gcc is a good option. 
+
 - Install cmake using: 
   
   ```
